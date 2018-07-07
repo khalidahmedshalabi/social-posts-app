@@ -35,7 +35,8 @@ export default class App extends React.Component {
 			Entypo: require("@expo/vector-icons/fonts/Entypo.ttf"),
 			MaterialIcons: require("@expo/vector-icons/fonts/MaterialIcons.ttf"),
 			"Material Icons": require("@expo/vector-icons/fonts/MaterialIcons.ttf"),
-			Octicons: require("@expo/vector-icons/fonts/Octicons.ttf")
+			Octicons: require("@expo/vector-icons/fonts/Octicons.ttf"),
+			'droidkufi': require('./assets/fonts/DroidKufi-Regular.ttf')
 		})
 	};
 
