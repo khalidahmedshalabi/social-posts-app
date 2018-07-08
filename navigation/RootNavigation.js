@@ -20,7 +20,7 @@ export default RootNavigation = createStackNavigator({
 	},
 },
 {
-	initialRouteName: 'Walkthrough',
+	initialRouteName: 'Login',
 	navigationOptions: {
 		header: null,
 	}
