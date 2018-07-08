@@ -1,12 +1,25 @@
 import React from 'react';
-import { Platform, StatusBar, StyleSheet, View } from 'react-native';
-import { AppLoading, Asset, Font, Icon } from 'expo';
+import { Platform, StatusBar, StyleSheet, View, I18nManager } from 'react-native';
+import { AppLoading, Font, Util } from 'expo';
 import RootNavigation from './navigation/RootNavigation';
 
 export default class App extends React.Component {
-	state = {
-		isLoadingComplete: false,
-	};
+	constructor() {
+		super()
+
+		if (!I18nManager.isRTL) {
+			I18nManager.forceRTL(true)
+			Util.reload(true)
+			return
+		}
+
+		this.state = {
+			isLoadingComplete: false,
+		};
+	}
+
+
+	
 
 	render() {
 		if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
