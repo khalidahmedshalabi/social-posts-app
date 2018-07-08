@@ -26,7 +26,7 @@ export default class Walkthrough extends Component {
 	applyTheAnim = () => {
 		this.viewIcon1.fadeIn(1500)
 		this.viewText1.fadeInUpBig(1500)
-		this.viewSkip1.fadeInUpBig(1500)
+		//this.viewSkip1.fadeInUpBig(1500)
 	}
 
 	applyTheAnim2 = () => {
@@ -38,7 +38,7 @@ export default class Walkthrough extends Component {
 		if(number == 0) {
 			this.viewText1.fadeOut(0)
 			this.viewIcon1.fadeOut(0)
-			this.viewSkip1.fadeOut(0)
+			//this.viewSkip1.fadeOut(0)
 		}
 		else if(number == 1) {
 			// second page
@@ -55,7 +55,7 @@ export default class Walkthrough extends Component {
 
 			this.viewText1.fadeOut(0)
 			this.viewIcon1.fadeOut(0)
-			this.viewSkip1.fadeOut(0)
+		//	this.viewSkip1.fadeOut(0)
 
 		}
 		}
@@ -86,14 +86,15 @@ export default class Walkthrough extends Component {
 								</FontedText>
 						</Animatable.View>
 
-						<Animatable.View 
+						<View style={{ flex: 0.7 }} />
+					{/*	<Animatable.View 
 						animation="fadeInUpBig"
 						style={{ flex: 0.7, alignSelf: 'flex-start', justifyContent: 'center' }}>
 							<TouchableOpacity>
 								<FontedText style={{ color: mainColor }}>تخطي</FontedText>
 							</TouchableOpacity>
-						</Animatable.View>
-					</View>
+					</Animatable.View> */}
+					</View> 
 
 					<View style={styles.contentContainer}>
 						<Animatable.View 
@@ -111,13 +112,14 @@ export default class Walkthrough extends Component {
 							</FontedText>
 						</Animatable.View>
 
-						<Animatable.View
+							<View style={{ flex: 0.7 }} />
+					{/*	<Animatable.View
 							ref={ref => this.viewSkip1 = ref}
 							style={{ flex: 0.7, alignSelf: 'flex-start', justifyContent: 'center' }}>
 							<TouchableOpacity>
 								<FontedText style={{ color: mainColor }}>تخطي</FontedText>
 							</TouchableOpacity>
-						</Animatable.View>
+					</Animatable.View> */}
 					</View>
 
 					<View style={styles.contentContainer}>
