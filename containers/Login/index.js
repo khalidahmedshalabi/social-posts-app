@@ -35,7 +35,7 @@ export default class Login extends Component {
 		loginUser = () => {
 			var emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         	var isValidEmail = emailRegex.test(this.state.emailaddress);
-			if(!this.state.emailaddress || !this.state.password == '' )
+			if(!this.state.emailaddress || !this.state.password)
 			 {
 				 this.refs.toast.show('برجاء ادخال البيانات كاملة');
 			 }
@@ -75,6 +75,9 @@ export default class Login extends Component {
 									placeholder='البريد الالكتروني'
 									placeholderTextColor='#d8d8d8'
 									underlineColorAndroid='transparent'
+									autoCapitalize='none'
+									keyboardType='email-address'
+									maxLength={254}
 									style={{
 										flex: 1,
 										color: 'white'
@@ -93,6 +96,7 @@ export default class Login extends Component {
 									placeholder='كلمة المرور'
 									placeholderTextColor='#d8d8d8'
 									underlineColorAndroid='transparent'
+									maxLength={128}
 									secureTextEntry={true}
 									style={{
 										flex: 1,
