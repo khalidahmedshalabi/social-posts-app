@@ -20,7 +20,7 @@ export default RootNavigation = createStackNavigator({
 	},
 },
 {
-	initialRouteName: 'Login',
+	initialRouteName: 'ResetPassword',
 	navigationOptions: {
 		header: null,
 	}

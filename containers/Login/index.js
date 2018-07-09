@@ -46,7 +46,6 @@ export default class Login extends Component {
         	else if(!isValidEmail)
         	{
             	this.refs.toast.show('تأكد من ادخال البريد الالكتروني الصحيح');
-            	return;
         	}
 			else
 			{
