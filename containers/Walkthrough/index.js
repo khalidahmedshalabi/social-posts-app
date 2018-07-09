@@ -18,9 +18,13 @@ const width = Dimensions.get('window').width
 
 
 export default class Walkthrough extends Component {
+	ShouldAnim1= true
+	ShouldAnim2=true
 	
+
 	componentDidMount () {
 		this.viewIcon1.fadeOut(0)
+		this.viewText1.fadeOut(0)
 	}
 
 	applyTheAnim = () => {
@@ -39,23 +43,45 @@ export default class Walkthrough extends Component {
 			this.viewText1.fadeOut(0)
 			this.viewIcon1.fadeOut(0)
 			//this.viewSkip1.fadeOut(0)
+			
 		}
 		else if(number == 1) {
 			// second page
+			if(this.ShouldAnim1==true)
+			{
 			this.applyTheAnim()
 
 			this.viewText2.fadeOut(0)
-			this.viewIcon2.fadeOut(0)
-
+			this.viewIcon2.fadeOut(0)			
+			this.ShouldAnim1=false
+			}
+			else if(this.ShouldAnim1==false) 
+			{		
+				this.viewText1.stopAnimation()
+				this.viewIcon1.stopAnimation()
+				this.viewText2.fadeOut(0)
+				this.viewIcon2.fadeOut(0)
+			}
+			
 		}
 		else {
 			if (number == 2) {
 				// third page
+			if(this.ShouldAnim2==true)
+			{
+
 			this.applyTheAnim2()
 
 			this.viewText1.fadeOut(0)
 			this.viewIcon1.fadeOut(0)
+			this.ShouldAnim2=false
 		//	this.viewSkip1.fadeOut(0)
+			}
+			else if(this.ShouldAnim2==false)
+			{
+				this.viewText2.stopAnimation()
+				this.viewIcon2.stopAnimation()
+			}
 
 		}
 		}
@@ -79,7 +105,7 @@ export default class Walkthrough extends Component {
 							<FontAwesome name='picture-o' size={120} color={mainColor} />
 						</Animatable.View>
 
-						<Animatable.View style={styles.contentContainerText} animation="fadeInUpBig">
+						<Animatable.View style={styles.contentContainerText} animation="fadeInUpBig" >
 								<FontedText style={{color: 'white', fontSize: 23}}>عنوان 1</FontedText>
 								<FontedText style={{ color: '#a1a2a3', fontSize: 12, textAlign: 'center' }}>
 									هذا وصف لهذا العنوان - هذا وصف لهذا العنوان - هذا وصف لهذا العنوان - هذا وصف لهذا العنوان - هذا وصف لهذا العنوان
@@ -102,14 +128,15 @@ export default class Walkthrough extends Component {
 							style={styles.contentContainerIcon}>
 							<FontAwesome name='picture-o' size={120} color={mainColor} />
 						</Animatable.View>
-
+					
 						<Animatable.View 
 							ref={ref => this.viewText1 = ref} 
-							style={styles.contentContainerText}>
+							style={styles.contentContainerText}	>
 							<FontedText style={{ color: 'white', fontSize: 23 }}>عنوان 2</FontedText>
 							<FontedText style={{ color: '#a1a2a3', fontSize: 12, textAlign: 'center' }}>
 								هذا وصف لهذا العنوان - هذا وصف لهذا العنوان - هذا وصف لهذا العنوان - هذا وصف لهذا العنوان - هذا وصف لهذا العنوان
 							</FontedText>
+							
 						</Animatable.View>
 
 							<View style={{ flex: 0.7 }} />
