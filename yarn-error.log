@@ -1,8 +1,8 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add $ npm i react-native-swiper --save
 
 PATH: 
-  C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\ATI Technologies\ATI.ACE\Core-Static;C:\Program Files (x86)\Windows Live\Shared;C:\Program Files (x86)\QuickTime\QTSystem\;C:\Program Files\nodejs\;D:\Matlap\runtime\win64;D:\Matlap\bin;D:\Matlap\polyspace\bin;C:\Program Files\Git\cmd;C:\Program Files (x86)\Yarn\bin\;C:\Users\Rodaina Pc\AppData\Local\atom\bin;C:\Users\Rodaina Pc\AppData\Roaming\npm;C:\Users\Rodaina Pc\AppData\Local\Yarn\bin;C:\Program Files\Microsoft VS Code\bin
+  C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\ATI Technologies\ATI.ACE\Core-Static;C:\Program Files (x86)\Windows Live\Shared;C:\Program Files (x86)\QuickTime\QTSystem\;C:\Program Files\nodejs\;D:\Matlap\runtime\win64;D:\Matlap\bin;D:\Matlap\polyspace\bin;C:\Program Files\Git\cmd;C:\Program Files (x86)\Yarn\bin\;C:\Program Files\Microsoft VS Code\bin;C:\Users\Rodaina Pc\AppData\Local\atom\bin;C:\Users\Rodaina Pc\AppData\Roaming\npm;C:\Users\Rodaina Pc\AppData\Local\Yarn\bin;C:\Program Files\Microsoft VS Code\bin
 
 Yarn version: 
   1.7.0
@@ -14,7 +14,17 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: EPERM: operation not permitted, unlink 'D:\zizo\Expo Works\social-posts-app\node_modules\@babel\template\node_modules\.bin'
+  Error: https://registry.yarnpkg.com/$: Not found
+      at Request.params.callback [as _callback] (C:\Program Files (x86)\Yarn\lib\cli.js:65656:18)
+      at Request.self.callback (C:\Program Files (x86)\Yarn\lib\cli.js:134675:22)
+      at emitTwo (events.js:126:13)
+      at Request.emit (events.js:214:7)
+      at Request.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:135658:10)
+      at emitOne (events.js:116:13)
+      at Request.emit (events.js:211:7)
+      at IncomingMessage.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:135578:12)
+      at Object.onceWrapper (events.js:313:30)
+      at emitNone (events.js:111:20)
 
 npm manifest: 
   {
@@ -34,6 +44,7 @@ npm manifest:
       "react-native": "https://github.com/expo/react-native/archive/sdk-28.0.0.tar.gz",
       "react-native-animatable": "^1.3.0",
       "react-native-carousel-view": "^0.5.1",
+      "react-native-easy-toast": "^1.1.0",
       "react-native-transition": "^1.1.8",
       "react-navigation": "2.3.1"
     },
@@ -4586,6 +4597,12 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/react-native-easy-grid/-/react-native-easy-grid-0.1.17.tgz#fad8cb371d465828c1c71daa4d8b513d33253452"
     dependencies:
       lodash "^4.11.1"
+  
+  react-native-easy-toast@^1.1.0:
+    version "1.1.0"
+    resolved "https://registry.yarnpkg.com/react-native-easy-toast/-/react-native-easy-toast-1.1.0.tgz#7d3a34ed298d32c4827b8d43ddfab6a71b98a2e3"
+    dependencies:
+      prop-types "^15.5.10"
   
   react-native-gesture-handler@1.0.4:
     version "1.0.4"

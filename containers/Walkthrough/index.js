@@ -7,12 +7,12 @@ import {
 	Dimensions
 } from 'react-native';
 import { Container, Button } from 'native-base';
-import Carousel from 'react-native-carousel-view';
 import * as Animatable from 'react-native-animatable';
 import { FontAwesome } from '@expo/vector-icons';
 import { mainColor, bgColor } from '../../constants/Colors'
 import FontedText from '../../components/FontedText'
 import { pagePadding } from '../../constants/Layout';
+import Swiper from 'react-native-swiper';
 
 const width = Dimensions.get('window').width
 
@@ -90,15 +90,14 @@ export default class Walkthrough extends Component {
 	render() {
 		return (
 			<Container style={{backgroundColor: bgColor, paddingBottom: 15}}>
-				<Carousel
-					//hideIndicators={true}
+				<Swiper
 					height="100%"
-					animate={false}
-					indicatorAtBottom={true}
-					indicatorSize={20}
-					indicatorText="•"
-					indicatorColor="white"
-					onPageChange={(number) => this.onPageChanged(number)}
+					horizontal={true}
+					loop={false}
+					showsPagination={true}
+					activeDotColor='grey'
+					dotColor='white'
+					onIndexChanged={(number) => this.onPageChanged(number)}
 				>
 					<View style={styles.contentContainer}>
 						<Animatable.View style={styles.contentContainerIcon} animation="fadeIn">
@@ -177,7 +176,7 @@ export default class Walkthrough extends Component {
 
 						<View style={{flex: 0.4}}/>
 					</View>
-				</Carousel>
+				</Swiper>
 			</Container>
 		)
 	}
