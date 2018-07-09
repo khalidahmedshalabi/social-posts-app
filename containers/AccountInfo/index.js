@@ -135,7 +135,7 @@ export default class AccountInfo extends Component {
 							flex: 1,
 							justifyContent: 'center'
 						}}>
-						<FontedText style={{ color: bgColor, textAlign: 'center', fontSize: 19 }}>تسجيل الدخول</FontedText>
+						<FontedText style={{ color: bgColor, textAlign: 'center', fontSize: 19 }}>حفظ البيانات</FontedText>
 					</LinearGradient>
 				</TouchableOpacity>
 			</Container>
