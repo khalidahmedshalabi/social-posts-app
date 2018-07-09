@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import {
 	StyleSheet,
-	Text,
 	View,
-	TouchableOpacity,
 	Dimensions
 } from 'react-native';
 import { Container, Button } from 'native-base';
