@@ -26,7 +26,7 @@ export default class Signup extends Component {
 							</View>
 
 							<FontedInput
-								placeholder='البريد الالكتروني'
+								placeholder='الاسم'
 								placeholderTextColor='#d8d8d8'
 								underlineColorAndroid='transparent'
 								style={{
