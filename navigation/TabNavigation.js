@@ -12,16 +12,16 @@ import Profile from '../containers/Profile'
 const tabBarIconSize = 27
 
 export default createBottomTabNavigator({
-	'حسابي': {
-		screen: Profile,
-		navigationOptions: {
-			tabBarIcon: ({ tintColor }) => <MaterialCommunityIcons color={tintColor} name='account' size={tabBarIconSize} />
-		}
-	},
 	'المنشورات': {
 		screen: Posts,
 		navigationOptions: {
 			tabBarIcon: ({ tintColor }) => <Entypo color={tintColor} name='news' size={tabBarIconSize} />
+		}
+	},
+	'حسابي': {
+		screen: Profile,
+		navigationOptions: {
+			tabBarIcon: ({ tintColor }) => <MaterialCommunityIcons color={tintColor} name='account' size={tabBarIconSize} />
 		}
 	}
 },
@@ -31,8 +31,9 @@ export default createBottomTabNavigator({
 			showIcon: true,
 			showLabel: true,
 			activeTintColor: mainColor,
-			inactiveTintColor: '#888888',
-			labelStyle: { fontFamily: 'droidkufi', fontSize: 13 }
+			inactiveTintColor: 'white',
+			labelStyle: { fontFamily: 'droidkufi', fontSize: 13 },
+			tabStyle: { backgroundColor: '#474668' }
 		},
 		lazy: true,
 	})
