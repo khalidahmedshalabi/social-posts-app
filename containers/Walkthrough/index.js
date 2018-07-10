@@ -18,11 +18,13 @@ const width = Dimensions.get('window').width
 export default class Walkthrough extends Component {
 	ShouldAnim1= true
 	ShouldAnim2=true
-	
+	ShouldAnim3=true
 
 	componentDidMount () {
 		this.viewIcon1.fadeOut(0)
 		this.viewText1.fadeOut(0)
+		this.viewIcon3.fadeOut(0)
+		this.viewText3.fadeOut(0)
 	}
 
 	applyTheAnim = () => {
@@ -34,6 +36,11 @@ export default class Walkthrough extends Component {
 	applyTheAnim2 = () => {
 		this.viewIcon2.fadeIn(1500)
 		this.viewText2.fadeInUpBig(1500)
+	}
+	
+	applyTheAnim3 = () => {
+		this.viewIcon3.fadeIn(1500)
+		this.viewText3.fadeInUpBig(1500)
 	}
 
 	onPageChanged = (number) => {
@@ -62,8 +69,8 @@ export default class Walkthrough extends Component {
 			}
 			
 		}
-		else {
-			if (number == 2) {
+		
+		else if (number == 2) {
 				// third page
 			if(this.ShouldAnim2==true)
 			{
@@ -82,7 +89,26 @@ export default class Walkthrough extends Component {
 			}
 
 		}
+		else if (number == 3) {
+			// fourth page
+		if(this.ShouldAnim3==true)
+		{
+
+		this.applyTheAnim3()
+
+		this.viewText2.fadeOut(0)
+		this.viewIcon2.fadeOut(0)
+		this.ShouldAnim3=false
+	//	this.viewSkip1.fadeOut(0)
 		}
+		else if(this.ShouldAnim3==false)
+		{
+			this.viewText3.stopAnimation()
+			this.viewIcon3.stopAnimation()
+		}
+
+	}
+	
 	}
 
 	render() {
@@ -157,6 +183,36 @@ export default class Walkthrough extends Component {
 							ref={ref => this.viewText2 = ref}
 							style={styles.contentContainerText}>
 							<FontedText style={{ color: 'white', fontSize: 23 }}>عنوان 3</FontedText>
+							<FontedText style={{ color: '#a1a2a3', fontSize: 12, textAlign: 'center' }}>
+								هذا وصف لهذا العنوان - هذا وصف لهذا العنوان - هذا وصف لهذا العنوان - هذا وصف لهذا العنوان - هذا وصف لهذا العنوان
+							</FontedText>
+
+						{/*	<Button 
+								onPress={
+									() => {
+										this.props.navigation.navigate("Login")
+									}
+								}
+								style={{ backgroundColor: mainColor, paddingHorizontal: width * 0.35, paddingVertical: 15, borderRadius: 20, marginTop: 25 }}>
+								<FontedText style={{ fontSize: 19 }}>ابدأ الان</FontedText>
+							</Button> */}
+						</Animatable.View>
+
+						<View style={{flex: 0.4}}/>
+					</View>
+
+
+					<View style={styles.contentContainer}>
+						<Animatable.View 
+							ref={ref => this.viewIcon3 = ref}
+							style={styles.contentContainerIcon}>
+							<FontAwesome name='picture-o' size={120} color={mainColor} />
+						</Animatable.View>
+
+						<Animatable.View 
+							ref={ref => this.viewText3 = ref}
+							style={styles.contentContainerText}>
+							<FontedText style={{ color: 'white', fontSize: 23 }}>عنوان 4</FontedText>
 							<FontedText style={{ color: '#a1a2a3', fontSize: 12, textAlign: 'center' }}>
 								هذا وصف لهذا العنوان - هذا وصف لهذا العنوان - هذا وصف لهذا العنوان - هذا وصف لهذا العنوان - هذا وصف لهذا العنوان
 							</FontedText>
