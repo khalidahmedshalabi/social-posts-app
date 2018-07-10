@@ -13,7 +13,6 @@ export default RootNavigation = createStackNavigator({
 	Tabs: {
 		screen: Tabs
 	},
-	},
 	Walkthrough: {
 		screen: Walkthrough
 	},
