@@ -33,7 +33,7 @@ export default RootNavigation = createStackNavigator({
 	},
 },
 {
-	initialRouteName: 'CodeConfirmation',
+	initialRouteName: 'Signup',
 	navigationOptions: {
 		header: null,
 	}
