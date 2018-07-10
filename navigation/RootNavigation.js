@@ -8,11 +8,14 @@ import ResetPassword from '../containers/ResetPassword'
 import Walkthrough from '../containers/Walkthrough'
 import AccountInfo from '../containers/AccountInfo'
 import CodeConfirmation from '../containers/CodeConfirmation'
+import EditProfile from '../containers/EditProfile'
 
 export default RootNavigation = createStackNavigator({
 	Tabs: {
 		screen: Tabs
 	},
+	EditProfile: {
+		screen: EditProfile
 	},
 	Walkthrough: {
 		screen: Walkthrough
