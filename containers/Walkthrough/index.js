@@ -28,18 +28,18 @@ export default class Walkthrough extends Component {
 	}
 
 	applyTheAnim = () => {
-		this.viewIcon1.fadeIn(1500)
+		this.viewIcon1.bounce(1500)
 		this.viewText1.fadeInUpBig(1500)
 		//this.viewSkip1.fadeInUpBig(1500)
 	}
 
 	applyTheAnim2 = () => {
-		this.viewIcon2.fadeIn(1500)
+		this.viewIcon2.jello(1500)
 		this.viewText2.fadeInUpBig(1500)
 	}
 	
 	applyTheAnim3 = () => {
-		this.viewIcon3.fadeIn(1500)
+		this.viewIcon3.fadeInUpBig(1500)
 		this.viewText3.fadeInUpBig(1500)
 	}
 
@@ -124,7 +124,11 @@ export default class Walkthrough extends Component {
 					onIndexChanged={(number) => this.onPageChanged(number)}
 				>
 					<View style={styles.contentContainer}>
-						<Animatable.View style={styles.contentContainerIcon} animation="fadeIn">
+						<Animatable.View 
+							style={styles.contentContainerIcon} 
+							animation="rubberBand" 
+							duration={1500}
+							delay={300}>
 							<MaterialIcons name='attach-money' size={120} color={mainColor} />
 						</Animatable.View>
 
