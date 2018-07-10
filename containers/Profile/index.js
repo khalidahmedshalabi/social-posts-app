@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import { View, TouchableOpacity, Dimensions } from 'react-native';
-import { Container, Button, Content } from 'native-base';
+import { Container, Content } from 'native-base';
 import { MaterialIcons, MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
 import { mainColor, bgColor } from '../../constants/Colors';
 import { LinearGradient } from 'expo';
 import FontedText from '../../components/FontedText';
-import FontedInput from '../../components/FontedInput';
 import * as Animatable from 'react-native-animatable';
 
-const width = Dimensions.get('window').width
 const height = Dimensions.get('window').height
 export default class Profile extends Component {
 	
@@ -36,10 +34,10 @@ export default class Profile extends Component {
 								<View style={{ flex: 0.50, alignItems: 'center'}}>
 									<TouchableOpacity activeOpacity={0.7}>
 										<View style={{backgroundColor: '#474668', borderRadius: 40, height: 130, width: 130, justifyContent: 'center', alignItems: 'center'}}>
-											<Ionicons name='md-eye' size={80} color={mainColor} />
+											<MaterialCommunityIcons name='history' size={80} color={mainColor} />
 										</View>
 										
-										<FontedText style={{ color: 'white', textAlign: 'center', marginTop: 13 }}>بوستات مشاهدة</FontedText>
+										<FontedText style={{ color: 'white', textAlign: 'center', marginTop: 13 }}>منشورات شاهدتها</FontedText>
 									</TouchableOpacity>
 								</View>
 
@@ -71,7 +69,7 @@ export default class Profile extends Component {
 											<Ionicons name='md-add' size={80} color={mainColor} />
 										</View>
 
-										<FontedText style={{ color: 'white', textAlign: 'center', marginTop: 13 }}>إضافة بوست</FontedText>
+										<FontedText style={{ color: 'white', textAlign: 'center', marginTop: 13 }}>إضافة منشور</FontedText>
 									</TouchableOpacity>
 								</View>
 							</View>
