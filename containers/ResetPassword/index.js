@@ -40,7 +40,7 @@ export default class ResetPassword extends Component {
 			 }
 			 else
 			 {
-				 alert("Done");
+				{this.props.navigation.navigate("CodeConfirmation")}
 			 }
 			
 		}; 	
