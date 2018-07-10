@@ -33,7 +33,7 @@ export default RootNavigation = createStackNavigator({
 	},
 },
 {
-	initialRouteName: 'Signup',
+	initialRouteName: 'Tabs',
 	navigationOptions: {
 		header: null,
 	}
