@@ -108,11 +108,23 @@ export default class Login extends Component {
 							
 									
 							<View style={{ flex: 0.35, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 50, paddingHorizontal: 30}}>
-								<TouchableOpacity style={{backgroundColor: mainColor, borderRadius: 25, paddingHorizontal: 12, paddingVertical: 12}}>
+								<TouchableOpacity style={{backgroundColor: mainColor, borderRadius: 25, paddingHorizontal: 12, paddingVertical: 12}}
+								onPress={
+									() => {
+										this.props.navigation.navigate("Signup")
+									}
+								}
+								>
 									<FontedText style={{ color: bgColor, textAlign: 'center' }}>إنشاء حساب جديد</FontedText>
 								</TouchableOpacity>
 
-								<TouchableOpacity style={{ borderRadius: 25, borderWidth: 1, borderColor: mainColor, paddingHorizontal: 12, paddingVertical: 12}}>
+								<TouchableOpacity style={{ borderRadius: 25, borderWidth: 1, borderColor: mainColor, paddingHorizontal: 12, paddingVertical: 12}}
+								onPress={
+									() => {
+										this.props.navigation.navigate("ResetPassword")
+									}
+								}
+								>
 									<FontedText style={{ color: mainColor, textAlign: 'center' }}>نسيت كلمة المرور؟</FontedText>
 								</TouchableOpacity>
 							</View>
