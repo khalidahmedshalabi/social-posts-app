@@ -37,7 +37,7 @@ export default RootNavigation = createStackNavigator({
 	},
 },
 {
-	initialRouteName: 'Tabs',
+	initialRouteName: 'Walkthrough',
 	navigationOptions: {
 		header: null,
 	}

@@ -6,7 +6,7 @@ import {
 } from 'react-native';
 import { Container, Button } from 'native-base';
 import * as Animatable from 'react-native-animatable';
-import { FontAwesome } from '@expo/vector-icons';
+import { FontAwesome, Entypo, MaterialIcons, Ionicons } from '@expo/vector-icons';
 import { mainColor, bgColor } from '../../constants/Colors'
 import FontedText from '../../components/FontedText'
 import { pagePadding } from '../../constants/Layout';
@@ -125,14 +125,11 @@ export default class Walkthrough extends Component {
 				>
 					<View style={styles.contentContainer}>
 						<Animatable.View style={styles.contentContainerIcon} animation="fadeIn">
-							<FontAwesome name='picture-o' size={120} color={mainColor} />
+							<MaterialIcons name='attach-money' size={120} color={mainColor} />
 						</Animatable.View>
 
 						<Animatable.View style={styles.contentContainerText} animation="fadeInUpBig" >
-								<FontedText style={{color: 'white', fontSize: 23}}>عنوان 1</FontedText>
-								<FontedText style={{ color: '#a1a2a3', fontSize: 12, textAlign: 'center' }}>
-									هذا وصف لهذا العنوان - هذا وصف لهذا العنوان - هذا وصف لهذا العنوان - هذا وصف لهذا العنوان - هذا وصف لهذا العنوان
-								</FontedText>
+							<FontedText style={{ color: 'white', fontSize: 23, textAlign: 'center' }}>هل تريد ان تحصل على المال بدون جهد</FontedText>
 						</Animatable.View>
 
 						<View style={{ flex: 0.7 }} />
@@ -149,17 +146,13 @@ export default class Walkthrough extends Component {
 						<Animatable.View 
 							ref={ref => this.viewIcon1 = ref} 
 							style={styles.contentContainerIcon}>
-							<FontAwesome name='picture-o' size={120} color={mainColor} />
+							<Entypo name='trophy' size={120} color={mainColor} />
 						</Animatable.View>
 					
 						<Animatable.View 
 							ref={ref => this.viewText1 = ref} 
 							style={styles.contentContainerText}	>
-							<FontedText style={{ color: 'white', fontSize: 23 }}>عنوان 2</FontedText>
-							<FontedText style={{ color: '#a1a2a3', fontSize: 12, textAlign: 'center' }}>
-								هذا وصف لهذا العنوان - هذا وصف لهذا العنوان - هذا وصف لهذا العنوان - هذا وصف لهذا العنوان - هذا وصف لهذا العنوان
-							</FontedText>
-							
+							<FontedText style={{ color: 'white', fontSize: 23, textAlign: 'center' }}>شاهد واربح الان</FontedText>
 						</Animatable.View>
 
 							<View style={{ flex: 0.7 }} />
@@ -176,17 +169,14 @@ export default class Walkthrough extends Component {
 						<Animatable.View 
 							ref={ref => this.viewIcon2 = ref}
 							style={styles.contentContainerIcon}>
-							<FontAwesome name='picture-o' size={120} color={mainColor} />
+							<FontAwesome name='bullhorn' size={120} color={mainColor} />
 						</Animatable.View>
 
 						<Animatable.View 
 							ref={ref => this.viewText2 = ref}
 							style={styles.contentContainerText}>
-							<FontedText style={{ color: 'white', fontSize: 23 }}>عنوان 3</FontedText>
-							<FontedText style={{ color: '#a1a2a3', fontSize: 12, textAlign: 'center' }}>
-								هذا وصف لهذا العنوان - هذا وصف لهذا العنوان - هذا وصف لهذا العنوان - هذا وصف لهذا العنوان - هذا وصف لهذا العنوان
-							</FontedText>
-
+							<FontedText style={{ color: 'white', fontSize: 23, textAlign: 'center' }}>
+								هل انت صاحب مشروع وتريد ايصال اعلانك لاكبر قدر من الناس المهتين</FontedText>
 						{/*	<Button 
 								onPress={
 									() => {
@@ -206,17 +196,13 @@ export default class Walkthrough extends Component {
 						<Animatable.View 
 							ref={ref => this.viewIcon3 = ref}
 							style={styles.contentContainerIcon}>
-							<FontAwesome name='picture-o' size={120} color={mainColor} />
+							<Ionicons name='md-thumbs-up' size={120} color={mainColor} />
 						</Animatable.View>
 
 						<Animatable.View 
 							ref={ref => this.viewText3 = ref}
 							style={styles.contentContainerText}>
-							<FontedText style={{ color: 'white', fontSize: 23 }}>عنوان 4</FontedText>
-							<FontedText style={{ color: '#a1a2a3', fontSize: 12, textAlign: 'center' }}>
-								هذا وصف لهذا العنوان - هذا وصف لهذا العنوان - هذا وصف لهذا العنوان - هذا وصف لهذا العنوان - هذا وصف لهذا العنوان
-							</FontedText>
-
+							<FontedText style={{ color: 'white', fontSize: 23, textAlign: 'center' }}>اعلن الان لدينا</FontedText>
 							<Button 
 								onPress={
 									() => {
