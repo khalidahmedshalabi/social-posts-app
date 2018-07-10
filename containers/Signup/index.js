@@ -23,17 +23,19 @@ export default class Signup extends Component {
 		
 		Check = () => {
 			var emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+			var UserNameRegex = /^[a-zA-Z]/
+			var UserCheck = UserNameRegex.test(this.state.username);
 			var isValidEmail = emailRegex.test(this.state.emailaddress);
-			var isValidUser = emailRegex.test(this.state.username);
+			var isValidUserName = emailRegex.test(this.state.username);
 			if(!this.state.username || !this.state.emailaddress || !this.state.password || !this.state.confirmpassword)
 			 {
 				 this.refs.toast.show('برجاء ادخال البيانات كاملة');
 			 }
-			 else if (this.state.username.length<3)
+			else if ((this.state.username.length<3 && !UserCheck ) ||  this.state.username.length<3 || !UserCheck )
 			 {
-				this.refs.toast.show('يجب أن يحتوي الاسم علي 3 حروف علي الاقل');
+				this.refs.toast.show('الاسم خاطئ');	
 			 }
-			 else if (isValidUser)
+			 else if (isValidUserName)
 			 {
 				this.refs.toast.show('برجاء ادخال الاسم و ليس البريد الالكتروني');
 			 }
@@ -51,7 +53,7 @@ export default class Signup extends Component {
 			 }
 			 else
 			 {
-				{this.props.navigation.navigate("Tabs")}
+				{this.props.navigation.navigate("AccountInfo")}
 			 } 
 			
 		}; 	
