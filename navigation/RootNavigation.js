@@ -7,6 +7,7 @@ import Signup from '../containers/Signup'
 import ResetPassword from '../containers/ResetPassword'
 import Walkthrough from '../containers/Walkthrough'
 import AccountInfo from '../containers/AccountInfo'
+import CodeConfirmation from '../containers/CodeConfirmation'
 
 export default RootNavigation = createStackNavigator({
 	Tabs: {
@@ -26,6 +27,9 @@ export default RootNavigation = createStackNavigator({
 	},
 	AccountInfo: {
 		screen: AccountInfo
+	},
+	CodeConfirmation: {
+		screen: CodeConfirmation
 	},
 },
 {
