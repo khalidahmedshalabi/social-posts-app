@@ -6,6 +6,7 @@ import { mainColor, bgColor } from '../../constants/Colors';
 import { LinearGradient } from 'expo';
 import FontedText from '../../components/FontedText';
 import FontedInput from '../../components/FontedInput';
+import LazyContainer from '../../components/LazyContainer';
 import DatePicker from 'react-native-datepicker'
 import ModalSelector from 'react-native-modal-selector'
 import * as Animatable from 'react-native-animatable';
@@ -31,7 +32,7 @@ export default class EditProfile extends Component {
 		];
 
 		return (
-			<Container style={{backgroundColor: bgColor}}>
+			<LazyContainer style={{backgroundColor: bgColor}}>
 				<Content>
 					<Animatable.View animation="fadeIn" duration={1000} delay={500} style={{ paddingVertical: 30, flex: 0.55, justifyContent: 'center', alignItems: 'center' }}>
 						<Ionicons name='md-settings' size={150} color={mainColor} />
@@ -195,7 +196,7 @@ export default class EditProfile extends Component {
 						<FontedText style={{ color: bgColor, textAlign: 'center', fontSize: 19 }}>حفظ البيانات</FontedText>
 					</LinearGradient>
 				</TouchableOpacity>
-			</Container>
+			</LazyContainer>
 		)
 	}
 }
