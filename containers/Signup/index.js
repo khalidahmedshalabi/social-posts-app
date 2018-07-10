@@ -161,7 +161,7 @@ export default class Signup extends Component {
 					<TouchableOpacity
 					onPress={() => {
 						this.Check()
-					}}>>
+					}}>
 						<LinearGradient
 							colors={['#b28003', '#f9ce63']}
 							start={{ x: 0.0, y: 1.0 }}
