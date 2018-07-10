@@ -1,7 +1,6 @@
 import { createStackNavigator } from 'react-navigation';
 
 import Tabs from './TabNavigation'
-import Profile from './TabNavigation'
 
 import Login from '../containers/Login'
 import Signup from '../containers/Signup'
@@ -14,8 +13,6 @@ export default RootNavigation = createStackNavigator({
 	Tabs: {
 		screen: Tabs
 	},
-	Profile: {
-		screen: Profile
 	},
 	Walkthrough: {
 		screen: Walkthrough
