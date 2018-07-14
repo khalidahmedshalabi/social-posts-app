@@ -1,4 +1,4 @@
-export const mainColor = '#e5aa16';
+export const mainColor = '#FFD700';
 export const bgColor = '#201f33';
 
 export default {
