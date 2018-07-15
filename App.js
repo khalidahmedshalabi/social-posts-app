@@ -1,7 +1,7 @@
 import React from 'react';
-import { Platform, StatusBar, StyleSheet, View, I18nManager } from 'react-native';
+import { I18nManager } from 'react-native';
 import { AppLoading, Font, Util } from 'expo';
-import RootNavigation from './navigation/RootNavigation';
+import ReduxProvider from './ReduxProvider'
 
 export default class App extends React.Component {
 	constructor() {
@@ -18,9 +18,6 @@ export default class App extends React.Component {
 		};
 	}
 
-
-	
-
 	render() {
 		if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
 			return (
@@ -32,10 +29,7 @@ export default class App extends React.Component {
 			);
 		} else {
 			return (
-				<View style={styles.container}>
-					{Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-					<RootNavigation />
-				</View>
+				<ReduxProvider />
 			);
 		}
 	}
@@ -63,10 +57,3 @@ export default class App extends React.Component {
 		this.setState({ isLoadingComplete: true });
 	};
 }
-
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		backgroundColor: '#fff',
-	},
-});
