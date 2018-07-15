@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity} from 'react-native';
+import { View, TouchableOpacity,KeyboardAvoidingView} from 'react-native';
 import { Container } from 'native-base';
 import { FontAwesome, Entypo, Feather } from '@expo/vector-icons';
 import { mainColor, bgColor } from '../../constants/Colors';
@@ -66,13 +66,18 @@ export default class Signup extends Component {
 					</Animatable.View>
 				</View>
 
-				<View style={{ flex: 0.64, justifyContent: 'center' }}>
+				
+				<KeyboardAvoidingView
+						behavior="padding" enabled
+                        keyboardVerticalOffset={0}
+                        style={{flex:1,justifyContent:'center' }}
+						contentContainerStyle= {{ flex: 0.64, flexDirection: 'column', alignItems: 'center', width:width}}>
 					<View style={{ flex: 1, justifyContent: 'center' }}>
 						<View style={{ flex: 0.15, flexDirection: 'row', alignItems: 'center', borderTopWidth: 1, borderTopColor: '#39384b' }}>
 							<View style={{ flex: 0.10, marginLeft: 30, marginRight: 10, alignItems: 'center' }}>
 								<Feather name='user' size={27} color={'#93939b'} />
 							</View>
-
+							
 							<FontedInput
 								placeholder='الاسم'
 								placeholderTextColor='#d8d8d8'
@@ -142,14 +147,14 @@ export default class Signup extends Component {
 								onChangeText={(text) => this.setState({confirmpassword:text})}
 								/>
 						</View>
-						
-						
+					
+		
 						<View style={{flex: 0.20, justifyContent: 'flex-end', alignItems: 'center'}}>
 							<TouchableOpacity>
 								<FontedText style={{color: 'white'}}>لديك حساب بالفعل؟</FontedText>
 							</TouchableOpacity>
 						</View>
-						
+
 						<Toast 	ref="toast" 
 								style={{backgroundColor:'#dcdee2',borderRadius:25,}}
 								position='bottom'
@@ -159,7 +164,7 @@ export default class Signup extends Component {
 								opacity={0.8}
 								textStyle={{color:bgColor}}/>
 					</View>
-
+	
 					<TouchableOpacity
 					onPress={() => {
 						this.Check()
@@ -174,7 +179,7 @@ export default class Signup extends Component {
 							<FontedText style={{ color: bgColor, textAlign: 'center', fontSize: 19 }}>إنشاء حساب</FontedText>
 						</LinearGradient>
 					</TouchableOpacity>
-				</View>
+				</KeyboardAvoidingView>
 			</Container>
 		)
 	}
