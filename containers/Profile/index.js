@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, Dimensions } from 'react-native';
+import { View, TouchableOpacity, Dimensions, Image } from 'react-native';
 import { Container, Content } from 'native-base';
 import { MaterialIcons, MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
 import { mainColor, bgColor } from '../../constants/Colors';
@@ -29,7 +29,92 @@ export default class Profile extends Component {
 							</Animatable.View>
 						</LinearGradient>
 
-						<Animatable.View animation="fadeInUp" duration={1000} delay={500} style={{ paddingTop: height*0.10, alignItems: 'center' }}>
+						<Animatable.View animation="fadeInUp" duration={1000} delay={500} 
+							style={{ paddingTop: height*0.10, alignItems: 'center' }}>
+							<Animatable.Image
+								source={require('../../assets/images/Hexagon.png')}
+								animation={{
+									0: {
+										rotate: '0deg',
+										translateY: 0
+									},
+									0.5: {
+										translateY: 50
+									},
+									1: {
+										rotate: '360deg',
+										translateY: 0
+									}
+								}}
+								duration={18000}
+								easing='linear'
+								iterationCount='infinite'
+								style={{
+									opacity: 0.18,
+									position: 'absolute',
+									width: 200,
+									height: 200,
+									alignSelf: 'flex-start',
+									marginTop: -50
+									}}>
+							</Animatable.Image>
+
+							<Animatable.Image
+								source={require('../../assets/images/Hexagon.png')}
+								animation={{
+									0: {
+										rotate: '360deg',
+										translateY: 0
+									},
+									0.5: {
+										translateY: 80
+									},
+									1: {
+										rotate: '0deg',
+										translateY: 0
+									}
+								}}
+								duration={18000}
+								easing='linear'
+								iterationCount='infinite'
+								style={{
+									opacity: 0.18,
+									position: 'absolute',
+									width: 200,
+									height: 200,
+									alignSelf: 'flex-end',
+									marginTop: 200
+								}}>
+							</Animatable.Image>
+
+							<Animatable.Image
+								source={require('../../assets/images/Hexagon.png')}
+								animation={{
+									0: {
+										rotate: '0deg',
+										translateY: 0
+									},
+									0.5: {
+										translateY: 80
+									},
+									1: {
+										rotate: '360deg',
+										translateY: 0
+									}
+								}}
+								duration={18000}
+								easing='linear'
+								iterationCount='infinite'
+								style={{
+									opacity: 0.18,
+									position: 'absolute',
+									width: 200,
+									height: 200,
+									alignSelf: 'flex-start',
+									marginTop: 400
+								}}>
+							</Animatable.Image>
+
 							<View style={{ flexDirection: 'row' }}>
 								<View style={{ flex: 0.50, alignItems: 'center'}}>
 									<TouchableOpacity activeOpacity={0.7}>
