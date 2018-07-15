@@ -9,6 +9,7 @@ import Walkthrough from '../containers/Walkthrough'
 import AccountInfo from '../containers/AccountInfo'
 import CodeConfirmation from '../containers/CodeConfirmation'
 import EditProfile from '../containers/EditProfile'
+import AddPost from '../containers/AddPost'
 
 export default RootNavigation = createStackNavigator({
 	Tabs: {
@@ -34,6 +35,9 @@ export default RootNavigation = createStackNavigator({
 	},
 	EditProfile: {
 		screen: EditProfile
+	},
+	AddPost: {
+		screen: AddPost
 	},
 },
 {
