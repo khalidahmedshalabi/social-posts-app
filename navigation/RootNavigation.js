@@ -10,6 +10,7 @@ import AccountInfo from '../containers/AccountInfo'
 import CodeConfirmation from '../containers/CodeConfirmation'
 import EditProfile from '../containers/EditProfile'
 import AddPost from '../containers/AddPost'
+import Gifts from '../containers/Gifts'
 
 export default RootNavigation = createStackNavigator({
 	Tabs: {
@@ -39,6 +40,9 @@ export default RootNavigation = createStackNavigator({
 	AddPost: {
 		screen: AddPost
 	},
+	Gifts: {
+		screen: Gifts
+	}
 },
 {
 	initialRouteName: 'Tabs',
