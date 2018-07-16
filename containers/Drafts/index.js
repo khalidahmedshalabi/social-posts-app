@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { View, TouchableOpacity,FlatList } from 'react-native';
-import { Container } from 'native-base';
-import { FontAwesome, Foundation, MaterialCommunityIcons } from '@expo/vector-icons';
-import { mainColor, bgColor } from '../../constants/Colors';
+import { bgColor } from '../../constants/Colors';
 import FontedText from '../../components/FontedText';
+import BackHeader from '../../components/BackHeader';
+import { Container } from 'native-base';
 
 
 
@@ -44,14 +44,11 @@ export default class Drafts extends Component {
       var month = new Date().getMonth() + 1;
       var year = new Date().getFullYear();*/
 		return (
-			<View style= {{
-				flex: 1,
-				flexDirection: 'row',
-				justifyContent: 'center',
-				alignItems: 'flex-start',
-				backgroundColor:bgColor,
-				paddingTop:15,
-			}}>
+			<Container>
+			<BackHeader
+				navigation={this.props.navigation}
+				title='إضافة منشور' />
+
 							 <FlatList
 									data={ this.state.FlatListItems }
 									style={{backgroundColor:bgColor,}}
@@ -69,7 +66,7 @@ export default class Drafts extends Component {
 									</TouchableOpacity>
 							 }
 								 />
-				</View>
+				</Container>
 			
 		)
 	}
