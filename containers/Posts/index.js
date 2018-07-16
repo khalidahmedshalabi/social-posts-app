@@ -68,10 +68,6 @@ export default class Posts extends Component {
 		}
 	}
 
-	componentWillUnmount() {
-		alert('will unmount')
-	}
-
 	onPressPlayVideo = (key) => {
 		// Find index by key
 		const index = this.state.posts.findIndex((el) => el.key === key);
