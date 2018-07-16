@@ -34,7 +34,7 @@ export default class AddPost extends Component {
 	}
 
 	pickImage = async () => {
-		if(Platform === 'ios') {
+		if(Platform.OS === 'ios') {
 			const { status } = await Permissions.getAsync(Permissions.CAMERA_ROLL);
 
 			if (status === 'granted') {
