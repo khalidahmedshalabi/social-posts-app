@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import {
-	StyleSheet,
 	View,
 	Dimensions,Image,TouchableOpacity
 } from 'react-native';
 import { Container} from 'native-base';
 import { LinearGradient } from 'expo';
-import { mainColor, bgColor } from '../../constants/Colors'
+import { bgColor } from '../../constants/Colors'
 import FontedText from '../../components/FontedText'
 import Carousel from 'react-native-snap-carousel';
+import BackHeader from '../../components/BackHeader';
 
 const width = Dimensions.get('window').width
 
@@ -27,7 +27,7 @@ export default class Gifts extends Component {
 			
 			}
 		}
-	_renderItem ({item, index}) {
+	_renderItem ({item}) {
 		return (
 			<View style={{flex:1,flexDirection:'column',justifyContent:'center',alignItems:'center',backgroundColor:'#474668',borderRadius:40}}>
 				<Image style={{ width:160, height: 160, resizeMode:'contain',borderRadius:50,marginBottom:12}} source={{ uri: item.photo }} />
@@ -40,6 +40,10 @@ export default class Gifts extends Component {
 	render() {
 		return (
 			<Container style={{backgroundColor: bgColor, paddingBottom: 15}}>
+				<BackHeader
+					navigation={this.props.navigation}
+					title='إضافة منشور' />
+
 			<View style={{flex:1,alignItems:'center',justifyContent:'center',paddingVertical:100}} >
 				<Carousel
 					ref={(c) => { this._carousel = c; }}

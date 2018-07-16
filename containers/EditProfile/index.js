@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, TouchableOpacity } from 'react-native';
-import { Container, Content } from 'native-base';
+import { Content } from 'native-base';
 import { FontAwesome, Foundation, Ionicons, Feather, Entypo } from '@expo/vector-icons';
 import { mainColor, bgColor } from '../../constants/Colors';
 import { LinearGradient } from 'expo';
@@ -10,6 +10,7 @@ import LazyContainer from '../../components/LazyContainer';
 import DatePicker from 'react-native-datepicker'
 import ModalSelector from 'react-native-modal-selector'
 import * as Animatable from 'react-native-animatable';
+import BackHeader from '../../components/BackHeader';
 
 
 
@@ -33,6 +34,10 @@ export default class EditProfile extends Component {
 
 		return (
 			<LazyContainer style={{backgroundColor: bgColor}}>
+				<BackHeader
+					navigation={this.props.navigation}
+					title='إضافة منشور' />
+
 				<Content>
 					<Animatable.View animation="fadeIn" duration={1000} delay={500} style={{ paddingVertical: 30, flex: 0.55, justifyContent: 'center', alignItems: 'center' }}>
 						<Ionicons name='md-settings' size={150} color={mainColor} />
