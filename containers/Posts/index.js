@@ -18,7 +18,7 @@ export default class Posts extends Component {
 					title: 'عنوان المنشور',
 					content: 'محتوى البوست محتوى البوست محتوى البوست محتوى البوست محتوى البوست',
 					media_type: 2,
-					media_url: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WhatCarCanYouGetForAGrand.mp4',
+					media_url: 'http://mirrors.standaloneinstaller.com/video-sample/small.mp4',
 					link: 'https://google.com',
 					is_completed: 0,
 					likes: 13
@@ -48,7 +48,7 @@ export default class Posts extends Component {
 					title: 'عنوان المنشور',
 					content: 'محتوى البوست محتوى البوست محتوى البوست محتوى البوست محتوى البوست',
 					media_type: 2,
-					media_url: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+					media_url: 'http://mirrors.standaloneinstaller.com/video-sample/grb_2.mp4',
 					link: 'https://google.com',
 					is_completed: 0,
 					likes: 29
@@ -66,6 +66,10 @@ export default class Posts extends Component {
 				
 			]
 		}
+	}
+
+	componentWillUnmount() {
+		alert('will unmount')
 	}
 
 	onPressPlayVideo = (key) => {
