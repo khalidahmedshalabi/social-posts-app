@@ -124,14 +124,16 @@ export default class Posts extends Component {
 
 	render() {
 		return (
-			<FlatList
-				style={{
-					backgroundColor: bgColor,
-					paddingHorizontal: 20,
-					paddingTop: 20
-				}}
-				data={this.state.posts}
-				renderItem={({ item }) => this.renderItem(item)} />
+			<View style={{ flex: 1, alignItems: 'center' }}>
+				<FlatList
+					style={{
+						backgroundColor: bgColor,
+						paddingHorizontal: 20,
+						paddingTop: 20
+					}}
+					data={this.state.posts}
+					renderItem={({ item }) => this.renderItem(item)} />
+			</View>
 		)
 	}
 }
