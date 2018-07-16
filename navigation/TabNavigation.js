@@ -1,6 +1,6 @@
 import React from 'react'
 import { createBottomTabNavigator } from 'react-navigation'
-import { mainColor } from '../constants/Colors'
+import { mainColor, lightBGColor } from '../constants/Colors'
 import Entypo from 'react-native-vector-icons/Entypo'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
@@ -33,7 +33,7 @@ export default createBottomTabNavigator({
 			activeTintColor: mainColor,
 			inactiveTintColor: 'white',
 			labelStyle: { fontFamily: 'droidkufi', fontSize: 13 },
-			tabStyle: { backgroundColor: '#474668' }
+			tabStyle: { backgroundColor: lightBGColor }
 		},
 		lazy: true,
 	})
