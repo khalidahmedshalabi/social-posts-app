@@ -8,7 +8,7 @@ import { mainColor, lightBGColor } from '../../constants/Colors';
 import { Ionicons } from '@expo/vector-icons';
 
 export default BackHeader = ({ title, navigation, rightComponent }) => {
-	const statusBarHeight = Platform.OS === 'ios' ? StatusBar.currentHeight * 2 : StatusBar.currentHeight
+	const statusBarHeight = Platform.OS === 'ios' ? 20 : StatusBar.currentHeight
 
 	return (
 		<Header
