@@ -196,9 +196,6 @@ export default class Posts extends Component {
 						</View>
 					</View>
 				</View>
-				
-				
-				<View style={{ backgroundColor: bgColor, width: '100%', height: 40 }}></View>
 
 				{
 					(item.is_completed == 0 ) ? null :
@@ -220,11 +217,12 @@ export default class Posts extends Component {
 		return (
 			<View style={{ flex: 1, alignItems: 'center' }}>
 				<FlatList
-					style={{
+					contentContainerStyle={{
 						backgroundColor: bgColor,
 						paddingHorizontal: 15,
-						paddingTop: 20
+						paddingVertical: 20
 					}}
+					ItemSeparatorComponent={ () => <View style={{ height: 20 }}></View> }
 					data={this.state.posts}
 					renderItem={({ item }) => this.renderItem(item)} />
 			</View>
