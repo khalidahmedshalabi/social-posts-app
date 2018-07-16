@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, Image } from 'react-native';
+import { View, TouchableOpacity, Image, Platform } from 'react-native';
 import { Content } from 'native-base';
-import { LinearGradient, ImagePicker } from 'expo';
+import { LinearGradient, ImagePicker, Permissions } from 'expo';
 import { FontAwesome, Foundation, SimpleLineIcons, Feather, Entypo, Octicons } from '@expo/vector-icons';
 import { mainColor, bgColor } from '../../constants/Colors';
 import FontedText from '../../components/FontedText';
@@ -19,7 +19,7 @@ export default class AddPost extends Component {
 		}
 	}
 
-	pickImage = async () => {
+	openImagePicker = async () => {
 		const result = await ImagePicker.launchImageLibraryAsync({
 			mediaTypes: ImagePicker.MediaTypeOptions.All,
 			allowsEditing: false,
@@ -32,6 +32,42 @@ export default class AddPost extends Component {
 			});
 		}
 	}
+
+	pickImage = async () => {
+		if(Platform === 'ios') {
+			const { status } = await Permissions.getAsync(Permissions.CAMERA_ROLL);
+
+			if (status === 'granted') {
+				this.openImagePicker()
+			}
+		}
+		else this.openImagePicker()
+	}
+
+	/*postImage = () => {
+		const apiUrl = `${SERVER_URI}/upload`;
+		const uri = this.state.image;
+		const uriParts = uri.split('.');
+		const fileType = uriParts[uriParts.length - 1];
+		const formData = new FormData();
+
+		formData.append('photo', {
+			uri,
+			name: `photo.${fileType}`,
+			type: `image/${fileType}`,
+		});
+
+		const options = {
+			method: 'POST',
+			body: formData,
+			headers: {
+				Accept: 'application/json',
+				'Content-Type': 'multipart/form-data',
+			},
+		};
+
+		return fetch(apiUrl, options);
+	}*/
 
 	renderPickedImage = () => {
 		if(this.state.image) {
