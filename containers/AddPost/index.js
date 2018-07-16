@@ -8,6 +8,7 @@ import FontedText from '../../components/FontedText';
 import FontedInput from '../../components/FontedInput';
 import LazyContainer from '../../components/LazyContainer';
 import ModalSelector from 'react-native-modal-selector'
+import BackHeader from '../../components/BackHeader';
 
 export default class AddPost extends Component {
 	constructor() {
@@ -73,6 +74,10 @@ export default class AddPost extends Component {
 
 		return (
 			<LazyContainer style={{backgroundColor: bgColor}}>
+				<BackHeader
+					navigation={this.props.navigation}
+					title='إضافة منشور' />
+
 				<Content>
 					<TouchableOpacity 
 						onPress={() => this.pickImage()}
