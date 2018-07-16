@@ -220,7 +220,8 @@ export default class Posts extends Component {
 					contentContainerStyle={{
 						backgroundColor: bgColor,
 						paddingHorizontal: 15,
-						paddingVertical: 20
+						paddingVertical: 20,
+						alignItems: 'center'
 					}}
 					ItemSeparatorComponent={ () => <View style={{ height: 20 }}></View> }
 					data={this.state.posts}
