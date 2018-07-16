@@ -1,17 +1,55 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity, Image } from 'react-native';
 import { Content } from 'native-base';
-import { LinearGradient } from 'expo';
-import { FontAwesome, Foundation, SimpleLineIcons, Feather, Entypo, MaterialCommunityIcons, Octicons } from '@expo/vector-icons';
+import { LinearGradient, ImagePicker } from 'expo';
+import { FontAwesome, Foundation, SimpleLineIcons, Feather, Entypo, Octicons } from '@expo/vector-icons';
 import { mainColor, bgColor } from '../../constants/Colors';
 import FontedText from '../../components/FontedText';
 import FontedInput from '../../components/FontedInput';
 import LazyContainer from '../../components/LazyContainer';
 import ModalSelector from 'react-native-modal-selector'
 
-
-
 export default class AddPost extends Component {
+	constructor() {
+		super()
+
+		this.state = {
+			image: null
+		}
+	}
+
+	pickImage = async () => {
+		const result = await ImagePicker.launchImageLibraryAsync({
+			mediaTypes: ImagePicker.MediaTypeOptions.All,
+			allowsEditing: false,
+			base64: true,
+		});
+		if (!result.cancelled) {
+			this.setState({
+				image: result.uri,
+				media_type: result.type === 'image' ? 0 : 1
+			});
+		}
+	}
+
+	renderPickedImage = () => {
+		if(this.state.image) {
+			return (
+				<Image
+					source={{ uri: this.state.image }}
+					resizeMode='center'
+					style={{ width: 250, height: 250 }}
+					/>
+			)
+		}
+		else {
+			return [
+				<SimpleLineIcons key='1' name='camera' size={100} color={'#93939b'} />
+				,
+				<FontedText key='2' style={{ color: '#d8d8d8', fontSize: 18 }}>إضافة صورة او فيديو</FontedText>
+			]
+		}
+	}
 
 	render() {
 		const gender_data = [
@@ -36,10 +74,10 @@ export default class AddPost extends Component {
 		return (
 			<LazyContainer style={{backgroundColor: bgColor}}>
 				<Content>
-					<TouchableOpacity style={{ flex: 0.55, justifyContent: 'center', alignItems: 'center', paddingVertical: 30 }}>
-						<SimpleLineIcons name='camera' size={100} color={'#93939b'} />
-
-						<FontedText style={{ color: '#d8d8d8', fontSize: 18 }}>إضافة صورة او فيديو</FontedText>
+					<TouchableOpacity 
+						onPress={() => this.pickImage()}
+						style={{ flex: 0.55, justifyContent: 'center', alignItems: 'center', paddingVertical: 30 }}>
+						{this.renderPickedImage()}
 					</TouchableOpacity>
 
 					<View style={{ flex: 0.45, justifyContent: 'flex-start' }}>
