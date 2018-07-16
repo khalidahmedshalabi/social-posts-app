@@ -12,7 +12,7 @@ export default class Profile extends Component {
 	
 	render() {
 		return (
-				<Container style={{backgroundColor: bgColor, alignItems: 'center'}}>
+				<Container style={{ backgroundColor: bgColor, alignItems: 'center' }}>
 					<Content style={{ width: '100%' }}>
 						<LinearGradient
 							colors={['#b28003', '#f9ce63']}
@@ -21,9 +21,95 @@ export default class Profile extends Component {
 							style={{
 								justifyContent: 'center',
 								alignItems: 'center',
-								height: height*0.20,
+								height: height*0.25,
 								width: '100%'
 							}}>
+							<Animatable.Image
+								source={require('../../assets/images/Hexagon.png')}
+								animation={{
+									0: {
+										rotate: '0deg',
+										translateY: 0
+									},
+									0.5: {
+										translateY: 20
+									},
+									1: {
+										rotate: '360deg',
+										translateY: 0
+									}
+								}}
+								duration={18000}
+								easing='linear'
+								iterationCount='infinite'
+								style={{
+									opacity: 0.18,
+									position: 'absolute',
+									width: 200,
+									height: 200,
+									alignSelf: 'flex-start',
+									marginBottom: 200,
+									marginLeft: -100
+								}}>
+							</Animatable.Image>
+
+							<Animatable.Image
+								source={require('../../assets/images/Hexagon.png')}
+								animation={{
+									0: {
+										rotate: '360deg',
+										translateY: 0
+									},
+									0.5: {
+										translateY: 20
+									},
+									1: {
+										rotate: '0deg',
+										translateY: 0
+									}
+								}}
+								duration={18000}
+								easing='linear'
+								iterationCount='infinite'
+								style={{
+									opacity: 0.18,
+									width: 200,
+									height: 200,
+									alignSelf: 'flex-start',
+									marginTop: -150,
+									marginLeft: 70
+								}}>
+							</Animatable.Image>
+
+							<Animatable.Image
+								source={require('../../assets/images/Hexagon.png')}
+								animation={{
+									0: {
+										rotate: '360deg',
+										translateY: 0
+									},
+									0.5: {
+										translateY: 20
+									},
+									1: {
+										rotate: '0deg',
+										translateY: 0
+									}
+								}}
+								duration={18000}
+								easing='linear'
+								iterationCount='infinite'
+								style={{
+									opacity: 0.18,
+									position: 'absolute',
+									width: 200,
+									height: 200,
+									alignSelf: 'flex-start',
+									marginTop: -100,
+									marginLeft: 250
+								}}>
+							</Animatable.Image>
+
 							<Animatable.View animation="fadeInDown" duration={1000} delay={500}>
 								<FontedText style={{color: 'white', fontSize: 32}}>محمد أحمد</FontedText>
 							</Animatable.View>
@@ -31,90 +117,6 @@ export default class Profile extends Component {
 
 						<Animatable.View animation="fadeInUp" duration={1000} delay={500} 
 							style={{ paddingTop: height*0.10, alignItems: 'center' }}>
-							<Animatable.Image
-								source={require('../../assets/images/Hexagon.png')}
-								animation={{
-									0: {
-										rotate: '0deg',
-										translateY: 0
-									},
-									0.5: {
-										translateY: 50
-									},
-									1: {
-										rotate: '360deg',
-										translateY: 0
-									}
-								}}
-								duration={18000}
-								easing='linear'
-								iterationCount='infinite'
-								style={{
-									opacity: 0.18,
-									position: 'absolute',
-									width: 200,
-									height: 200,
-									alignSelf: 'flex-start',
-									marginTop: -50
-									}}>
-							</Animatable.Image>
-
-							<Animatable.Image
-								source={require('../../assets/images/Hexagon.png')}
-								animation={{
-									0: {
-										rotate: '360deg',
-										translateY: 0
-									},
-									0.5: {
-										translateY: 80
-									},
-									1: {
-										rotate: '0deg',
-										translateY: 0
-									}
-								}}
-								duration={18000}
-								easing='linear'
-								iterationCount='infinite'
-								style={{
-									opacity: 0.18,
-									position: 'absolute',
-									width: 200,
-									height: 200,
-									alignSelf: 'flex-end',
-									marginTop: 200
-								}}>
-							</Animatable.Image>
-
-							<Animatable.Image
-								source={require('../../assets/images/Hexagon.png')}
-								animation={{
-									0: {
-										rotate: '0deg',
-										translateY: 0
-									},
-									0.5: {
-										translateY: 80
-									},
-									1: {
-										rotate: '360deg',
-										translateY: 0
-									}
-								}}
-								duration={18000}
-								easing='linear'
-								iterationCount='infinite'
-								style={{
-									opacity: 0.18,
-									position: 'absolute',
-									width: 200,
-									height: 200,
-									alignSelf: 'flex-start',
-									marginTop: 400
-								}}>
-							</Animatable.Image>
-
 							<View style={{ flexDirection: 'row' }}>
 								<View style={{ flex: 0.50, alignItems: 'center'}}>
 									<TouchableOpacity activeOpacity={0.7}>
@@ -190,7 +192,7 @@ export default class Profile extends Component {
 
 						
 							
-						<Animatable.View animation="fadeIn" duration={2000} delay={500} style={{ flexDirection: 'row', position: 'absolute', paddingHorizontal: 17, marginTop: height*0.1625, backgroundColor: 'white', borderRadius: 7, justifyContent: 'center', alignItems: 'center', alignSelf: 'center' }}>
+						<Animatable.View animation="fadeIn" duration={2000} delay={500} style={{ flexDirection: 'row', position: 'absolute', paddingHorizontal: 17, marginTop: height*0.2125, backgroundColor: 'white', borderRadius: 7, justifyContent: 'center', alignItems: 'center', alignSelf: 'center' }}>
 							<View style={{ justifyContent: 'center', alignItems: 'center' }}>
 								<FontedText style={{ color: bgColor }}>نقاط متوفرة</FontedText>
 								<FontedText style={{ color: mainColor, fontSize: 17 }}>10</FontedText>
