@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity,KeyboardAvoidingView } from 'react-native';
 import { Container } from 'native-base';
 import { FontAwesome, Entypo, Feather } from '@expo/vector-icons';
 import { mainColor, bgColor } from '../../constants/Colors';
@@ -8,7 +8,7 @@ import FontedText from '../../components/FontedText';
 import FontedInput from '../../components/FontedInput';
 import * as Animatable from 'react-native-animatable';
 import Toast from 'react-native-easy-toast';
-import { height } from '../../constants/Layout';
+import { height,width } from '../../constants/Layout';
 
 export default class ResetPassword extends Component {
 	constructor(props) {
@@ -47,6 +47,11 @@ export default class ResetPassword extends Component {
 	render() {
 		return (
 			<Container style={{ backgroundColor: bgColor }}>
+			<KeyboardAvoidingView
+						behavior="padding" enabled
+                        keyboardVerticalOffset={0}
+                        style={{flex:1 }}
+                        contentContainerStyle= {{ flex: 1, flexDirection: 'column', alignItems: 'center', width:width}}>
 				<View style={{ flex: 0.36, justifyContent: 'flex-end', alignItems: 'center' }}>
 					<Animatable.View animation="fadeInDown" duration={1000} delay={500}>
 						<Feather name='lock' size={150} color={mainColor} />
@@ -55,7 +60,7 @@ export default class ResetPassword extends Component {
 
 				<View style={{ flex: 0.64, justifyContent: 'center' }}>
 					<View style={{ flex: 1, justifyContent: 'center' }}>
-
+					
 						<View style={{ flex: 0.15, flexDirection: 'row', alignItems: 'center', borderTopWidth: 1, borderTopColor: '#39384b' }}>
 							<View style={{ flex: 0.10, marginLeft: 30, marginRight: 10, alignItems: 'center' }}>
 								<Entypo name='mail' size={27} color={'#93939b'} />
@@ -112,6 +117,7 @@ export default class ResetPassword extends Component {
 								}}
 								onChangeText={(text) => this.setState({newpassword:text})}
 								 />
+							
 						</View>
 						<Toast 	ref="toast" 
 									style={{backgroundColor:'#dcdee2',borderRadius:25,}}
@@ -120,7 +126,7 @@ export default class ResetPassword extends Component {
 									fadeInDuration={750}
 									fadeOutDuration={1000}
 									opacity={0.8}
-									textStyle={{color:bgColor}}/>
+									textStyle={{color:bgColor}}/>									
 					</View>
 
 					<TouchableOpacity
@@ -138,6 +144,7 @@ export default class ResetPassword extends Component {
 						</LinearGradient>
 					</TouchableOpacity>
 				</View>
+				</KeyboardAvoidingView>
 			</Container>
 		)
 	}
