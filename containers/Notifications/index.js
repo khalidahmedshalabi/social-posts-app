@@ -73,9 +73,9 @@ export default class Notifications extends Component {
 			<View style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', paddingVertical: 15, paddingHorizontal: 15 }}>
 				<FontedText style={{ color: 'white', fontSize: 16 }}>{item.status == 0 ? 'لقد تم خصم' : 'لقد تم إضافة'}</FontedText>				
 
-				<FontedText style={{ color: item.status == 0 ? '#c13c3f' : '#4d9336', fontSize: 16, marginLeft: 5 }}>{item.status == 0 ? '-' : '+'}</FontedText>
-				<FontedText style={{ color: item.status == 0 ? '#c13c3f' : '#4d9336', fontSize: 16, marginRight: 5 }}>{item.points}</FontedText>
-
+				<FontedText style={{ color: item.status == 0 ? '#c13c3f' : '#4d9336', fontSize: 16, marginLeft: 5 }}>{item.points}</FontedText>
+				<FontedText style={{ color: item.status == 0 ? '#c13c3f' : '#4d9336', fontSize: 16, marginRight: 5 }}>{item.status == 0 ? '-' : '+'}</FontedText>
+				
 				<FontedText style={{ color: 'white', fontSize: 16 }}>{item.status == 0 ? 'نقطة من حسابك' : 'نقطة إلى حسابك'}</FontedText>
 			</View>
 		)

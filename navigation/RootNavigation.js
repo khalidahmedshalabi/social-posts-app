@@ -10,6 +10,7 @@ import AccountInfo from '../containers/AccountInfo'
 import CodeConfirmation from '../containers/CodeConfirmation'
 import EditProfile from '../containers/EditProfile'
 import AddPost from '../containers/AddPost'
+import PostsHistory from '../containers/PostsHistory'
 import Gifts from '../containers/Gifts'
 import Drafts from '../containers/Drafts';
 import ContactUs from '../containers/ContactUs';
@@ -41,6 +42,9 @@ export default RootNavigation = createStackNavigator({
 	},
 	AddPost: {
 		screen: AddPost
+	},
+	PostsHistory: {
+		screen: PostsHistory
 	},
 	Gifts: {
 		screen: Gifts
