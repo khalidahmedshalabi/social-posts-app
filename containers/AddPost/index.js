@@ -20,7 +20,6 @@ class AddPost extends Component {
 
 		this.state = {
 			image: null,
-			
 			title: '', 
 			content: '',
 			link: '',
@@ -28,8 +27,7 @@ class AddPost extends Component {
 			age:'', 
 			gender: '',
 			max_reaches:'',
-				//media_type
-				
+			media_type: 0 // 0 link, 1 image, 2 video
 		}
 	}
 	DotheDraft = () => {
@@ -53,7 +51,7 @@ class AddPost extends Component {
 		if (!result.cancelled) {
 			this.setState({
 				image: result.uri,
-				media_type: result.type === 'image' ? 0 : 1
+				media_type: result.type === 'image' ? 1 : 2
 			});
 		}
 	}
