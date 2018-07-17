@@ -44,7 +44,7 @@ export const reducer = (state = initialState, action) => {
 				draft_posts: draftPostsAfterRemoval
 			};
 		case types.CLEAR_DRAFT_POSTS:
-			return { ...state, draft_posts: [] };
+			return { ...state, draft_posts: [], key: -1 };
 		
 		default:
 			return state
