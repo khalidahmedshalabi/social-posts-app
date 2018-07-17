@@ -24,24 +24,13 @@ class AddPost extends Component {
 			country:'',
 			age:'', 
 			gender: '',
-			views:'',
+			max_reaches:'',
+				//media_type
 				
-				/*{ key: '2', title: 'عنوان 2', content: 'محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. ',link:"",country:"",age:"", },
-				{ key: '3', title: 'عنوان 3', content: 'محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. ',link:"",country:"",age:"", },
-				{ key: '4', title: 'عنوان 4', content: 'محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. ',link:"",country:"",age:"", },
-				{ key: '5', title: 'عنوان 5', content: 'محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. ',link:"",country:"",age:"", },
-				{ key: '6', title: 'عنوان 6', content: 'محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. ',link:"",country:"",age:"", },
-				{ key: '7', title: 'عنوان 7', content: 'محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. ',link:"",country:"",age:"", },
-				{ key: '8', title: 'عنوان 8', content: 'محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. ',link:"",country:"",age:"", },
-				{ key: '9', title: 'عنوان 9', content: 'محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. ',link:"",country:"",age:"", },
-				{ key: '10', title: 'عنوان 10', content: 'محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. ',link:"",country:"",age:"", },
-				{ key: '11', title: 'عنوان 11', content: 'محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. ',link:"",country:"",age:"", },
-				/{ key: '12', title: 'عنوان 12', content: 'محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. ',link:"",country:"",age:"", },*/
-			
 		}
 	}
 	DotheDraft = () => {
-		this.props.addDraftPost({title:this.state.title ,content: this.state.content, link:this.state.link,country:this.state.country,age:this.state.age,gender:this.state.gender,views:this.state.views,})
+		this.props.addDraftPost({title:this.state.title ,content: this.state.content, link:this.state.link,country:this.state.country,age:this.state.age,gender:this.state.gender,views:this.state.max_reaches,})
 		this.props.navigation.navigate("Drafts")
 		
 	}
@@ -297,7 +286,7 @@ class AddPost extends Component {
 									flex: 0.85,
 									color: 'white'
 								}}
-								onChangeText={(text) => this.setState({views:text})}
+								onChangeText={(text) => this.setState({max_reaches:text})}
 							/>
 						</View>
 					</View>
