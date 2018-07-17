@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, Dimensions, Image } from 'react-native';
+import { View, TouchableOpacity, Dimensions } from 'react-native';
 import { Container, Content } from 'native-base';
 import { MaterialIcons, MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
 import { mainColor, bgColor } from '../../constants/Colors';
@@ -179,14 +179,33 @@ export default class Profile extends Component {
 								</View>
 							</View>
 
-							<View style={{ width: '100%', marginVertical: 20, alignSelf: 'center', alignItems: 'center' }}>
-								<TouchableOpacity activeOpacity={0.7}>
-									<View style={{ backgroundColor: '#474668', borderRadius: 40, height: 130, width: 130, justifyContent: 'center', alignItems: 'center' }}>
-										<MaterialIcons name='feedback' size={80} color={mainColor} />
-									</View>
+							<View style={{ flexDirection: 'row', marginVertical: 20 }}>
+								<View style={{ flex: 0.50, alignItems: 'center' }}>
+									<TouchableOpacity
+										onPress={
+											() => {
+												this.props.navigation.navigate("Drafts")
+											}
+										}
+										activeOpacity={0.7}>
+										<View style={{ backgroundColor: '#474668', borderRadius: 40, height: 130, width: 130, justifyContent: 'center', alignItems: 'center' }}>
+											<MaterialIcons name='drafts' size={80} color={mainColor} />
+										</View>
 
-									<FontedText style={{ color: 'white', textAlign: 'center', marginTop: 13 }}>تواصل معنا</FontedText>
-								</TouchableOpacity>
+										<FontedText style={{ color: 'white', textAlign: 'center', marginTop: 13 }}>مسودات</FontedText>
+									</TouchableOpacity>
+								</View>
+
+								<View style={{ flex: 0.50, alignItems: 'center' }}>
+									<TouchableOpacity
+										activeOpacity={0.7}>
+										<View style={{ backgroundColor: '#474668', borderRadius: 40, height: 130, width: 130, justifyContent: 'center', alignItems: 'center' }}>
+											<MaterialIcons name='feedback' size={80} color={mainColor} />
+										</View>
+
+										<FontedText style={{ color: 'white', textAlign: 'center', marginTop: 13 }}>تواصل معنا</FontedText>
+									</TouchableOpacity>
+								</View>
 							</View>
 						</Animatable.View>
 
