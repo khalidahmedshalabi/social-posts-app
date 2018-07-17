@@ -35,6 +35,7 @@ class AddPost extends Component {
 	DotheDraft = () => {
 		if(this.state.title)
 		{
+			//this.props.navigation.state.params.title
 			this.props.addDraftPost({title:this.state.title ,content: this.state.content, link:this.state.link,country:this.state.country,age:this.state.age,gender:this.state.gender,views:this.state.max_reaches,})
 			this.props.navigation.navigate("Drafts")
 		}

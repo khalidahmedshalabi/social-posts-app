@@ -55,7 +55,11 @@ class Drafts extends Component {
 					ItemSeparatorComponent={this.FlatListItemSeparator}
 					renderItem={({ item }) =>
 						<View style={{ flex: 1, flexDirection: 'row' }}>
-							<TouchableOpacity style={{ flex: 0.9, alignItems: 'flex-start', paddingVertical: 15, justifyContent: 'center', paddingLeft: 15 }}>
+							<TouchableOpacity
+							onPress={() => {
+								this.props.navigation.navigate("AddPost",{title:item.title,content:item.content})
+							}}
+							 style={{ flex: 0.9, alignItems: 'flex-start', paddingVertical: 15, justifyContent: 'center', paddingLeft: 15 }}>
 								<FontedText style={{ color: 'white', fontSize: 16 }} > {item.title} </FontedText>
 								<FontedText style={{ color: 'white', fontSize: 10, textAlign: 'left' }} > {item.content} </FontedText>
 							</TouchableOpacity>
