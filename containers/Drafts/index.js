@@ -7,7 +7,7 @@ import { Container } from 'native-base';
 
 
 
-export default class Drafts extends Component {
+class Drafts extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
@@ -69,3 +69,21 @@ export default class Drafts extends Component {
 		)
 	}
 }
+
+const mapStateToProps = (state) => ({
+	draft_posts: state.draft.draft_posts || [],
+})
+
+function mergeProps(stateProps, dispatchProps, ownProps) {
+	const { dispatch } = dispatchProps;
+	const { actions } = require('../../redux/DraftRedux.js');
+
+	return {
+		...ownProps,
+		...stateProps,
+		removeDraftPost: (key_to_remove) => actions.removeCartItem(dispatch, key_to_remove),
+		clearDraftPosts: () => actions.clearDraftPosts(dispatch),
+	};
+}
+
+export default connect(mapStateToProps, undefined, mergeProps)(Drafts)
