@@ -12,6 +12,7 @@ import EditProfile from '../containers/EditProfile'
 import AddPost from '../containers/AddPost'
 import Gifts from '../containers/Gifts'
 import Drafts from '../containers/Drafts';
+import ContactUs from '../containers/ContactUs';
 
 export default RootNavigation = createStackNavigator({
 	Tabs: {
@@ -46,6 +47,9 @@ export default RootNavigation = createStackNavigator({
 	},
 	Drafts: {
 		screen: Drafts
+	},
+	ContactUs: {
+		screen: ContactUs
 	},
 },
 {
