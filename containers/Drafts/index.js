@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { View, TouchableOpacity, FlatList } from 'react-native';
+import { connect } from 'react-redux'
 import { bgColor } from '../../constants/Colors';
 import FontedText from '../../components/FontedText';
 import BackHeader from '../../components/BackHeader';
 import { Container } from 'native-base';
-
 
 
 class Drafts extends Component {

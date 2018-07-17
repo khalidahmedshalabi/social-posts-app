@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, TouchableOpacity, Image, Platform } from 'react-native';
+import { connect } from 'react-redux'
 import { Content } from 'native-base';
 import { LinearGradient, ImagePicker, Permissions } from 'expo';
 import { FontAwesome, Foundation, SimpleLineIcons, Feather, Entypo, Octicons } from '@expo/vector-icons';
