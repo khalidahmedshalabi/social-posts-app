@@ -204,6 +204,11 @@ export default class Profile extends Component {
 
 								<View style={{ flex: 0.50, alignItems: 'center' }}>
 									<TouchableOpacity
+										onPress={
+											() => {
+												this.props.navigation.navigate("ContactUs")
+											}
+										}
 										activeOpacity={0.7}>
 										<View style={{ backgroundColor: '#474668', borderRadius: 40, height: 130, width: 130, justifyContent: 'center', alignItems: 'center' }}>
 											<MaterialIcons name='feedback' size={80} color={mainColor} />
