@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, TouchableOpacity, FlatList } from 'react-native';
 import { connect } from 'react-redux'
 import { bgColor } from '../../constants/Colors';
+import { FontAwesome } from '@expo/vector-icons';
 import FontedText from '../../components/FontedText';
 import BackHeader from '../../components/BackHeader';
 import { Container } from 'native-base';
@@ -45,7 +46,7 @@ class Drafts extends Component {
 			<Container>
 				<BackHeader
 					navigation={this.props.navigation}
-					title='مسودات' />
+					title='المسودات' />
 
 				<FlatList
 					data={this.props.draft_posts}
@@ -53,15 +54,16 @@ class Drafts extends Component {
 					//contentContainerStyle={{padding}}
 					ItemSeparatorComponent={this.FlatListItemSeparator}
 					renderItem={({ item }) =>
-						<TouchableOpacity
-						>
-							<View style={{ flex: 1, flexDirection: 'row' }}>
-								<View style={{ flex: 1, alignItems: 'flex-start', paddingHorizontal: 15, paddingVertical: 15, }}>
-									<FontedText style={{ color: 'white', fontSize: 16 }} > {item.title} </FontedText>
-									<FontedText style={{ color: 'white', fontSize: 10, textAlign: 'left' }} > {item.content} </FontedText>
-								</View>
-							</View>
-						</TouchableOpacity>
+						<View style={{ flex: 1, flexDirection: 'row' }}>
+							<TouchableOpacity style={{ flex: 0.9, alignItems: 'flex-start', paddingVertical: 15, justifyContent: 'center', paddingLeft: 15 }}>
+								<FontedText style={{ color: 'white', fontSize: 16 }} > {item.title} </FontedText>
+								<FontedText style={{ color: 'white', fontSize: 10, textAlign: 'left' }} > {item.content} </FontedText>
+							</TouchableOpacity>
+
+							<TouchableOpacity style={{ flex: 0.1, justifyContent: 'center', alignItems: 'flex-end', paddingRight: 15 }}>
+								<FontAwesome name='trash' size={28} color={'#999999'} />
+							</TouchableOpacity>
+						</View>
 					}
 				/>
 			</Container>
