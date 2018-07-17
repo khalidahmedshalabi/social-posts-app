@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, FlatList, Image, Dimensions, Linking } from 'react-native';
-import { Video } from 'expo'
-import { Entypo, Foundation, Feather, FontAwesome } from '@expo/vector-icons';
-import { mainColor, bgColor, lightBGColor } from '../../constants/Colors';
+import { View, TouchableOpacity } from 'react-native';
+import { Entypo, Foundation, FontAwesome } from '@expo/vector-icons';
+import { bgColor } from '../../constants/Colors';
 import FontedText from '../../components/FontedText';
 import BackHeader from '../../components/BackHeader';
 import { Container } from 'native-base';
 
-const height = Dimensions.get('window').height
 
 export default class ContactUs extends Component {
 
