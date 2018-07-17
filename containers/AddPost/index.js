@@ -10,7 +10,7 @@ import LazyContainer from '../../components/LazyContainer';
 import ModalSelector from 'react-native-modal-selector'
 import BackHeader from '../../components/BackHeader';
 
-export default class AddPost extends Component {
+class AddPost extends Component {
 	constructor() {
 		super()
 
@@ -294,3 +294,16 @@ export default class AddPost extends Component {
 		)
 	}
 }
+
+function mergeProps(stateProps, dispatchProps, ownProps) {
+	const { dispatch } = dispatchProps;
+	const { actions } = require('../../redux/DraftRedux.js');
+	
+	return {
+		...ownProps,
+		...stateProps,
+		addDraftPost: (draft_post) => actions.addDraftPost(dispatch, draft_post),
+	};
+}
+
+export default connect(undefined, undefined, mergeProps)(AddPost)
