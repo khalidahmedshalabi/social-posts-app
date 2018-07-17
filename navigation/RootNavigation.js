@@ -7,6 +7,7 @@ import Signup from '../containers/Signup'
 import ResetPassword from '../containers/ResetPassword'
 import Walkthrough from '../containers/Walkthrough'
 import AccountInfo from '../containers/AccountInfo'
+import PostsHistory from '../containers/PostsHistory'
 import CodeConfirmation from '../containers/CodeConfirmation'
 import EditProfile from '../containers/EditProfile'
 import AddPost from '../containers/AddPost'
@@ -34,6 +35,9 @@ export default RootNavigation = createStackNavigator({
 	},
 	CodeConfirmation: {
 		screen: CodeConfirmation
+	},
+	PostsHistory: {
+		screen: PostsHistory
 	},
 	EditProfile: {
 		screen: EditProfile
