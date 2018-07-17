@@ -17,8 +17,15 @@ class AddPost extends Component {
 
 		this.state = {
 			image: null,
-			PostData: [
-				{ title: '', content: 'محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. ',link:"",country:"",age:"", },
+			
+			title: '', 
+			content: '',
+			link: '',
+			country:'',
+			age:'', 
+			gender: '',
+			views:'',
+				
 				/*{ key: '2', title: 'عنوان 2', content: 'محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. ',link:"",country:"",age:"", },
 				{ key: '3', title: 'عنوان 3', content: 'محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. ',link:"",country:"",age:"", },
 				{ key: '4', title: 'عنوان 4', content: 'محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. ',link:"",country:"",age:"", },
@@ -30,12 +37,12 @@ class AddPost extends Component {
 				{ key: '10', title: 'عنوان 10', content: 'محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. ',link:"",country:"",age:"", },
 				{ key: '11', title: 'عنوان 11', content: 'محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. ',link:"",country:"",age:"", },
 				/{ key: '12', title: 'عنوان 12', content: 'محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. ',link:"",country:"",age:"", },*/
-			]
+			
 		}
 	}
 	DotheDraft = () => {
-		{this.props.addDraftPost({title: '' ,content: 'محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. ', link:""})}
-		{this.props.navigation.navigate("Drafts")}
+		this.props.addDraftPost({title:this.state.title ,content: this.state.content, link:this.state.link,country:this.state.country,age:this.state.age,gender:this.state.gender,views:this.state.views,})
+		this.props.navigation.navigate("Drafts")
 		
 	}
 	openImagePicker = async () => {
@@ -155,6 +162,7 @@ class AddPost extends Component {
 									color: 'white'
 								}}
 								onChangeText={(text) => this.setState({title:text})}
+								
 							/>
 						</View>
 
@@ -224,6 +232,7 @@ class AddPost extends Component {
 								accessible={true}
 								scrollViewAccessibilityLabel={'Scrollable options'}
 								cancelButtonAccessibilityLabel={'Cancel Button'}
+								onChange={(option)=>{ this.setState({textInputValue:option.label})}}
 							/>
 						</View>
 
@@ -246,6 +255,7 @@ class AddPost extends Component {
 								accessible={true}
 								scrollViewAccessibilityLabel={'Scrollable options'}
 								cancelButtonAccessibilityLabel={'Cancel Button'}
+								onChange={(option)=>{ this.setState({textInputValue:option.label})}}
 							/>
 						</View>
 
@@ -268,6 +278,7 @@ class AddPost extends Component {
 								accessible={true}
 								scrollViewAccessibilityLabel={'Scrollable options'}
 								cancelButtonAccessibilityLabel={'Cancel Button'}
+								onChange={(option)=>{ this.setState({textInputValue:option.label})}}
 							/>
 						</View>
 
@@ -286,6 +297,7 @@ class AddPost extends Component {
 									flex: 0.85,
 									color: 'white'
 								}}
+								onChangeText={(text) => this.setState({views:text})}
 							/>
 						</View>
 					</View>

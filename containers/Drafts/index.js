@@ -59,7 +59,6 @@ class Drafts extends Component {
 								<View style={{ flex: 1, alignItems: 'flex-start', paddingHorizontal: 15, paddingVertical: 15, }}>
 									<FontedText style={{ color: 'white', fontSize: 16 }} > {item.title} </FontedText>
 									<FontedText style={{ color: 'white', fontSize: 10, textAlign: 'left' }} > {item.content} </FontedText>
-									<FontedText style={{ color: 'white', fontSize: 10, textAlign: 'left' }} > {item.link} </FontedText>
 								</View>
 							</View>
 						</TouchableOpacity>
