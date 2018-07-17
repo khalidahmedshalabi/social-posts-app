@@ -4,6 +4,7 @@ import { Video } from 'expo'
 import { Ionicons, MaterialCommunityIcons, Feather, FontAwesome } from '@expo/vector-icons';
 import { mainColor, bgColor } from '../../constants/Colors';
 import FontedText from '../../components/FontedText';
+import { Container } from 'native-base';
 
 const height = Dimensions.get('window').height
 
@@ -215,18 +216,13 @@ export default class Posts extends Component {
 
 	render() {
 		return (
-			<View style={{ flex: 1, alignItems: 'center' }}>
+			<Container style={{ alignItems: 'center', backgroundColor: bgColor, paddingHorizontal: 15 }}>
 				<FlatList
-					contentContainerStyle={{
-						backgroundColor: bgColor,
-						paddingHorizontal: 15,
-						paddingVertical: 20,
-						alignItems: 'center'
-					}}
+					contentContainerStyle={{ paddingVertical: 20 }}
 					ItemSeparatorComponent={ () => <View style={{ height: 20 }}></View> }
 					data={this.state.posts}
 					renderItem={({ item }) => this.renderItem(item)} />
-			</View>
+			</Container>
 		)
 	}
 }
