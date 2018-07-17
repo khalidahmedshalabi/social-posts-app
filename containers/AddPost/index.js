@@ -16,10 +16,28 @@ class AddPost extends Component {
 		super()
 
 		this.state = {
-			image: null
+			image: null,
+			PostData: [
+				{ title: '', content: 'محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. ',link:"",country:"",age:"", },
+				/*{ key: '2', title: 'عنوان 2', content: 'محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. ',link:"",country:"",age:"", },
+				{ key: '3', title: 'عنوان 3', content: 'محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. ',link:"",country:"",age:"", },
+				{ key: '4', title: 'عنوان 4', content: 'محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. ',link:"",country:"",age:"", },
+				{ key: '5', title: 'عنوان 5', content: 'محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. ',link:"",country:"",age:"", },
+				{ key: '6', title: 'عنوان 6', content: 'محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. ',link:"",country:"",age:"", },
+				{ key: '7', title: 'عنوان 7', content: 'محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. ',link:"",country:"",age:"", },
+				{ key: '8', title: 'عنوان 8', content: 'محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. ',link:"",country:"",age:"", },
+				{ key: '9', title: 'عنوان 9', content: 'محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. ',link:"",country:"",age:"", },
+				{ key: '10', title: 'عنوان 10', content: 'محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. ',link:"",country:"",age:"", },
+				{ key: '11', title: 'عنوان 11', content: 'محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. ',link:"",country:"",age:"", },
+				/{ key: '12', title: 'عنوان 12', content: 'محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. ',link:"",country:"",age:"", },*/
+			]
 		}
 	}
-
+	DotheDraft = () => {
+		{this.props.addDraftPost({title: '' ,content: 'محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. ', link:""})}
+		{this.props.navigation.navigate("Drafts")}
+		
+	}
 	openImagePicker = async () => {
 		const result = await ImagePicker.launchImageLibraryAsync({
 			mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -136,6 +154,7 @@ class AddPost extends Component {
 									flex: 0.85,
 									color: 'white'
 								}}
+								onChangeText={(text) => this.setState({title:text})}
 							/>
 						</View>
 
@@ -163,6 +182,7 @@ class AddPost extends Component {
 									paddingTop: 10,
 									paddingLeft: 13
 								}}
+								onChangeText={(text) => this.setState({content:text})}
 							/>
 						</View>
 
@@ -181,6 +201,7 @@ class AddPost extends Component {
 									flex: 0.85,
 									color: 'white'
 								}}
+								onChangeText={(text) => this.setState({link:text})}
 							/>
 						</View>
 
@@ -287,7 +308,10 @@ class AddPost extends Component {
 					</TouchableOpacity>
 
 				
-					<TouchableOpacity style={{ flex: 0.5, borderWidth: 1, borderColor: mainColor, marginHorizontal: 10, borderRadius: 20, justifyContent: 'center', alignItems: 'center' }}>
+					<TouchableOpacity style={{ flex: 0.5, borderWidth: 1, borderColor: mainColor, marginHorizontal: 10, borderRadius: 20, justifyContent: 'center', alignItems: 'center' }}
+						onPress={() => {
+							{this.DotheDraft()}
+						}}>
 						<FontedText style={{ color: mainColor, fontSize: 15 }}>حفظ كمسودة</FontedText>
 					</TouchableOpacity>
 				</View>

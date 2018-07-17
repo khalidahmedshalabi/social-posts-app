@@ -11,7 +11,7 @@ class Drafts extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			FlatListItems: [
+			/*FlatListItems: [
 
 				{ key: '1', title: 'عنوان 1', msg: 'محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. ' },
 				{ key: '2', title: 'عنوان 2', msg: 'محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. ' },
@@ -25,7 +25,7 @@ class Drafts extends Component {
 				{ key: '10', title: 'عنوان 10', msg: 'محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. ' },
 				{ key: '11', title: 'عنوان 11', msg: 'محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. ' },
 				{ key: '12', title: 'عنوان 12', msg: 'محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. محتوى البوست. ' },
-			]
+			]*/
 		}
 	}
 	FlatListItemSeparator = () => {
@@ -48,7 +48,7 @@ class Drafts extends Component {
 					title='مسودات' />
 
 				<FlatList
-					data={this.state.FlatListItems}
+					data={this.props.draft_posts}
 					style={{ backgroundColor: bgColor, }}
 					//contentContainerStyle={{padding}}
 					ItemSeparatorComponent={this.FlatListItemSeparator}
@@ -58,7 +58,8 @@ class Drafts extends Component {
 							<View style={{ flex: 1, flexDirection: 'row' }}>
 								<View style={{ flex: 1, alignItems: 'flex-start', paddingHorizontal: 15, paddingVertical: 15, }}>
 									<FontedText style={{ color: 'white', fontSize: 16 }} > {item.title} </FontedText>
-									<FontedText style={{ color: 'white', fontSize: 10, textAlign: 'left' }} > {item.msg} </FontedText>
+									<FontedText style={{ color: 'white', fontSize: 10, textAlign: 'left' }} > {item.content} </FontedText>
+									<FontedText style={{ color: 'white', fontSize: 10, textAlign: 'left' }} > {item.link} </FontedText>
 								</View>
 							</View>
 						</TouchableOpacity>
