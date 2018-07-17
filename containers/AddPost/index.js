@@ -10,6 +10,9 @@ import FontedInput from '../../components/FontedInput';
 import LazyContainer from '../../components/LazyContainer';
 import ModalSelector from 'react-native-modal-selector'
 import BackHeader from '../../components/BackHeader';
+import Toast, {DURATION} from 'react-native-easy-toast';
+import { height } from '../../constants/Layout';
+
 
 class AddPost extends Component {
 	constructor() {
@@ -30,8 +33,15 @@ class AddPost extends Component {
 		}
 	}
 	DotheDraft = () => {
-		this.props.addDraftPost({title:this.state.title ,content: this.state.content, link:this.state.link,country:this.state.country,age:this.state.age,gender:this.state.gender,views:this.state.max_reaches,})
-		this.props.navigation.navigate("Drafts")
+		if(this.state.title)
+		{
+			this.props.addDraftPost({title:this.state.title ,content: this.state.content, link:this.state.link,country:this.state.country,age:this.state.age,gender:this.state.gender,views:this.state.max_reaches,})
+			this.props.navigation.navigate("Drafts")
+		}
+		else
+		{
+			this.refs.toast.show('تأكد من ادخال العنوان');
+		}
 		
 	}
 	openImagePicker = async () => {
@@ -289,6 +299,15 @@ class AddPost extends Component {
 								onChangeText={(text) => this.setState({max_reaches:text})}
 							/>
 						</View>
+						<Toast 	
+							ref="toast" 
+							style={{backgroundColor:'#dcdee2',borderRadius:25,}}
+							position='bottom'
+							positionValue={height*0.52}
+							fadeInDuration={750}
+							fadeOutDuration={1000}
+							opacity={0.8}
+							textStyle={{color:bgColor}}/>
 					</View>
 				</Content>
 
