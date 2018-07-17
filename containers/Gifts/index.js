@@ -42,7 +42,7 @@ export default class Gifts extends Component {
 			<Container style={{backgroundColor: bgColor, paddingBottom: 15}}>
 				<BackHeader
 					navigation={this.props.navigation}
-					title='إضافة منشور' />
+					title='الهدايا' />
 
 			<View style={{flex:1,alignItems:'center',justifyContent:'center',paddingVertical:100}} >
 				<Carousel
