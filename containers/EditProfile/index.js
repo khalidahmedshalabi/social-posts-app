@@ -36,7 +36,7 @@ export default class EditProfile extends Component {
 			<LazyContainer style={{backgroundColor: bgColor}}>
 				<BackHeader
 					navigation={this.props.navigation}
-					title='إضافة منشور' />
+					title='تعديل الحساب' />
 
 				<Content>
 					<Animatable.View animation="fadeIn" duration={1000} delay={500} style={{ paddingVertical: 30, flex: 0.55, justifyContent: 'center', alignItems: 'center' }}>

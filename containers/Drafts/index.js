@@ -47,7 +47,7 @@ export default class Drafts extends Component {
 			<Container>
 			<BackHeader
 				navigation={this.props.navigation}
-				title='إضافة منشور' />
+				title='مسودات' />
 
 							 <FlatList
 									data={ this.state.FlatListItems }
