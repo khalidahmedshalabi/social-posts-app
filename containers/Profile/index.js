@@ -119,7 +119,13 @@ export default class Profile extends Component {
 							style={{ paddingTop: height*0.10, alignItems: 'center' }}>
 							<View style={{ flexDirection: 'row' }}>
 								<View style={{ flex: 0.50, alignItems: 'center'}}>
-									<TouchableOpacity activeOpacity={0.7}>
+									<TouchableOpacity 
+										onPress={
+											() => {
+												this.props.navigation.navigate("PostsHistory")
+											}
+										}
+										activeOpacity={0.7}>
 										<View style={{backgroundColor: '#474668', borderRadius: 40, height: 130, width: 130, justifyContent: 'center', alignItems: 'center'}}>
 											<MaterialCommunityIcons name='history' size={80} color={mainColor} />
 										</View>
