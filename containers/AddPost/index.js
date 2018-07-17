@@ -193,7 +193,6 @@ class AddPost extends Component {
 								placeholderTextColor='#d8d8d8'
 								underlineColorAndroid='transparent'
 								maxLength={128}
-								secureTextEntry={true}
 								style={{
 									flex: 0.85,
 									color: 'white'
