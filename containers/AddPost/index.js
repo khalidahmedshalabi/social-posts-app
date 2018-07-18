@@ -12,6 +12,7 @@ import ModalSelector from 'react-native-modal-selector'
 import BackHeader from '../../components/BackHeader';
 import Toast, {DURATION} from 'react-native-easy-toast';
 import { height } from '../../constants/Layout';
+import { base_url, api_extension } from '../../constants/Server';
 
 
 class AddPost extends Component {
@@ -27,7 +28,8 @@ class AddPost extends Component {
 			age:'', 
 			gender: '',
 			max_reaches:'',
-			media_type: 0 // 0 link, 1 image, 2 video
+			media_type: 0, // 0 link, 1 image, 2 video,
+			post_id: 0,
 		}
 	}
 	DotheDraft = () => {
@@ -51,6 +53,7 @@ class AddPost extends Component {
 		if (!result.cancelled) {
 			this.setState({
 				image: result.uri,
+				media_type_str: result.type,
 				media_type: result.type === 'image' ? 1 : 2
 			});
 		}
@@ -67,17 +70,18 @@ class AddPost extends Component {
 		else this.openImagePicker()
 	}
 
-	/*postImage = () => {
-		const apiUrl = `${SERVER_URI}/upload`;
+	uploadPostMedia = () => {
+		const apiUrl = `${base_url}${api_extension}Posts/UploadPostMedia`;
 		const uri = this.state.image;
 		const uriParts = uri.split('.');
 		const fileType = uriParts[uriParts.length - 1];
 		const formData = new FormData();
 
-		formData.append('photo', {
+		formData.append('document', {
 			uri,
-			name: `photo.${fileType}`,
-			type: `image/${fileType}`,
+			name: `post_${this.state.post_id}_media.${fileType}`,
+			type: `${this.state.media_type_str}/${fileType}`,
+			post_id: this.state.post_id
 		});
 
 		const options = {
@@ -90,7 +94,7 @@ class AddPost extends Component {
 		};
 
 		return fetch(apiUrl, options);
-	}*/
+	}
 
 	renderPickedImage = () => {
 		if(this.state.image) {
