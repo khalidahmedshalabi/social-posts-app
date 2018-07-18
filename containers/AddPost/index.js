@@ -16,10 +16,26 @@ import { base_url, api_extension } from '../../constants/Server';
 
 
 class AddPost extends Component {
+	componentDidMount () {
+		
+		{
+			if(this.props.navigation.state.params)
+			{
+			this.setState({title:this.props.navigation.state.params.title,content:this.props.navigation.state.params.content})
+			console.log("title::"+this.props.navigation.state.params.title)
+			console.log("content::"+this.props.navigation.state.params.content)
+			}
+			else if(!this.props.navigation.state.params)
+			{
+				alert("NOOOOOOOOOOOOOOOO")
+			}
+		}
+	}
 	constructor() {
 		super()
 
 		this.state = {
+		//	params: props.navigation.state.params,
 			image: null,
 			title: '', 
 			content: '',
@@ -31,10 +47,12 @@ class AddPost extends Component {
 			media_type: 0, // 0 link, 1 image, 2 video,
 			post_id: 0,
 		}
+
 	}
 	DotheDraft = () => {
 		if(this.state.title)
 		{
+			//this.props.navigation.state.params.title
 			this.props.addDraftPost({title:this.state.title ,content: this.state.content, link:this.state.link,country:this.state.country,age:this.state.age,gender:this.state.gender,views:this.state.max_reaches,})
 			this.props.navigation.navigate("Drafts")
 		}
@@ -163,6 +181,7 @@ class AddPost extends Component {
 									color: 'white'
 								}}
 								onChangeText={(text) => this.setState({title:text})}
+								value={this.state.title}
 								
 							/>
 						</View>
@@ -192,6 +211,7 @@ class AddPost extends Component {
 									paddingLeft: 13
 								}}
 								onChangeText={(text) => this.setState({content:text})}
+								value={this.state.content}
 							/>
 						</View>
 
@@ -210,6 +230,7 @@ class AddPost extends Component {
 									color: 'white'
 								}}
 								onChangeText={(text) => this.setState({link:text})}
+								value={this.state.link}
 							/>
 						</View>
 
@@ -300,17 +321,18 @@ class AddPost extends Component {
 								onChangeText={(text) => this.setState({max_reaches:text})}
 							/>
 						</View>
-						<Toast 	
-							ref="toast" 
-							style={{backgroundColor:'#dcdee2',borderRadius:25,}}
-							position='bottom'
-							positionValue={height*0.52}
-							fadeInDuration={750}
-							fadeOutDuration={1000}
-							opacity={0.8}
-							textStyle={{color:bgColor}}/>
 					</View>
 				</Content>
+
+				<Toast
+					ref="toast"
+					style={{ backgroundColor: '#dcdee2', borderRadius: 25 }}
+					position='bottom'
+					positionValue={height * 0.30}
+					fadeInDuration={750}
+					fadeOutDuration={1000}
+					opacity={0.8}
+					textStyle={{ color: bgColor }} />
 
 				<View style={{ flexDirection: 'row', justifyContent: 'space-around', paddingVertical: 10 }}>
 					<TouchableOpacity style={{ borderRadius: 20, flex: 0.5, marginHorizontal: 10 }}>

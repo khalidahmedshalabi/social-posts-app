@@ -122,7 +122,7 @@ export default class Profile extends Component {
 									<TouchableOpacity
 										onPress={
 											() => {
-												this.props.navigation.navigate("AddPost")
+												this.props.navigation.navigate("AddPost",{ })
 											}
 										}
 										activeOpacity={0.7}>
