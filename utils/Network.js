@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { base_url } from '../constants/Server';
+import { base_url, api_extension } from '../constants/Server';
 
 // This function, handles when the response is a success/failure
 export const HandleHttpResponses = (response, onSuccess, onFailure) => {
@@ -23,7 +23,7 @@ const HTTP_REQUEST = (
 	axios({
 		method,
 		headers: { 'Content-Type': 'application/json' },
-		url: `${base_url}/${endpoint}`,
+		url: `${base_url}${api_extension}${endpoint}`,
 		data: post_data
 	}).then(function (response) {
 		HandleHttpResponses(
