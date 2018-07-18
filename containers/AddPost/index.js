@@ -317,17 +317,18 @@ class AddPost extends Component {
 								onChangeText={(text) => this.setState({max_reaches:text})}
 							/>
 						</View>
-						<Toast 	
-							ref="toast" 
-							style={{backgroundColor:'#dcdee2',borderRadius:25,}}
-							position='bottom'
-							positionValue={height*0.52}
-							fadeInDuration={750}
-							fadeOutDuration={1000}
-							opacity={0.8}
-							textStyle={{color:bgColor}}/>
 					</View>
 				</Content>
+
+				<Toast
+					ref="toast"
+					style={{ backgroundColor: '#dcdee2', borderRadius: 25 }}
+					position='bottom'
+					positionValue={height * 0.30}
+					fadeInDuration={750}
+					fadeOutDuration={1000}
+					opacity={0.8}
+					textStyle={{ color: bgColor }} />
 
 				<View style={{ flexDirection: 'row', justifyContent: 'space-around', paddingVertical: 10 }}>
 					<TouchableOpacity style={{ borderRadius: 20, flex: 0.5, marginHorizontal: 10 }}>
