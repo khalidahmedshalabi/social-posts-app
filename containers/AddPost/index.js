@@ -315,11 +315,15 @@ class AddPost extends Component {
 								underlineColorAndroid='transparent'
 								maxLength={128}
 								style={{
-									flex: 0.85,
+									flex: 0.70,
 									color: 'white'
 								}}
 								onChangeText={(text) => this.setState({max_reaches:text})}
 							/>
+
+							<View style={{ flex: 0.15, alignItems: 'flex-start' }}>
+								<FontedText style={{ color: mainColor }}>35 رس</FontedText>
+							</View>
 						</View>
 					</View>
 				</Content>
