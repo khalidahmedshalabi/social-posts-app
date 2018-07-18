@@ -7,6 +7,9 @@ import { LinearGradient } from 'expo';
 import FontedText from '../../components/FontedText';
 import * as Animatable from 'react-native-animatable';
 
+const fontSize = 13
+const boxBorderRadius = 30
+const boxDim = 100
 const height = Dimensions.get('window').height
 export default class Profile extends Component {
 	
@@ -126,11 +129,11 @@ export default class Profile extends Component {
 											}
 										}
 										activeOpacity={0.7}>
-										<View style={{ backgroundColor: '#474668', borderRadius: 40, height: 130, width: 130, justifyContent: 'center', alignItems: 'center' }}>
-											<Ionicons name='md-add' size={80} color={mainColor} />
+										<View style={{ backgroundColor: '#474668', borderRadius: boxBorderRadius, height: boxDim, width: boxDim, justifyContent: 'center', alignItems: 'center' }}>
+											<Ionicons name='md-add' size={70} color={mainColor} />
 										</View>
 
-										<FontedText style={{ color: 'white', textAlign: 'center', marginTop: 13 }}>إضافة منشور</FontedText>
+										<FontedText style={{ color: 'white', textAlign: 'center', marginTop: 13, fontSize: fontSize }}>إضافة منشور</FontedText>
 									</TouchableOpacity>
 								</View>
 
@@ -142,11 +145,11 @@ export default class Profile extends Component {
 											}
 										}
 										activeOpacity={0.7}>
-										<View style={{ backgroundColor: '#474668', borderRadius: 40, height: 130, width: 130, justifyContent: 'center', alignItems: 'center' }}>
-											<MaterialCommunityIcons name='gift' size={80} color={mainColor} />
+									<View style={{ backgroundColor: '#474668', borderRadius: boxBorderRadius, height: boxDim, width: boxDim, justifyContent: 'center', alignItems: 'center' }}>
+											<MaterialCommunityIcons name='gift' size={70} color={mainColor} />
 										</View>
 
-										<FontedText style={{ color: 'white', textAlign: 'center', marginTop: 13 }}>الهدايا</FontedText>
+										<FontedText style={{ color: 'white', textAlign: 'center', marginTop: 13, fontSize: fontSize }}>الهدايا</FontedText>
 									</TouchableOpacity>
 								</View>
 							</View>
@@ -160,11 +163,11 @@ export default class Profile extends Component {
 											}
 										}
 										activeOpacity={0.7}>
-										<View style={{ backgroundColor: '#474668', borderRadius: 40, height: 130, width: 130, justifyContent: 'center', alignItems: 'center' }}>
-											<MaterialIcons name='drafts' size={80} color={mainColor} />
+										<View style={{ backgroundColor: '#474668', borderRadius: boxBorderRadius, height: boxDim, width: boxDim, justifyContent: 'center', alignItems: 'center' }}>
+											<MaterialIcons name='drafts' size={70} color={mainColor} />
 										</View>
 
-										<FontedText style={{ color: 'white', textAlign: 'center', marginTop: 13 }}>مسودات</FontedText>
+										<FontedText style={{ color: 'white', textAlign: 'center', marginTop: 13, fontSize: fontSize }}>مسودات</FontedText>
 									</TouchableOpacity>
 								</View>
 
@@ -176,11 +179,11 @@ export default class Profile extends Component {
 											}
 										}
 										activeOpacity={0.7}>
-										<View style={{ backgroundColor: '#474668', borderRadius: 40, height: 130, width: 130, justifyContent: 'center', alignItems: 'center' }}>
-											<MaterialCommunityIcons name='history' size={80} color={mainColor} />
+										<View style={{ backgroundColor: '#474668', borderRadius: boxBorderRadius, height: boxDim, width: boxDim, justifyContent: 'center', alignItems: 'center' }}>
+											<MaterialCommunityIcons name='history' size={70} color={mainColor} />
 										</View>
 
-										<FontedText style={{ color: 'white', textAlign: 'center', marginTop: 13 }}>منشورات شاهدتها</FontedText>
+										<FontedText style={{ color: 'white', textAlign: 'center', marginTop: 13, fontSize: fontSize }}>منشورات شاهدتها</FontedText>
 									</TouchableOpacity>
 								</View>
 							</View>
@@ -194,11 +197,11 @@ export default class Profile extends Component {
 											}
 										}
 										activeOpacity={0.7}>
-										<View style={{ backgroundColor: '#474668', borderRadius: 40, height: 130, width: 130, justifyContent: 'center', alignItems: 'center' }}>
-											<MaterialIcons name='feedback' size={80} color={mainColor} />
+										<View style={{ backgroundColor: '#474668', borderRadius: boxBorderRadius, height: boxDim, width: boxDim, justifyContent: 'center', alignItems: 'center' }}>
+											<MaterialIcons name='feedback' size={70} color={mainColor} />
 										</View>
 
-										<FontedText style={{ color: 'white', textAlign: 'center', marginTop: 13 }}>تواصل معنا</FontedText>
+										<FontedText style={{ color: 'white', textAlign: 'center', marginTop: 13, fontSize: fontSize }}>تواصل معنا</FontedText>
 									</TouchableOpacity>
 								</View>
 
@@ -210,30 +213,30 @@ export default class Profile extends Component {
 											}
 										}
 										activeOpacity={0.7}>
-										<View style={{ backgroundColor: '#474668', borderRadius: 40, height: 130, width: 130, justifyContent: 'center', alignItems: 'center' }}>
-											<Ionicons name='md-settings' size={80} color={mainColor} />
+										<View style={{ backgroundColor: '#474668', borderRadius: boxBorderRadius, height: boxDim, width: boxDim, justifyContent: 'center', alignItems: 'center' }}>
+											<Ionicons name='md-settings' size={70} color={mainColor} />
 										</View>
 
-										<FontedText style={{ color: 'white', textAlign: 'center', marginTop: 13 }}>تعديل الحساب</FontedText>
+										<FontedText style={{ color: 'white', textAlign: 'center', marginTop: 13, fontSize: fontSize }}>تعديل الحساب</FontedText>
 									</TouchableOpacity>
 								</View>
 							</View>
 
 							<View 
 								style={{ 
-								width: 32, 
-								height: 32, 
+								width: 28, 
+								height: 28, 
 								backgroundColor: mainColor, 
-								borderRadius: 16, 
+								borderRadius: 14, 
 								borderWidth: 1, 
 								borderColor: 'white', 
 								justifyContent: 'center', 
 								alignItems: 'center', 
 								position: 'absolute',
-								top: 47,
-								right: 120 
+								top: 50,
+								right: 115 
 								}}>
-								<FontedText style={{ color: bgColor, fontSize: 16 }}>3</FontedText>
+								<FontedText style={{ color: bgColor, fontSize: 15 }}>3</FontedText>
 							</View>
 						</Animatable.View>
 
