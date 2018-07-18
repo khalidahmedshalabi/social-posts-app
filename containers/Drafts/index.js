@@ -57,7 +57,8 @@ class Drafts extends Component {
 						<View style={{ flex: 1, flexDirection: 'row' }}>
 							<TouchableOpacity
 							onPress={() => {
-								this.props.navigation.navigate("AddPost",{title:item.title,content:item.content})
+								this.props.navigation.navigate("AddPost",{...item})
+								//console.log( "TITLE:::" +this.props.navigation.state.params.title )
 							}}
 							 style={{ flex: 0.9, alignItems: 'flex-start', paddingVertical: 15, justifyContent: 'center', paddingLeft: 15 }}>
 								<FontedText style={{ color: 'white', fontSize: 16 }} > {item.title} </FontedText>

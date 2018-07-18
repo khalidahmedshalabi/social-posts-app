@@ -15,10 +15,26 @@ import { height } from '../../constants/Layout';
 
 
 class AddPost extends Component {
+	componentDidMount () {
+		
+		{
+			if(this.props.navigation.state.params)
+			{
+			this.setState({title:this.props.navigation.state.params.title,content:this.props.navigation.state.params.content})
+			console.log("title::"+this.props.navigation.state.params.title)
+			console.log("content::"+this.props.navigation.state.params.content)
+			}
+			else if(!this.props.navigation.state.params)
+			{
+				alert("NOOOOOOOOOOOOOOOO")
+			}
+		}
+	}
 	constructor() {
 		super()
 
 		this.state = {
+		//	params: props.navigation.state.params,
 			image: null,
 			title: '', 
 			content: '',
@@ -29,6 +45,7 @@ class AddPost extends Component {
 			max_reaches:'',
 			media_type: 0 // 0 link, 1 image, 2 video
 		}
+
 	}
 	DotheDraft = () => {
 		if(this.state.title)
@@ -160,6 +177,7 @@ class AddPost extends Component {
 									color: 'white'
 								}}
 								onChangeText={(text) => this.setState({title:text})}
+								value={this.state.title}
 								
 							/>
 						</View>
@@ -189,6 +207,7 @@ class AddPost extends Component {
 									paddingLeft: 13
 								}}
 								onChangeText={(text) => this.setState({content:text})}
+								value={this.state.content}
 							/>
 						</View>
 
@@ -207,6 +226,7 @@ class AddPost extends Component {
 									color: 'white'
 								}}
 								onChangeText={(text) => this.setState({link:text})}
+								value={this.state.link}
 							/>
 						</View>
 
