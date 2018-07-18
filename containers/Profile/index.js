@@ -218,6 +218,23 @@ export default class Profile extends Component {
 									</TouchableOpacity>
 								</View>
 							</View>
+
+							<View 
+								style={{ 
+								width: 32, 
+								height: 32, 
+								backgroundColor: mainColor, 
+								borderRadius: 16, 
+								borderWidth: 1, 
+								borderColor: 'white', 
+								justifyContent: 'center', 
+								alignItems: 'center', 
+								position: 'absolute',
+								top: 47,
+								right: 120 
+								}}>
+								<FontedText style={{ color: bgColor, fontSize: 16 }}>3</FontedText>
+							</View>
 						</Animatable.View>
 
 						
