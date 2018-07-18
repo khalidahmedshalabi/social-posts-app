@@ -135,11 +135,12 @@ class AddPost extends Component {
 		];
 
 		const age_data = [
-			{ key: 0, label: '1' },
-			{ key: 1, label: '2' },
-			{ key: 2, label: '3' },
-			{ key: 3, label: '4' },
-			{ key: 4, label: '5' },
+			{ key: 0, label: '6-12' },
+			{ key: 1, label: '13-18' },
+			{ key: 2, label: '19-24' },
+			{ key: 3, label: '25-44' },
+			{ key: 5, label: '45-64' },
+			{ key: 6, label: '65-130' },
 		];
 
 		const country_data = [
