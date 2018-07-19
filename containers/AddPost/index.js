@@ -18,24 +18,16 @@ import { base_url, api_extension } from '../../constants/Server';
 class AddPost extends Component {
 	componentDidMount () {
 		
-		{
 			if(this.props.navigation.state.params)
 			{
-			this.setState({title:this.props.navigation.state.params.title,content:this.props.navigation.state.params.content})
-			console.log("title::"+this.props.navigation.state.params.title)
-			console.log("content::"+this.props.navigation.state.params.content)
+			this.setState({title:this.props.navigation.state.params.title,content:this.props.navigation.state.params.content,link:this.props.navigation.state.params.link,country:this.props.navigation.state.params.country,age:this.props.navigation.state.params.age,gender:this.props.navigation.state.params.gender,max_reaches:this.props.navigation.state.params.max_reaches})
 			}
-			else if(!this.props.navigation.state.params)
-			{
-				alert("NOOOOOOOOOOOOOOOO")
-			}
-		}
+			else{}
 	}
 	constructor() {
 		super()
 
 		this.state = {
-		//	params: props.navigation.state.params,
 			image: null,
 			title: '', 
 			content: '',
@@ -52,9 +44,11 @@ class AddPost extends Component {
 	DotheDraft = () => {
 		if(this.state.title)
 		{
-			//this.props.navigation.state.params.title
-			this.props.addDraftPost({title:this.state.title ,content: this.state.content, link:this.state.link,country:this.state.country,age:this.state.age,gender:this.state.gender,views:this.state.max_reaches,})
-			this.props.navigation.navigate("Drafts")
+			this.props.addDraftPost({title:this.state.title ,content: this.state.content, link:this.state.link,country:this.state.country,age:this.state.age,gender:this.state.gender,max_reaches:this.state.max_reaches,})
+			console.log("title::"+this.state.title)
+			console.log("content::"+this.state.content)
+			console.log("country::"+this.state.country)
+			this.props.navigation.push("Drafts")
 		}
 		else
 		{
@@ -137,14 +131,16 @@ class AddPost extends Component {
 		const gender_data = [
 			{ key: 0, label: 'ذكر' },
 			{ key: 1, label: 'أنثى' },
+			{ key: 2, label: 'الاثنان' },
 		];
 
 		const age_data = [
-			{ key: 0, label: '1' },
-			{ key: 1, label: '2' },
-			{ key: 2, label: '3' },
-			{ key: 3, label: '4' },
-			{ key: 4, label: '5' },
+			{ key: 0, label: '6-12' },
+			{ key: 1, label: '13-18' },
+			{ key: 2, label: '19-24' },
+			{ key: 3, label: '25-44' },
+			{ key: 5, label: '45-64' },
+			{ key: 6, label: '65-130' },
 		];
 
 		const country_data = [
@@ -182,7 +178,7 @@ class AddPost extends Component {
 								}}
 								onChangeText={(text) => this.setState({title:text})}
 								value={this.state.title}
-								
+
 							/>
 						</View>
 
@@ -253,7 +249,8 @@ class AddPost extends Component {
 								accessible={true}
 								scrollViewAccessibilityLabel={'Scrollable options'}
 								cancelButtonAccessibilityLabel={'Cancel Button'}
-								onChange={(option)=>{ this.setState({textInputValue:option.label})}}
+								onChange={(option) =>  this.setState({textInputValue:option.label})}
+								//value={this.state.country}
 							/>
 						</View>
 
@@ -277,9 +274,10 @@ class AddPost extends Component {
 								scrollViewAccessibilityLabel={'Scrollable options'}
 								cancelButtonAccessibilityLabel={'Cancel Button'}
 								onChange={(option)=>{ this.setState({textInputValue:option.label})}}
+							//	labelExtractor={(age_data)=> {age_data.label}}
+								//value={this.state.age}
 							/>
 						</View>
-
 						<View style={{ flex: 1, paddingVertical: 5, width: '100%', flexDirection: 'row', alignItems: 'center', borderBottomWidth: 1, borderBottomColor: '#39384b' }}>
 							<View style={{ flex: 0.15, alignItems: 'center' }}>
 								<Foundation name='torsos-male-female' size={27} color={'#93939b'} />
@@ -299,7 +297,8 @@ class AddPost extends Component {
 								accessible={true}
 								scrollViewAccessibilityLabel={'Scrollable options'}
 								cancelButtonAccessibilityLabel={'Cancel Button'}
-								onChange={(option)=>{ this.setState({textInputValue:option.label})}}
+								onChange={(option)=>{ this.setState({textInputValue:option.label})}}							
+								//value={this.state.gender}
 							/>
 						</View>
 
@@ -319,6 +318,7 @@ class AddPost extends Component {
 									color: 'white'
 								}}
 								onChangeText={(text) => this.setState({max_reaches:text})}
+								value={this.state.max_reaches}
 							/>
 
 							<View style={{ flex: 0.15, alignItems: 'flex-start' }}>
@@ -358,6 +358,7 @@ class AddPost extends Component {
 					<TouchableOpacity style={{ flex: 0.5, borderWidth: 1, borderColor: mainColor, marginHorizontal: 10, borderRadius: 20, justifyContent: 'center', alignItems: 'center' }}
 						onPress={() => {
 							{this.DotheDraft()}
+
 						}}>
 						<FontedText style={{ color: mainColor, fontSize: 15 }}>حفظ كمسودة</FontedText>
 					</TouchableOpacity>

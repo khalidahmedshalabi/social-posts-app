@@ -24,6 +24,7 @@ export default class EditProfile extends Component {
 		const gender_data = [
 			{ key: 0, label: 'ذكر' },
 			{ key: 1, label: 'أنثى' },
+			{ key: 2, label: 'الاثنان' },
 		];
 
 		const country_data = [
