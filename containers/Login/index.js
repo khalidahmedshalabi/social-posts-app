@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { View, TouchableOpacity } from 'react-native';
 import { Container } from 'native-base';
 import { FontAwesome, MaterialCommunityIcons, Entypo } from '@expo/vector-icons';
@@ -13,10 +14,12 @@ import { createTransition, SlideUp } from 'react-native-transition';
 
 const Transition = createTransition(SlideUp);
 
-export default class Login extends Component {
+class Login extends Component {
 	constructor(props) {
 		super(props);
-		
+
+		this.successfulLoginTransitionID = null
+
 		this.state = {
 			emailaddress: '',
 			password: '',
@@ -24,7 +27,7 @@ export default class Login extends Component {
 	}
 
 	switch = () => {
-		Transition.show(
+		this.successfulLoginTransitionID = Transition.show(
 			<Animatable.View animation="slideInUp" duration={20} style={{ flex: 1, backgroundColor: bgColor, justifyContent: 'center', alignItems: 'center' }}>
 				<MaterialCommunityIcons name='check-circle' size={150} color={'#24c144'} />
 				<FontedText style={{ color: 'white', fontSize: 25 }}>عملية دخول ناجحة</FontedText>
@@ -50,10 +53,13 @@ export default class Login extends Component {
 		}
 	};
 
-
 	render() {
 		return (
-			<Transition>
+			<Transition
+				onTransitioned={(id) => {
+					if (id == this.successfulLoginTransitionID)
+						requestAnimationFrame(() => this.props.setLoggedIn(true)) 
+				}}>
 				<Container style={{ backgroundColor: bgColor }}>
 					<View style={{ flex: 0.33, justifyContent: 'flex-end', alignItems: 'center' }}>
 						<Animatable.View animation="fadeInLeft" duration={1000} delay={500}>
@@ -153,3 +159,16 @@ export default class Login extends Component {
 		)
 	}
 }
+
+function mergeProps(stateProps, dispatchProps, ownProps) {
+	const { dispatch } = dispatchProps;
+	const { actions } = require('../../redux/LoginRedux.js');
+
+	return {
+		...ownProps,
+		...stateProps,
+		setLoggedIn: (logged_in) => actions.setLoggedIn(dispatch, logged_in)
+	};
+}
+
+export default connect(undefined, undefined, mergeProps)(Login)

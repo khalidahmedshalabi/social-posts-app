@@ -73,7 +73,7 @@ const RootNavigatorCore = ({ screenProps, initialRouteName }) => {
 };
 
 // This acts as a wrapper for the navigator
-const RootNavigation = ({ screenProps, seen_walkthrough }) => (
+const RootNavigation = ({ screenProps, seen_walkthrough, logged_in }) => (
 	<RootNavigatorCore
 		// Pass screen props normally
 		screenProps={screenProps}
@@ -81,13 +81,19 @@ const RootNavigation = ({ screenProps, seen_walkthrough }) => (
 		// Determine what the initial route screen is based on first-run rules
 		initialRouteName={
 			seen_walkthrough ?
-				'Tabs' : 'Walkthrough'
+				logged_in ?
+					'Tabs'
+					:
+					'Login'
+				:
+				'Walkthrough'
 		} />
 );
 
 // Map Redux state to this component's props
 const mapStateToProps = (state) => ({
-	seen_walkthrough: state.justOnce.seen_walkthrough || false
+	seen_walkthrough: state.justOnce.seen_walkthrough || false,
+	logged_in: state.login.logged_in || false,
 })
 
 export default connect(mapStateToProps)(RootNavigation)
