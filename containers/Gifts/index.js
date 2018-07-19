@@ -10,6 +10,7 @@ import FontedText from '../../components/FontedText'
 import Carousel from 'react-native-snap-carousel';
 import BackHeader from '../../components/BackHeader';
 
+const height = Dimensions.get('window').height
 const width = Dimensions.get('window').width
 
 
@@ -29,7 +30,7 @@ export default class Gifts extends Component {
 		}
 	_renderItem ({item}) {
 		return (
-			<View style={{flex:1,flexDirection:'column',justifyContent:'center',alignItems:'center',backgroundColor:'#474668',borderRadius:40}}>
+			<View style={{flexDirection:'column',paddingVertical: 20, justifyContent:'center',alignItems:'center',backgroundColor:'#474668',borderRadius:40}}>
 				<Image style={{ width:160, height: 160, resizeMode:'contain',borderRadius:50,marginBottom:12}} source={{ uri: item.photo }} />
 				<FontedText style={{color: 'white', fontSize: 23, textAlign: 'center'}}>{item.title}</FontedText>
 				<FontedText style={{color: 'white', fontSize: 16, textAlign: 'center'}}>{item.description}</FontedText>
@@ -39,35 +40,37 @@ export default class Gifts extends Component {
 	
 	render() {
 		return (
-			<Container style={{backgroundColor: bgColor, paddingBottom: 15}}>
+			<Container style={{backgroundColor: bgColor}}>
 				<BackHeader
 					navigation={this.props.navigation}
 					title='الهدايا' />
 
-			<View style={{flex:1,alignItems:'center',justifyContent:'center',paddingVertical:100}} >
-				<Carousel
-					ref={(c) => { this._carousel = c; }}
-					data={this.state.data}
-					renderItem={this._renderItem}
-					sliderWidth={width}
-					itemWidth={width*0.75}
-					activeSlideAlignment='center'
-					layout={'default'} 
-					//layoutCardOffset={9}
-					showsHorizontalScrollIndicator={true}
-            	/>
+				<View style={{ flex: 0.88 }} >
+					<Carousel
+						contentContainerCustomStyle={{ marginTop: 83 }}
+						ref={(c) => { this._carousel = c; }}
+						data={this.state.data}
+						renderItem={this._renderItem}
+						sliderWidth={width}
+						itemWidth={width*0.75}
+						activeSlideAlignment='center'
+						layout={'default'} 
+						//layoutCardOffset={9}
+					/>
 				</View>
-				<TouchableOpacity style={{bottom:-15}}>
+
+				<TouchableOpacity style={{ flex: 0.12 }} >
 							<LinearGradient
 								colors={['#b28003', '#f9ce63']}
 								start={{ x: 0.0, y: 1.0 }}
 								end={{ x: 1.0, y: 0.0 }}
 								style={{
-									paddingVertical: 12
+									paddingVertical: 12,
+									flex: 1
 								}}>
 								<FontedText style={{ color: bgColor, textAlign: 'center', fontSize: 19 }}>اختار الهدية</FontedText>
 							</LinearGradient>
-						</TouchableOpacity>
+				</TouchableOpacity>
 			</Container>
 		)
 	}
