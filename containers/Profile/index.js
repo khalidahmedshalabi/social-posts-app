@@ -193,15 +193,15 @@ export default class Profile extends Component {
 									<TouchableOpacity
 										onPress={
 											() => {
-												this.props.navigation.navigate("ContactUs")
+												this.props.navigation.navigate("EditProfile")
 											}
 										}
 										activeOpacity={0.7}>
 										<View style={{ backgroundColor: '#474668', borderRadius: boxBorderRadius, height: boxDim, width: boxDim, justifyContent: 'center', alignItems: 'center' }}>
-											<MaterialIcons name='feedback' size={70} color={mainColor} />
+											<Ionicons name='md-exit' size={70} color={mainColor} />
 										</View>
 
-										<FontedText style={{ color: 'white', textAlign: 'center', marginTop: 13, fontSize: fontSize }}>تواصل معنا</FontedText>
+										<FontedText style={{ color: 'white', textAlign: 'center', marginTop: 13, fontSize: fontSize }}>تسجيل الخروج</FontedText>
 									</TouchableOpacity>
 								</View>
 								
@@ -234,6 +234,24 @@ export default class Profile extends Component {
 										</View>
 
 										<FontedText style={{ color: 'white', textAlign: 'center', marginTop: 13, fontSize: fontSize }}>منشورات شاهدتها</FontedText>
+									</TouchableOpacity>
+								</View>
+							</View>
+
+							<View style={{ flexDirection: 'row', marginVertical: 20 }}>
+								<View style={{ flex: 0.50, alignItems: 'center' }}>
+									<TouchableOpacity
+										onPress={
+											() => {
+												this.props.navigation.navigate("ContactUs")
+											}
+										}
+										activeOpacity={0.7}>
+										<View style={{ backgroundColor: '#474668', borderRadius: boxBorderRadius, height: boxDim, width: boxDim, justifyContent: 'center', alignItems: 'center' }}>
+											<MaterialIcons name='feedback' size={70} color={mainColor} />
+										</View>
+
+										<FontedText style={{ color: 'white', textAlign: 'center', marginTop: 13, fontSize: fontSize }}>تواصل معنا</FontedText>
 									</TouchableOpacity>
 								</View>
 							</View>
