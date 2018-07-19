@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import {
 	StyleSheet,
 	View,
@@ -15,7 +16,7 @@ import Swiper from 'react-native-swiper';
 const width = Dimensions.get('window').width
 
 
-export default class Walkthrough extends Component {
+class Walkthrough extends Component {
 	ShouldAnim1= true
 	ShouldAnim2=true
 	ShouldAnim3=true
@@ -210,7 +211,7 @@ export default class Walkthrough extends Component {
 							<Button 
 								onPress={
 									() => {
-										this.props.navigation.navigate("Login")
+										this.props.markSeenWalkthrough(true)
 									}
 								}
 								style={{ backgroundColor: mainColor, paddingHorizontal: width * 0.35, paddingVertical: 15, borderRadius: 20, marginTop: 25 }}>
@@ -225,6 +226,7 @@ export default class Walkthrough extends Component {
 		)
 	}
 }
+
 const styles = StyleSheet.create({
 	contentContainerIcon: {
 		justifyContent: 'center',
@@ -245,3 +247,15 @@ const styles = StyleSheet.create({
 		alignItems: 'center'
 	},
 });
+
+function mergeProps(stateProps, dispatchProps, ownProps) {
+	const { dispatch } = dispatchProps;
+	const { actions } = require('../../redux/JustOnceRedux.js');
+	return {
+		...ownProps,
+		...stateProps,
+		markSeenWalkthrough: (seen) => actions.markSeenWalkthrough(dispatch, seen)
+	};
+}
+
+export default connect(undefined, undefined, mergeProps)(Walkthrough)
