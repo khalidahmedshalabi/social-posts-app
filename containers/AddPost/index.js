@@ -35,7 +35,6 @@ class AddPost extends Component {
 	}
 
 	componentDidMount() {
-
 		if (this.props.navigation.state.params) {
 			this.setState({
 				title: this.props.navigation.state.params.title,
@@ -259,12 +258,12 @@ class AddPost extends Component {
 								overlayStyle={{ backgroundColor: 'rgba(0,0,0,0.3)' }}
 								cancelTextStyle={{ color: '#f44242', fontSize: 17, fontFamily: 'droidkufi' }}
 								data={country_data}
-								initValue="الدولة"
+								initValue={this.state.country || 'الدولة'}
 								supportedOrientations={['portrait']}
 								accessible={true}
 								scrollViewAccessibilityLabel={'Scrollable options'}
 								cancelButtonAccessibilityLabel={'Cancel Button'}
-								onChange={(option) => this.setState({ textInputValue: option.label })}
+								onChange={(option) => this.setState({ country: option.label })}
 							//value={this.state.country}
 							/>
 						</View>
@@ -283,12 +282,12 @@ class AddPost extends Component {
 								overlayStyle={{ backgroundColor: 'rgba(0,0,0,0.3)' }}
 								cancelTextStyle={{ color: '#f44242', fontSize: 17, fontFamily: 'droidkufi' }}
 								data={age_data}
-								initValue="العمر"
+								initValue={this.state.age || 'العمر'}
 								supportedOrientations={['portrait']}
 								accessible={true}
 								scrollViewAccessibilityLabel={'Scrollable options'}
 								cancelButtonAccessibilityLabel={'Cancel Button'}
-								onChange={(option) => { this.setState({ textInputValue: option.label }) }}
+								onChange={(option) => { this.setState({ age: option.label }) }}
 							//	labelExtractor={(age_data)=> {age_data.label}}
 							//value={this.state.age}
 							/>
@@ -307,12 +306,12 @@ class AddPost extends Component {
 								overlayStyle={{ backgroundColor: 'rgba(0,0,0,0.3)' }}
 								cancelTextStyle={{ color: '#f44242', fontSize: 17, fontFamily: 'droidkufi' }}
 								data={gender_data}
-								initValue="الجنس"
+								initValue={this.state.gender || 'الجنس'}
 								supportedOrientations={['portrait']}
 								accessible={true}
 								scrollViewAccessibilityLabel={'Scrollable options'}
 								cancelButtonAccessibilityLabel={'Cancel Button'}
-								onChange={(option) => { this.setState({ textInputValue: option.label }) }}
+								onChange={(option) => { this.setState({ gender: option.label }) }}
 							//value={this.state.gender}
 							/>
 						</View>
@@ -343,16 +342,6 @@ class AddPost extends Component {
 					</View>
 				</Content>
 
-				<Toast
-					ref="toast"
-					style={{ backgroundColor: '#dcdee2', borderRadius: 25 }}
-					position='bottom'
-					positionValue={height * 0.30}
-					fadeInDuration={750}
-					fadeOutDuration={1000}
-					opacity={0.8}
-					textStyle={{ color: bgColor }} />
-
 				<View style={{ flexDirection: 'row', justifyContent: 'space-around', paddingVertical: 10 }}>
 					<TouchableOpacity style={{ borderRadius: 20, flex: 0.5, marginHorizontal: 10 }}>
 						<LinearGradient
@@ -378,6 +367,16 @@ class AddPost extends Component {
 						<FontedText style={{ color: mainColor, fontSize: 15 }}>حفظ كمسودة</FontedText>
 					</TouchableOpacity>
 				</View>
+
+				<Toast
+					ref="toast"
+					style={{ backgroundColor: '#dcdee2', borderRadius: 25 }}
+					position='bottom'
+					positionValue={height * 0.30}
+					fadeInDuration={750}
+					fadeOutDuration={1000}
+					opacity={0.8}
+					textStyle={{ color: bgColor }} />
 			</LazyContainer>
 		)
 	}
