@@ -11,16 +11,98 @@ import DatePicker from 'react-native-datepicker'
 import ModalSelector from 'react-native-modal-selector'
 import * as Animatable from 'react-native-animatable';
 import BackHeader from '../../components/BackHeader';
-
-
+import { POST, GET } from '../../utils/Network';
+import Toast from 'react-native-easy-toast';
+import { height } from '../../constants/Layout';
 
 export default class EditProfile extends Component {
 	constructor(props) {
 		super(props)
-		this.state = { date: '' }
+		
+		this.state = {
+			fetchedSettings: false,
+
+			didNameChange: false,
+			didEmailChange: false,
+			didPasswordChange: false,
+			didBirthdateChange: false,
+			didCountryChange: false,
+			didGenderChange: false,
+
+			name: '',
+			email: '',
+			password: '',
+			birthdate: '',
+			country: '',
+			gender: '',
+		}
+	}
+
+	componentDidMount () {
+		GET('EditProfile',
+			res => {
+				this.setState({ ...res.data.settings, fetchedSettings: true })
+			},
+			err => {
+
+			},
+		)
+	}
+
+	onSaveSettings = () => {
+		const { didNameChange, didEmailChange, didPasswordChange, didBirthdateChange, didCountryChange, didGenderChange } = this.state
+
+		let
+			settings_to_update = {},
+			didAnySettingChange = false
+
+		if (didEmailChange) {
+			settings_to_update['email'] = this.state.email
+			didAnySettingChange = true
+		}
+		if (didNameChange) {
+			settings_to_update['name'] = this.state.name
+			didAnySettingChange = true
+		}
+		if (didBirthdateChange) {
+			settings_to_update['birthdate'] = this.state.birthdate
+			didAnySettingChange = true
+		}
+		if (didGenderChange) {
+			settings_to_update['gender'] = this.state.gender
+			didAnySettingChange = true
+		}
+		if (didPasswordChange) {
+			settings_to_update['password'] = this.state.password
+			didAnySettingChange = true
+
+			if (this.state.password.length < 8) {
+				this.refs.toast.show('الحد الادني لكلمة المرور 8 حروف او ارقام او رموز');
+				return
+			}
+		}
+		if (didCountryChange) {
+			settings_to_update['country'] = this.state.country
+			didAnySettingChange = true
+		}
+
+		if (didAnySettingChange) {
+			POST('EditProfile',
+				settings_to_update,
+				res => {
+
+				},
+				err => {
+					// on failure
+				},
+			)
+		}
+		this.props.navigation.goBack()
 	}
 
 	render() {
+		if (!this.state.fetchedSettings) return <View style={{ flex: 1, backgroundColor: bgColor }} />
+
 		const gender_data = [
 			{ key: 0, label: 'ذكر' },
 			{ key: 1, label: 'أنثى' },
@@ -58,7 +140,8 @@ export default class EditProfile extends Component {
 									flex: 0.85,
 									color: 'white'
 								}}
-								onChangeText={(text) => this.setState({ username: text })}
+								defaultValue={this.state.name}
+								onChangeText={(text) => this.setState({ name: text, didNameChange: true })}
 							/>
 						</View>
 
@@ -78,7 +161,8 @@ export default class EditProfile extends Component {
 									flex: 0.85,
 									color: 'white'
 								}}
-								onChangeText={(text) => this.setState({ emailaddress: text })}
+								defaultValue={this.state.email}
+								onChangeText={(text) => this.setState({ email: text, didEmailChange: true })}
 							/>
 						</View>
 
@@ -97,7 +181,7 @@ export default class EditProfile extends Component {
 									flex: 0.85,
 									color: 'white'
 								}}
-								onChangeText={(text) => this.setState({ password: text })}
+								onChangeText={(text) => this.setState({ password: text, didPasswordChange: true })}
 							/>
 						</View>
 
@@ -107,6 +191,7 @@ export default class EditProfile extends Component {
 							</View>
 
 							<ModalSelector
+								onChange={(option) => this.setState({ country: option.label, didCountryChange: true })}
 								style={{ width: '100%', flex: 0.85 }}
 								selectStyle={{ borderWidth: 0, paddingHorizontal: 0, paddingVertical: 0, alignItems: 'flex-start' }}
 								selectTextStyle={{ color: '#d8d8d8', fontFamily: 'droidkufi', fontSize: 17, marginLeft: 4 }}
@@ -115,7 +200,7 @@ export default class EditProfile extends Component {
 								overlayStyle={{ backgroundColor: 'rgba(0,0,0,0.3)' }}
 								cancelTextStyle={{ color: '#f44242', fontSize: 17, fontFamily: 'droidkufi' }}
 								data={country_data}
-								initValue="الدولة"
+								initValue={this.state.country}
 								supportedOrientations={['portrait']}
 								accessible={true}
 								scrollViewAccessibilityLabel={'Scrollable options'}
@@ -130,7 +215,7 @@ export default class EditProfile extends Component {
 
 							<DatePicker
 								style={{ width: '100%', flex: 0.85 }}
-								date={this.state.date}
+								date={this.state.birthdate}
 								placeholder="تاريخ الميلاد"
 								format="YYYY-MM-DD"
 								minDate="1930-01-01"
@@ -162,7 +247,7 @@ export default class EditProfile extends Component {
 										color: bgColor
 									}
 								}}
-								onDateChange={(date) => { this.setState({ date: date }) }}
+								onDateChange={(date) => { this.setState({ birthdate: date, didBirthdateChange: true }) }}
 							/>
 						</View>
 
@@ -172,6 +257,7 @@ export default class EditProfile extends Component {
 							</View>
 
 							<ModalSelector
+								onChange={(option) => this.setState({ gender: option.label, didGenderChange: true })}
 								style={{ width: '100%', flex: 0.85 }}
 								selectStyle={{borderWidth: 0, paddingHorizontal: 0, paddingVertical: 0, alignItems: 'flex-start'}}
 								selectTextStyle={{ color: '#d8d8d8', fontFamily: 'droidkufi', fontSize: 19 }}
@@ -180,7 +266,7 @@ export default class EditProfile extends Component {
 								overlayStyle={{ backgroundColor: 'rgba(0,0,0,0.3)' }}
 								cancelTextStyle={{ color: '#f44242', fontSize: 17, fontFamily: 'droidkufi' }}
 								data={gender_data}
-								initValue="الجنس"
+								initValue={this.state.gender}
 								supportedOrientations={['portrait']}
 								accessible={true}
 								scrollViewAccessibilityLabel={'Scrollable options'}
@@ -190,7 +276,9 @@ export default class EditProfile extends Component {
 					</View>
 				</Content>
 
-				<TouchableOpacity style={{ flex: 0.08 }}>
+				<TouchableOpacity 
+					onPress={this.onSaveSettings}
+					style={{ flex: 0.08 }}>
 					<LinearGradient
 						colors={['#b28003', '#f9ce63']}
 						start={{ x: 0.0, y: 1.0 }}
@@ -202,6 +290,15 @@ export default class EditProfile extends Component {
 						<FontedText style={{ color: bgColor, textAlign: 'center', fontSize: 19 }}>حفظ البيانات</FontedText>
 					</LinearGradient>
 				</TouchableOpacity>
+
+				<Toast ref="toast"
+					style={{ backgroundColor: '#dcdee2', borderRadius: 25, }}
+					position='bottom'
+					positionValue={height * 0.52}
+					fadeInDuration={750}
+					fadeOutDuration={1000}
+					opacity={0.8}
+					textStyle={{ color: bgColor }} />
 			</LazyContainer>
 		)
 	}
