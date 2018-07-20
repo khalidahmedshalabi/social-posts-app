@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { base_url, api_extension } from '../constants/Server';
+import { store } from '../ReduxProvider';
 
 // This function, handles when the response is a success/failure
 export const HandleHttpResponses = (response, onSuccess, onFailure) => {
@@ -22,7 +23,10 @@ const HTTP_REQUEST = (
 	onSuccess, onFailure) => {
 	axios({
 		method,
-		headers: { 'Content-Type': 'application/json' },
+		headers: {
+			'Content-Type': 'application/json',
+			'user_id': store.getState().login.user_id
+		},
 		url: `${base_url}${api_extension}${endpoint}`,
 		data: post_data
 	}).then(function (response) {

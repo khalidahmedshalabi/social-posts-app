@@ -7,6 +7,10 @@ import RootNavigation from './navigation/RootNavigation';
 
 const { persistor, store } = configureStore();
 
+// Export the store, so we can use it outside React components (where we can't connect)
+// I don't know if there's a better way to achieve that..
+export { store };
+
 const onBeforeLift = () => {
 	// take some action before the gate lifts
 }
