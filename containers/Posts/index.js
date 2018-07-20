@@ -1,12 +1,20 @@
 import React, { Component } from 'react';
 import { View, TouchableOpacity, FlatList, Image, Dimensions, Linking } from 'react-native';
 import { Video } from 'expo'
-import { Ionicons, MaterialCommunityIcons, Feather, FontAwesome } from '@expo/vector-icons';
+import { Ionicons, MaterialCommunityIcons, Feather, FontAwesome, Entypo } from '@expo/vector-icons';
 import { mainColor, bgColor } from '../../constants/Colors';
 import FontedText from '../../components/FontedText';
 import { Container } from 'native-base';
+import PopupDialog from 'react-native-popup-dialog';
 
 const height = Dimensions.get('window').height
+
+/*
+use this to show the modal
+
+this.popupDialog.show();
+
+*/
 
 export default class Posts extends Component {
 	constructor(props) {
@@ -205,7 +213,7 @@ export default class Posts extends Component {
 					name='md-checkmark-circle' size={55} color={'#ff5e5e'} />
 				}
 				
-				<TouchableOpacity 
+				<TouchableOpacity
 					activeOpacity= {0.7}
 					style={{ position: 'absolute', marginTop: height * 0.35, alignSelf: 'flex-end', paddingRight: 8 }}>
 					<MaterialCommunityIcons name='heart' size={60} color={'#B6B6B6'} />
@@ -222,6 +230,26 @@ export default class Posts extends Component {
 					ItemSeparatorComponent={ () => <View style={{ height: 20 }}></View> }
 					data={this.state.posts}
 					renderItem={({ item }) => this.renderItem(item)} />
+
+				<PopupDialog
+					dialogStyle={{ backgroundColor: bgColor, borderRadius: 10, justifyContent: 'center', alignItems: 'center' }}
+					width={0.80}
+					height={0.25}
+					ref={(popupDialog) => { this.popupDialog = popupDialog; }}>
+
+					<View>
+						<Entypo name='circle-with-plus' size={70} color={'#4d9336'} />
+					</View>
+					
+					<View style={{ flexDirection: 'row', marginTop: 15 }}>
+						<FontedText style={{ color: 'white', fontSize: 16 }}>لقد تم إضافة</FontedText>
+
+						<FontedText style={{ color: '#4d9336', fontSize: 16, marginLeft: 5 }}>10</FontedText>
+						<FontedText style={{ color: '#4d9336', fontSize: 16, marginRight: 5 }}>+</FontedText>
+
+						<FontedText style={{ color: 'white', fontSize: 16 }}>نقطة إلى حسابك</FontedText>
+					</View>
+				</PopupDialog>
 			</Container>
 		)
 	}
