@@ -59,8 +59,13 @@ class Login extends Component {
 				res => {
 					const { user_id } = res.data
 
-					this.props.setUserID(user_id)
-					this.successfulLoginTransition()
+					if(user_id > 1) {
+						this.props.setUserID(user_id)
+						this.successfulLoginTransition()
+					}
+					else {
+						this.refs.toast.show('بريد الكتروني غير مسجل او كلمة المرور خاطئة');
+					}
 				},
 				err => this.refs.toast.show('خطاء فى الشبكة'))
 		}
