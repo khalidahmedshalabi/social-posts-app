@@ -121,41 +121,7 @@ export default class Profile extends Component {
 						<Animatable.View animation="fadeInUp" duration={1000} delay={500} 
 							style={{ paddingTop: height*0.10, alignItems: 'center' }}>
 							<View style={{ flexDirection: 'row' }}>
-								<View style={{ flex: 0.50, alignItems: 'center' }}>
-									<TouchableOpacity
-										onPress={
-											() => {
-												this.props.navigation.navigate("AddPost",{ })
-											}
-										}
-										activeOpacity={0.7}>
-										<View style={{ backgroundColor: '#474668', borderRadius: boxBorderRadius, height: boxDim, width: boxDim, justifyContent: 'center', alignItems: 'center' }}>
-											<Ionicons name='md-add' size={70} color={mainColor} />
-										</View>
-
-										<FontedText style={{ color: 'white', textAlign: 'center', marginTop: 13, fontSize: fontSize }}>إضافة منشور</FontedText>
-									</TouchableOpacity>
-								</View>
-
-								<View style={{ flex: 0.50, alignItems: 'center'}}>
-									<TouchableOpacity 
-										onPress={
-											() => {
-												this.props.navigation.navigate("Gifts")
-											}
-										}
-										activeOpacity={0.7}>
-									<View style={{ backgroundColor: '#474668', borderRadius: boxBorderRadius, height: boxDim, width: boxDim, justifyContent: 'center', alignItems: 'center' }}>
-											<MaterialCommunityIcons name='gift' size={70} color={mainColor} />
-										</View>
-
-										<FontedText style={{ color: 'white', textAlign: 'center', marginTop: 13, fontSize: fontSize }}>الهدايا</FontedText>
-									</TouchableOpacity>
-								</View>
-							</View>
-
-							<View style={{ flexDirection: 'row', marginTop: 20 }}>
-								<View style={{ flex: 0.50, alignItems: 'center' }}>
+								<View style={{ flex: 0.333, alignItems: 'center' }}>
 									<TouchableOpacity
 										onPress={
 											() => {
@@ -171,7 +137,91 @@ export default class Profile extends Component {
 									</TouchableOpacity>
 								</View>
 
-								<View style={{ flex: 0.50, alignItems: 'center' }}>
+								<View style={{ flex: 0.333, alignItems: 'center' }}>
+									<TouchableOpacity
+										onPress={
+											() => {
+												this.props.navigation.navigate("AddPost", {})
+											}
+										}
+										activeOpacity={0.7}>
+										<View style={{ backgroundColor: '#474668', borderRadius: boxBorderRadius, height: boxDim, width: boxDim, justifyContent: 'center', alignItems: 'center' }}>
+											<Ionicons name='md-add' size={70} color={mainColor} />
+										</View>
+
+										<FontedText style={{ color: 'white', textAlign: 'center', marginTop: 13, fontSize: fontSize }}>إضافة منشور</FontedText>
+									</TouchableOpacity>
+								</View>
+
+								<View style={{ flex: 0.333, alignItems: 'center' }}>
+									<TouchableOpacity
+										onPress={
+											() => {
+												this.props.navigation.navigate("Gifts")
+											}
+										}
+										activeOpacity={0.7}>
+										<View style={{ backgroundColor: '#474668', borderRadius: boxBorderRadius, height: boxDim, width: boxDim, justifyContent: 'center', alignItems: 'center' }}>
+											<MaterialCommunityIcons name='gift' size={70} color={mainColor} />
+										</View>
+
+										<FontedText style={{ color: 'white', textAlign: 'center', marginTop: 13, fontSize: fontSize }}>الهدايا</FontedText>
+									</TouchableOpacity>
+
+									<View
+										style={{
+											width: 28,
+											height: 28,
+											backgroundColor: mainColor,
+											borderRadius: 14,
+											borderWidth: 1,
+											borderColor: 'white',
+											justifyContent: 'center',
+											alignItems: 'center',
+											position: 'absolute',
+											top: -8,
+											right: 80,
+											zIndex: 2
+										}}>
+										<FontedText style={{ color: bgColor, fontSize: 15 }}>3</FontedText>
+									</View>
+								</View>
+							</View>
+
+							<View style={{ flexDirection: 'row', marginTop: 20 }}>
+								<View style={{ flex: 0.333, alignItems: 'center' }}>
+									<TouchableOpacity
+										onPress={
+											() => {
+												this.props.navigation.navigate("EditProfile")
+											}
+										}
+										activeOpacity={0.7}>
+										<View style={{ backgroundColor: '#474668', borderRadius: boxBorderRadius, height: boxDim, width: boxDim, justifyContent: 'center', alignItems: 'center' }}>
+											<Ionicons name='md-exit' size={70} color={mainColor} />
+										</View>
+
+										<FontedText style={{ color: 'white', textAlign: 'center', marginTop: 13, fontSize: fontSize }}>تسجيل الخروج</FontedText>
+									</TouchableOpacity>
+								</View>
+								
+								<View style={{ flex: 0.333, alignItems: 'center' }}>
+									<TouchableOpacity
+										onPress={
+											() => {
+												this.props.navigation.navigate("EditProfile")
+											}
+										}
+										activeOpacity={0.7}>
+										<View style={{ backgroundColor: '#474668', borderRadius: boxBorderRadius, height: boxDim, width: boxDim, justifyContent: 'center', alignItems: 'center' }}>
+											<Ionicons name='md-settings' size={70} color={mainColor} />
+										</View>
+
+										<FontedText style={{ color: 'white', textAlign: 'center', marginTop: 13, fontSize: fontSize }}>تعديل الحساب</FontedText>
+									</TouchableOpacity>
+								</View>
+
+								<View style={{ flex: 0.333, alignItems: 'center' }}>
 									<TouchableOpacity
 										onPress={
 											() => {
@@ -204,39 +254,6 @@ export default class Profile extends Component {
 										<FontedText style={{ color: 'white', textAlign: 'center', marginTop: 13, fontSize: fontSize }}>تواصل معنا</FontedText>
 									</TouchableOpacity>
 								</View>
-
-								<View style={{ flex: 0.50, alignItems: 'center' }}>
-									<TouchableOpacity
-										onPress={
-											() => {
-												this.props.navigation.navigate("EditProfile")
-											}
-										}
-										activeOpacity={0.7}>
-										<View style={{ backgroundColor: '#474668', borderRadius: boxBorderRadius, height: boxDim, width: boxDim, justifyContent: 'center', alignItems: 'center' }}>
-											<Ionicons name='md-settings' size={70} color={mainColor} />
-										</View>
-
-										<FontedText style={{ color: 'white', textAlign: 'center', marginTop: 13, fontSize: fontSize }}>تعديل الحساب</FontedText>
-									</TouchableOpacity>
-								</View>
-							</View>
-
-							<View 
-								style={{ 
-								width: 28, 
-								height: 28, 
-								backgroundColor: mainColor, 
-								borderRadius: 14, 
-								borderWidth: 1, 
-								borderColor: 'white', 
-								justifyContent: 'center', 
-								alignItems: 'center', 
-								position: 'absolute',
-								top: 50,
-								right: 115 
-								}}>
-								<FontedText style={{ color: bgColor, fontSize: 15 }}>3</FontedText>
 							</View>
 						</Animatable.View>
 
