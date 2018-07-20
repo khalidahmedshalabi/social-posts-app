@@ -13,6 +13,12 @@ export default class Posts extends Component {
 		super(props)
 
 		this.state = {
+			liked:false,
+			likeCount:0,
+			Watched:false,
+			heartClick:false,
+			color:true,
+			opacity:true,
 			posts: [
 				{
 					key: '1',
@@ -68,7 +74,41 @@ export default class Posts extends Component {
 			]
 		}
 	}
+	//_onPlaybackStatusUpdate = playbackStatus => {
+	//	if (playbackStatus.didJustFinish){
+			//console.log("Video Ended")
+	//		{this.setState({heartClick:true})}
+	//		{this.onPressHeart()}
+	//		{this.setState({Watched:true})}
+//			{this.ShouldRenderHeart()}
+		//}
+		  // The player has just finished playing and will stop.
+	  //};
+	onPressHeart = (key) => {
+		
+		
+		const index = this.state.posts.findIndex((el) => el.key === key);
+		
+		
+		let copy_posts = [...this.state.posts];
+		
+		copy_posts = copy_posts.filter(post => ({ ...post, Hcolor: 'blue' }))
 
+		let post = { ...copy_posts[index] };
+		post.Hcolor = 'red';
+		copy_posts[index] = post;
+		this.setState({
+			posts: copy_posts
+		});
+		
+		/*const index = this.state.posts.findIndex((el) => el.key === key);
+			let allItems = [...this.state.posts];
+			let filteredItems = allItems.filter( index  => index.Hcolor = 'red');
+			console.log('index:'+index)
+			this.setState({ posts: filteredItems })*/
+		  
+
+	}
 	onPressPlayVideo = (key) => {
 		// Find index by key
 		const index = this.state.posts.findIndex((el) => el.key === key);
@@ -88,12 +128,38 @@ export default class Posts extends Component {
 		// Update our copy of posts array
 		copy_posts[index] = post;
 
-		// Update component's state
 		this.setState({
 			posts: copy_posts
 		});
+		// Update component's state
 	}
+	/*ShouldRenderHeart = () => {
+		const changeState = this.state.color ? '#B6B6B6' : 'red'
+		const changeState = this.state.opacity ? '1' : '0.7'
+		if (this.state.heartClick) {
+			return (
+				<TouchableOpacity onPress={() => {
+						this.setState({color:false})
+						}}
+					activeOpacity= {0.7}
+					style={{ position: 'absolute', marginTop: height * 0.35, alignSelf: 'flex-end', paddingRight: 8 }}>
+					<MaterialCommunityIcons name='heart' size={60} color={changeState} />
+				</TouchableOpacity>
+			)		
+		}
 
+		else
+		{
+			return(
+				<View style={{ position: 'absolute', marginTop: height * 0.35, alignSelf: 'flex-end', paddingRight: 8 }} >
+					<MaterialCommunityIcons name='heart' size={60} color={changeState} />
+				</View>
+			)
+		}
+			
+		
+
+	};*/
 	renderCorrectMediaComponent = (key, is_playing, media_type, media_url) => {
 		if(media_type == 0) {
 			// link type
@@ -132,7 +198,10 @@ export default class Posts extends Component {
 				<View style={{
 					backgroundColor: 'white', alignItems: 'center', borderTopLeftRadius: 10, borderTopRightRadius: 10 }}>
 					<Video
+						ref={this.handleVideoRef}
 						source={{ uri: media_url }}
+		//				onPlaybackStatusUpdate=
+		//				{(playbackStatus) => this._onPlaybackStatusUpdate(playbackStatus)}
 						rate={1.0}
 						volume={1.0}
 						isMuted={false}
@@ -168,7 +237,7 @@ export default class Posts extends Component {
 		}	
 	}
 
-	renderItem = (item) => {
+	renderItem = (item) => { const changeState = this.state.opacity ? 0.7 : 1;
 		return (
 			<View style={{ opacity: item.is_completed == 0 ? null : 0.5 }}>
 				{this.renderCorrectMediaComponent(item.key, item.is_playing, item.media_type, item.media_url)}
@@ -205,10 +274,14 @@ export default class Posts extends Component {
 					name='md-checkmark-circle' size={55} color={'#ff5e5e'} />
 				}
 				
-				<TouchableOpacity 
-					activeOpacity= {0.7}
+				<TouchableOpacity 						
+					onPress={() => { this.onPressHeart(item.key) 
+						this.setState({opacity:false})
+					}}
+						
+					activeOpacity= {changeState}
 					style={{ position: 'absolute', marginTop: height * 0.35, alignSelf: 'flex-end', paddingRight: 8 }}>
-					<MaterialCommunityIcons name='heart' size={60} color={'#B6B6B6'} />
+					<MaterialCommunityIcons name='heart' size={60} color={item.Hcolor} />
 				</TouchableOpacity>
 			</View>
 		)
