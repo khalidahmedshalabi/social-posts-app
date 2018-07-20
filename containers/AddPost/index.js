@@ -10,52 +10,67 @@ import FontedInput from '../../components/FontedInput';
 import LazyContainer from '../../components/LazyContainer';
 import ModalSelector from 'react-native-modal-selector'
 import BackHeader from '../../components/BackHeader';
-import Toast, {DURATION} from 'react-native-easy-toast';
+import Toast from 'react-native-easy-toast';
 import { height } from '../../constants/Layout';
 import { base_url, api_extension } from '../../constants/Server';
 
 
 class AddPost extends Component {
-	componentDidMount () {
-		
-			if(this.props.navigation.state.params)
-			{
-			this.setState({title:this.props.navigation.state.params.title,content:this.props.navigation.state.params.content,link:this.props.navigation.state.params.link,country:this.props.navigation.state.params.country,age:this.props.navigation.state.params.age,gender:this.props.navigation.state.params.gender,max_reaches:this.props.navigation.state.params.max_reaches})
-			}
-			else{}
-	}
 	constructor() {
 		super()
 
 		this.state = {
 			image: null,
-			title: '', 
+			title: '',
 			content: '',
 			link: '',
-			country:'',
-			age:'', 
+			country: '',
+			age: '',
 			gender: '',
-			max_reaches:'',
+			max_reaches: '',
 			media_type: 0, // 0 link, 1 image, 2 video,
 			post_id: 0,
 		}
 
 	}
-	DotheDraft = () => {
-		if(this.state.title)
-		{
-			this.props.addDraftPost({title:this.state.title ,content: this.state.content, link:this.state.link,country:this.state.country,age:this.state.age,gender:this.state.gender,max_reaches:this.state.max_reaches,})
-			console.log("title::"+this.state.title)
-			console.log("content::"+this.state.content)
-			console.log("country::"+this.state.country)
+
+	componentDidMount() {
+
+		if (this.props.navigation.state.params) {
+			this.setState({
+				title: this.props.navigation.state.params.title,
+				content: this.props.navigation.state.params.content,
+				link: this.props.navigation.state.params.link,
+				country: this.props.navigation.state.params.country,
+				age: this.props.navigation.state.params.age,
+				gender: this.props.navigation.state.params.gender,
+				max_reaches: this.props.navigation.state.params.max_reaches
+			})
+		}
+	}
+
+	addToDraft = () => {
+		if (this.state.title) {
+			this.props.addDraftPost({ 
+				title: this.state.title, 
+				content: this.state.content, 
+				link: this.state.link, 
+				country: this.state.country, 
+				age: this.state.age, 
+				gender: this.state.gender, 
+				max_reaches: this.state.max_reaches
+			})
+			//console.log("title::" + this.state.title)
+			//console.log("content::" + this.state.content)
+			//console.log("country::" + this.state.country)
 			this.props.navigation.push("Drafts")
 		}
-		else
-		{
+		else {
 			this.refs.toast.show('تأكد من ادخال العنوان');
 		}
-		
+
 	}
+
 	openImagePicker = async () => {
 		const result = await ImagePicker.launchImageLibraryAsync({
 			mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -72,7 +87,7 @@ class AddPost extends Component {
 	}
 
 	pickImage = async () => {
-		if(Platform.OS === 'ios') {
+		if (Platform.OS === 'ios') {
 			const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
 
 			if (status === 'granted') {
@@ -109,13 +124,13 @@ class AddPost extends Component {
 	}
 
 	renderPickedImage = () => {
-		if(this.state.image) {
+		if (this.state.image) {
 			return (
 				<Image
 					source={{ uri: this.state.image }}
 					style={{ width: 250, height: 250 }}
 					resizeMode='contain'
-					/>
+				/>
 			)
 		}
 		else {
@@ -150,13 +165,13 @@ class AddPost extends Component {
 		];
 
 		return (
-			<LazyContainer style={{backgroundColor: bgColor}}>
+			<LazyContainer style={{ backgroundColor: bgColor }}>
 				<BackHeader
 					navigation={this.props.navigation}
 					title='إضافة منشور' />
 
 				<Content>
-					<TouchableOpacity 
+					<TouchableOpacity
 						onPress={() => this.pickImage()}
 						style={{ flex: 0.55, justifyContent: 'center', alignItems: 'center', paddingVertical: 30 }}>
 						{this.renderPickedImage()}
@@ -176,7 +191,7 @@ class AddPost extends Component {
 									flex: 0.85,
 									color: 'white'
 								}}
-								onChangeText={(text) => this.setState({title:text})}
+								onChangeText={(text) => this.setState({ title: text })}
 								value={this.state.title}
 
 							/>
@@ -206,7 +221,7 @@ class AddPost extends Component {
 									paddingTop: 10,
 									paddingLeft: 13
 								}}
-								onChangeText={(text) => this.setState({content:text})}
+								onChangeText={(text) => this.setState({ content: text })}
 								value={this.state.content}
 							/>
 						</View>
@@ -225,7 +240,7 @@ class AddPost extends Component {
 									flex: 0.85,
 									color: 'white'
 								}}
-								onChangeText={(text) => this.setState({link:text})}
+								onChangeText={(text) => this.setState({ link: text })}
 								value={this.state.link}
 							/>
 						</View>
@@ -249,8 +264,8 @@ class AddPost extends Component {
 								accessible={true}
 								scrollViewAccessibilityLabel={'Scrollable options'}
 								cancelButtonAccessibilityLabel={'Cancel Button'}
-								onChange={(option) =>  this.setState({textInputValue:option.label})}
-								//value={this.state.country}
+								onChange={(option) => this.setState({ textInputValue: option.label })}
+							//value={this.state.country}
 							/>
 						</View>
 
@@ -273,9 +288,9 @@ class AddPost extends Component {
 								accessible={true}
 								scrollViewAccessibilityLabel={'Scrollable options'}
 								cancelButtonAccessibilityLabel={'Cancel Button'}
-								onChange={(option)=>{ this.setState({textInputValue:option.label})}}
+								onChange={(option) => { this.setState({ textInputValue: option.label }) }}
 							//	labelExtractor={(age_data)=> {age_data.label}}
-								//value={this.state.age}
+							//value={this.state.age}
 							/>
 						</View>
 						<View style={{ flex: 1, paddingVertical: 5, width: '100%', flexDirection: 'row', alignItems: 'center', borderBottomWidth: 1, borderBottomColor: '#39384b' }}>
@@ -285,10 +300,10 @@ class AddPost extends Component {
 
 							<ModalSelector
 								style={{ width: '100%', flex: 0.85 }}
-								selectStyle={{borderWidth: 0, paddingHorizontal: 0, paddingVertical: 0, alignItems: 'flex-start'}}
+								selectStyle={{ borderWidth: 0, paddingHorizontal: 0, paddingVertical: 0, alignItems: 'flex-start' }}
 								selectTextStyle={{ color: '#d8d8d8', fontFamily: 'droidkufi', fontSize: 19 }}
 								optionTextStyle={{ color: bgColor, fontSize: 17, fontFamily: 'droidkufi' }}
-								cancelText= 'إلغاء'
+								cancelText='إلغاء'
 								overlayStyle={{ backgroundColor: 'rgba(0,0,0,0.3)' }}
 								cancelTextStyle={{ color: '#f44242', fontSize: 17, fontFamily: 'droidkufi' }}
 								data={gender_data}
@@ -297,8 +312,8 @@ class AddPost extends Component {
 								accessible={true}
 								scrollViewAccessibilityLabel={'Scrollable options'}
 								cancelButtonAccessibilityLabel={'Cancel Button'}
-								onChange={(option)=>{ this.setState({textInputValue:option.label})}}							
-								//value={this.state.gender}
+								onChange={(option) => { this.setState({ textInputValue: option.label }) }}
+							//value={this.state.gender}
 							/>
 						</View>
 
@@ -317,7 +332,7 @@ class AddPost extends Component {
 									flex: 0.70,
 									color: 'white'
 								}}
-								onChangeText={(text) => this.setState({max_reaches:text})}
+								onChangeText={(text) => this.setState({ max_reaches: text })}
 								value={this.state.max_reaches}
 							/>
 
@@ -354,10 +369,10 @@ class AddPost extends Component {
 						</LinearGradient>
 					</TouchableOpacity>
 
-				
+
 					<TouchableOpacity style={{ flex: 0.5, borderWidth: 1, borderColor: mainColor, marginHorizontal: 10, borderRadius: 20, justifyContent: 'center', alignItems: 'center' }}
 						onPress={() => {
-							{this.DotheDraft()}
+							{ this.addToDraft() }
 
 						}}>
 						<FontedText style={{ color: mainColor, fontSize: 15 }}>حفظ كمسودة</FontedText>
@@ -371,7 +386,7 @@ class AddPost extends Component {
 function mergeProps(stateProps, dispatchProps, ownProps) {
 	const { dispatch } = dispatchProps;
 	const { actions } = require('../../redux/DraftRedux.js');
-	
+
 	return {
 		...ownProps,
 		...stateProps,
