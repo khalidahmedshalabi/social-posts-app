@@ -6,7 +6,7 @@ import FontedText from '../../components/FontedText';
 import Toast from 'react-native-easy-toast';
 import { height, width } from '../../constants/Layout';
 import CodeInput from 'react-native-confirmation-code-input';
-import { GET } from '../../utils/Network';
+import { GET, POST } from '../../utils/Network';
 
 class CodeConfirmation extends Component {
 
@@ -25,12 +25,11 @@ class CodeConfirmation extends Component {
 			this.refs.toast.show('الكود خاطئ');
 		}
 		else {
-			const { sourceScreen } = this.props.navigation.state.params
+			const { sourceScreen, user_id } = this.props.navigation.state.params
 
 			switch(sourceScreen) {
 				case 'AccountInfo':
-					// Was creating a new account
-					const { user_id } = this.props.navigation.state.params
+					// Creating a new account
 
 					GET('Signup/ConfirmedSignup?user_id=' + user_id,
 						res => {
@@ -40,6 +39,23 @@ class CodeConfirmation extends Component {
 							}
 						},
 						() => {})
+					break;
+				case 'ResetPassword':
+					// Changing password
+					const { email, password } = this.props.navigation.state.params
+
+					POST('ResetPassword/ConfirmedResetPassword',
+						{
+							email,
+							password
+						},
+						res => {
+							if (res.data.response == 1) {
+								this.props.setUserID(user_id)
+								this.props.setLoggedIn(true)
+							}
+						},
+						() => { })
 					break;
 			}
 		}
