@@ -8,13 +8,58 @@ import FontedText from '../../components/FontedText';
 import DatePicker from 'react-native-datepicker'
 import ModalSelector from 'react-native-modal-selector'
 import * as Animatable from 'react-native-animatable';
-
-
+import Toast from 'react-native-easy-toast';
+import { height } from '../../constants/Layout';
+import { POST } from '../../utils/Network';
 
 export default class AccountInfo extends Component {
 	constructor(props) {
 		super(props)
-		this.state = { date: '' }
+
+		this.state = { 
+			birthdate: '',
+			country: '',
+			gender: '',
+		}
+	}
+
+	onSaveAccountInfo = () => {
+		const { birthdate, gender, country } = this.state
+
+		if(!birthdate || !gender || !country)
+			this.refs.toast.show('من فضلك قم بادخال كل البيانات')
+		else {
+			const { name, email, password } = this.props.navigation.state.params
+
+			POST('Signup', {
+				name, 
+				email, 
+				password,
+				birthdate, 
+				gender, 
+				country 
+			},
+			res => {
+				const { response } = res.data
+
+				switch(response) {
+					case 0:
+						this.refs.toast.show('هذا البريد الالكتروني مُستخدم من قبل')
+						break;
+					case -1:
+						this.refs.toast.show('لقد تم ارسال كود التحقق بالفعل. تفقد بريدك الالكتروني')
+						break;
+					case 1:
+						this.props.navigation.navigate("CodeConfirmation", { 
+							sourceScreen: 'AccountInfo', 
+							code: res.data.verification_code, 
+							user_id: res.data.user_id
+						})						
+						break;
+				}				
+			},
+			err => this.refs.toast.show('خطاء فى الشبكة'))
+		}
 	}
 
 	render() {
@@ -45,6 +90,7 @@ export default class AccountInfo extends Component {
 						</View>
 
 						<ModalSelector
+							onChange={(option) => this.setState({ country: option.label })}
 							style={{ width: '100%' }}
 							selectStyle={{ borderWidth: 0, paddingHorizontal: 0, paddingVertical: 0, alignItems: 'flex-start' }}
 							selectTextStyle={{ color: '#d8d8d8', fontFamily: 'droidkufi', fontSize: 19 }}
@@ -68,7 +114,7 @@ export default class AccountInfo extends Component {
 
 						<DatePicker
 							style={{width: '100%'}}
-							date={this.state.date}
+							date={this.state.birthdate}
 							placeholder="تاريخ الميلاد"
 							format="YYYY-MM-DD"
 							minDate="1930-01-01"
@@ -100,7 +146,7 @@ export default class AccountInfo extends Component {
 									color: bgColor
 								}
 							}}
-							onDateChange={(date) => { this.setState({ date: date }) }}
+							onDateChange={(date) => { this.setState({ birthdate: date }) }}
 						/>
 					</View>
 
@@ -110,6 +156,7 @@ export default class AccountInfo extends Component {
 						</View>
 
 						<ModalSelector
+							onChange={(option) => this.setState({ gender: option.label })}
 							style={{width: '100%'}}
 							selectStyle={{borderWidth: 0, paddingHorizontal: 0, paddingVertical: 0, alignItems: 'flex-start'}}
 							selectTextStyle={{ color: '#d8d8d8', fontFamily: 'droidkufi', fontSize: 19 }}
@@ -127,7 +174,9 @@ export default class AccountInfo extends Component {
 					</View>
 				</View>
 
-				<TouchableOpacity style={{ flex: 0.08 }}>
+				<TouchableOpacity 
+					onPress={this.onSaveAccountInfo}
+					style={{ flex: 0.08 }}>
 					<LinearGradient
 						colors={['#b28003', '#f9ce63']}
 						start={{ x: 0.0, y: 1.0 }}
@@ -139,6 +188,15 @@ export default class AccountInfo extends Component {
 						<FontedText style={{ color: bgColor, textAlign: 'center', fontSize: 19 }}>حفظ البيانات</FontedText>
 					</LinearGradient>
 				</TouchableOpacity>
+
+				<Toast ref="toast"
+					style={{ backgroundColor: '#dcdee2', borderRadius: 25, }}
+					position='bottom'
+					positionValue={height * 0.52}
+					fadeInDuration={750}
+					fadeOutDuration={1000}
+					opacity={0.8}
+					textStyle={{ color: bgColor }} />
 			</Container>
 		)
 	}

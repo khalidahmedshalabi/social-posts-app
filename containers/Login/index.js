@@ -26,7 +26,7 @@ class Login extends Component {
 		}
 	}
 
-	switch = () => {
+	successfulLoginTransition = () => {
 		this.successfulLoginTransitionID = Transition.show(
 			<Animatable.View animation="slideInUp" duration={20} style={{ flex: 1, backgroundColor: bgColor, justifyContent: 'center', alignItems: 'center' }}>
 				<MaterialCommunityIcons name='check-circle' size={150} color={'#24c144'} />
@@ -38,7 +38,7 @@ class Login extends Component {
 	loginUser = () => {
 		var emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 		var isValidEmail = emailRegex.test(this.state.emailaddress);
-		
+
 		if (!this.state.emailaddress || !this.state.password) {
 			this.refs.toast.show('برجاء ادخال البيانات كاملة');
 		}
@@ -49,7 +49,7 @@ class Login extends Component {
 			this.refs.toast.show('بريد الكتروني غير صالح');
 		}
 		else {
-			this.switch()
+			this.successfulLoginTransition()
 		}
 	};
 
@@ -58,7 +58,7 @@ class Login extends Component {
 			<Transition
 				onTransitioned={(id) => {
 					if (id == this.successfulLoginTransitionID)
-						requestAnimationFrame(() => this.props.setLoggedIn(true)) 
+						requestAnimationFrame(() => this.props.setLoggedIn(true))
 				}}>
 				<Container style={{ backgroundColor: bgColor }}>
 					<View style={{ flex: 0.33, justifyContent: 'flex-end', alignItems: 'center' }}>
