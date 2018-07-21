@@ -144,9 +144,25 @@ export default class Posts extends Component {
 						justifyContent: 'center',
 						alignItems: 'center'
 					}}>
-					<FontedText style={{ color: '#B6B6B6', fontSize: 40 }}>لا يوجد صورة</FontedText>
+					<Feather
+						name='link' size={70} color={'#b5b5b5'} />
 				</View>
 			)
+
+			/*return (
+				<View
+					style={{
+						backgroundColor: '#EEEEEE',
+						width: '100%',
+						height: 250,
+						borderTopLeftRadius: 10,
+						borderTopRightRadius: 10,
+						justifyContent: 'center',
+						alignItems: 'center'
+					}}>
+					<FontedText style={{ color: '#B6B6B6', fontSize: 40 }}>لا يوجد صورة</FontedText>
+				</View>
+			)*/
 		}
 		else if (media_type == 1) {
 			// Image type
