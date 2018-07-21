@@ -8,18 +8,12 @@ import { Container } from 'native-base';
 import PopupDialog from 'react-native-popup-dialog';
 const height = Dimensions.get('window').height
 
-/*
-+use this to show the modal
-+
-+this.popupDialog.show();
-+
-+*/
-
 export default class Posts extends Component {
 	constructor(props) {
 		super(props)
 
 		this.state = {
+			points_gained: 10,
 			posts: [
 				{
 					key: '1',
@@ -234,7 +228,12 @@ export default class Posts extends Component {
 
 		// Update component's state
 		this.setState({
-			posts: copy_posts
+			posts: copy_posts,
+			points_gained: 25
+		}, 
+		() => {
+			this.popupDialog.show();
+			setTimeout(() => this.popupDialog.dismiss(), 3000)
 		});
 	}
 
@@ -328,7 +327,7 @@ export default class Posts extends Component {
 					<View style={{ flexDirection: 'row', marginTop: 15 }}>
 						<FontedText style={{ color: 'white', fontSize: 16 }}>لقد تم إضافة</FontedText>
 
-						<FontedText style={{ color: '#4d9336', fontSize: 16, marginLeft: 5 }}>10</FontedText>
+						<FontedText style={{ color: '#4d9336', fontSize: 16, marginLeft: 5 }}>{this.state.points_gained}</FontedText>
 						<FontedText style={{ color: '#4d9336', fontSize: 16, marginRight: 5 }}></FontedText>
 
 						<FontedText style={{ color: 'white', fontSize: 16 }}>نقطة إلى حسابك</FontedText>
