@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, Image, Platform } from 'react-native';
+import { View, TouchableOpacity, Image, Platform, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux'
 import { Content } from 'native-base';
 import { LinearGradient, ImagePicker, Permissions } from 'expo';
@@ -13,6 +13,7 @@ import BackHeader from '../../components/BackHeader';
 import Toast from 'react-native-easy-toast';
 import { height } from '../../constants/Layout';
 import { base_url, api_extension } from '../../constants/Server';
+import { POST } from '../../utils/Network';
 
 
 class AddPost extends Component {
@@ -29,7 +30,8 @@ class AddPost extends Component {
 			gender: '',
 			max_reaches: '',
 			media_type: 0, // 0 link, 1 image, 2 video,
-			post_id: 0,
+
+			is_uploading_media: false,
 		}
 
 	}
@@ -96,7 +98,9 @@ class AddPost extends Component {
 		else this.openImagePicker()
 	}
 
-	uploadPostMedia = () => {
+	uploadPostMedia = (post_id) => {
+		this.setState({ is_uploading_media: true })
+
 		const apiUrl = `${base_url}${api_extension}Posts/UploadPostMedia`;
 		const uri = this.state.image;
 		const uriParts = uri.split('.');
@@ -105,9 +109,8 @@ class AddPost extends Component {
 
 		formData.append('document', {
 			uri,
-			name: `post_${this.state.post_id}_media.${fileType}`,
+			name: `post_${post_id}_media.${fileType}`,
 			type: `${this.state.media_type_str}/${fileType}`,
-			post_id: this.state.post_id
 		});
 
 		const options = {
@@ -116,10 +119,49 @@ class AddPost extends Component {
 			headers: {
 				Accept: 'application/json',
 				'Content-Type': 'multipart/form-data',
+				post_id
 			},
 		};
 
-		return fetch(apiUrl, options);
+		return fetch(apiUrl, options).then((response) => response.json())
+			.then((responseJson) => {
+				if(responseJson.response == 1) {
+					this.props.navigation.goBack()
+				} 
+			})
+			.catch((error) => {
+				console.error(error);
+				alert('error')
+			});
+	}
+
+	addPost = () => {
+		const { title, content, link, country, age, gender, max_reaches, media_type } = this.state
+
+		if (!title || !content || !link || !country || !age || !gender || max_reaches < 1)
+			return this.refs.toast.show('من فضلك قم بادخال كل البيانات')
+
+		POST('Posts/AddPost', 
+			{
+				title, 
+				content, 
+				link, 
+				country, 
+				age, 
+				gender, 
+				max_reaches: parseInt(max_reaches), 
+				media_type
+			},
+			res => {
+				if(media_type > 0 && this.state.image) {
+					const { post_id } = res.data
+					this.uploadPostMedia(post_id)
+				}
+				else this.props.navigation.goBack()
+			},
+			err => {
+
+			})
 	}
 
 	renderPickedImage = () => {
@@ -136,12 +178,21 @@ class AddPost extends Component {
 			return [
 				<SimpleLineIcons key='1' name='camera' size={100} color={'#93939b'} />
 				,
-				<FontedText key='2' style={{ color: '#d8d8d8', fontSize: 18 }}>إضافة صورة او فيديو</FontedText>
+				<FontedText key='2' style={{ color: '#d8d8d8', fontSize: 18 }}>إضافة صورة او فيديو | اختياري</FontedText>
 			]
 		}
 	}
 
 	render() {
+		if(this.state.is_uploading_media) {
+			return (
+				<View style={{ flex: 1, backgroundColor: bgColor, justifyContent: 'center', alignItems: 'center', padding: 25 }}>
+					<FontedText style={{ fontSize: 21, marginBottom: 15, color: '#d8d8d8' }}>جاري رفع {this.state.media_type == 1 ? 'الصورة' : 'الفيديو'}</FontedText>
+					<ActivityIndicator size="large" color={mainColor} />
+				</View>
+			)
+		}
+
 		const gender_data = [
 			{ key: 0, label: 'ذكر' },
 			{ key: 1, label: 'أنثى' },
@@ -342,8 +393,11 @@ class AddPost extends Component {
 					</View>
 				</Content>
 
-				<View style={{ flexDirection: 'row', justifyContent: 'space-around', paddingVertical: 10 }}>
-					<TouchableOpacity style={{ borderRadius: 20, flex: 0.5, marginHorizontal: 10 }}>
+				<View
+					style={{ flexDirection: 'row', justifyContent: 'space-around', paddingVertical: 10 }}>
+					<TouchableOpacity 
+						onPress={this.addPost}
+						style={{ borderRadius: 20, flex: 0.5, marginHorizontal: 10 }}>
 						<LinearGradient
 							colors={['#b28003', '#f9ce63']}
 							start={{ x: 0.0, y: 1.0 }}
