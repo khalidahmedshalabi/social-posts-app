@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, FlatList } from 'react-native';
+import { Entypo } from '@expo/vector-icons';
 import { bgColor } from '../../constants/Colors';
 import LazyContainer from '../../components/LazyContainer';
 import FontedText from '../../components/FontedText';
@@ -72,10 +73,12 @@ export default class Notifications extends Component {
 	renderItem = (item) => {
 		return (
 			<View style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', paddingVertical: 15, paddingHorizontal: 15 }}>
-				<FontedText style={{ color: 'white', fontSize: 16 }}>{item.status == 0 ? 'لقد تم خصم' : 'لقد تم إضافة'}</FontedText>				
+				<Entypo name={item.status == 0 ? 'circle-with-minus' : 'circle-with-plus' } size={28} color={item.status == 0 ? '#c13c3f' : '#4d9336' } />
 
-				<FontedText style={{ color: item.status == 0 ? '#c13c3f' : '#4d9336', fontSize: 16, marginLeft: 5 }}>{item.points}</FontedText>
-				<FontedText style={{ color: item.status == 0 ? '#c13c3f' : '#4d9336', fontSize: 16, marginRight: 5 }}>{item.status == 0 ? '-' : '+'}</FontedText>
+				<FontedText style={{ color: 'white', fontSize: 16, marginLeft: 15 }}>{item.status == 0 ? 'لقد تم خصم' : 'لقد تم إضافة'}</FontedText>				
+
+				<FontedText style={{ color: item.status == 0 ? '#bcbcbc' : '#bcbcbc', fontSize: 16, marginLeft: 5 }}>{item.points}</FontedText>
+				<FontedText style={{ color: item.status == 0 ? '#bcbcbc' : '#bcbcbc', fontSize: 16, marginRight: 5 }}>{item.status == 0 ? '-' : '+'}</FontedText>
 				
 				<FontedText style={{ color: 'white', fontSize: 16 }}>{item.status == 0 ? 'نقطة من حسابك' : 'نقطة إلى حسابك'}</FontedText>
 			</View>
