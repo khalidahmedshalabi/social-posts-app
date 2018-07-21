@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { View, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
-import { Container } from 'native-base';
 import { FontAwesome, Entypo, Feather } from '@expo/vector-icons';
 import { mainColor, bgColor } from '../../constants/Colors';
+import LazyContainer from '../../components/LazyContainer';
 import { LinearGradient } from 'expo';
 import FontedText from '../../components/FontedText';
 import FontedInput from '../../components/FontedInput';
@@ -67,7 +67,7 @@ export default class ResetPassword extends Component {
 
 	render() {
 		return (
-			<Container style={{ backgroundColor: bgColor }}>
+			<LazyContainer style={{ backgroundColor: bgColor }}>
 				<KeyboardAvoidingView
 					behavior="padding" enabled
 					keyboardVerticalOffset={0}
@@ -108,7 +108,7 @@ export default class ResetPassword extends Component {
 								</View>
 
 								<FontedInput
-									placeholder='كلمة المرور'
+									placeholder='كلمة المرور الجديدة'
 									placeholderTextColor='#d8d8d8'
 									underlineColorAndroid='transparent'
 									maxLength={128}
@@ -127,7 +127,7 @@ export default class ResetPassword extends Component {
 								</View>
 
 								<FontedInput
-									placeholder='تأكيد كلمة المرور'
+									placeholder='تأكيد كلمة المرور الجديدة'
 									placeholderTextColor='#d8d8d8'
 									underlineColorAndroid='transparent'
 									maxLength={128}
@@ -176,7 +176,7 @@ export default class ResetPassword extends Component {
 					fadeOutDuration={1000}
 					opacity={0.8}
 					textStyle={{ color: bgColor }} />
-			</Container>
+			</LazyContainer>
 		)
 	}
 }

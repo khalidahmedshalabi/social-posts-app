@@ -5,6 +5,7 @@ import { FontAwesome, Entypo, Feather } from '@expo/vector-icons';
 import { mainColor, bgColor } from '../../constants/Colors';
 import { LinearGradient } from 'expo';
 import FontedText from '../../components/FontedText';
+import LazyContainer from '../../components/LazyContainer';
 import FontedInput from '../../components/FontedInput';
 import * as Animatable from 'react-native-animatable';
 import { height, width } from '../../constants/Layout';
@@ -55,7 +56,7 @@ export default class Signup extends Component {
 	};
 	render() {
 		return (
-			<Container style={{ backgroundColor: bgColor }}>
+			<LazyContainer style={{ backgroundColor: bgColor }}>
 				<View style={{ flex: 0.36, justifyContent: 'flex-end', alignItems: 'center' }}>
 					<Animatable.View animation="fadeInDown" duration={1000} delay={500}>
 						<Feather name='user' size={150} color={mainColor} />
@@ -176,7 +177,7 @@ export default class Signup extends Component {
 					fadeOutDuration={1000}
 					opacity={0.8}
 					textStyle={{ color: bgColor }} />
-			</Container>
+			</LazyContainer>
 		)
 	}
 }

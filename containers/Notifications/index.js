@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity,FlatList } from 'react-native';
+import { View, FlatList } from 'react-native';
 import { bgColor } from '../../constants/Colors';
+import LazyContainer from '../../components/LazyContainer';
 import FontedText from '../../components/FontedText';
 import { Container } from 'native-base';
 
@@ -84,7 +85,7 @@ export default class Notifications extends Component {
 
 	render() {
 		return (
-			<Container style={{ backgroundColor: bgColor }}>
+			<LazyContainer style={{ backgroundColor: bgColor }}>
 				<FlatList
 					contentContainerStyle={{
 						paddingVertical: 15
@@ -92,7 +93,7 @@ export default class Notifications extends Component {
 					ItemSeparatorComponent={ () => <View style={{ height: 1, backgroundColor: '#474668', width: '100%' }}></View> }
 					data={this.state.notifications}
 					renderItem={({ item }) => this.renderItem(item)} />
-			</Container>	
+			</LazyContainer>	
 		)
 	}
 }

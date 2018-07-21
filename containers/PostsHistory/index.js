@@ -3,6 +3,7 @@ import { View, TouchableOpacity, FlatList, Image, Dimensions, Linking } from 're
 import { Video } from 'expo'
 import { Ionicons, MaterialCommunityIcons, Feather, FontAwesome } from '@expo/vector-icons';
 import { mainColor, bgColor } from '../../constants/Colors';
+import LazyContainer from '../../components/LazyContainer';
 import FontedText from '../../components/FontedText';
 import BackHeader from '../../components/BackHeader';
 import { Container } from 'native-base';
@@ -217,7 +218,7 @@ export default class PostsHistory extends Component {
 
 	render() {
 		return (
-			<Container>
+			<LazyContainer>
 				<BackHeader
 					navigation={this.props.navigation}
 					title='منشورات شاهدتها' />
@@ -229,7 +230,7 @@ export default class PostsHistory extends Component {
 						data={this.state.posts}
 						renderItem={({ item }) => this.renderItem(item)} />
 				</View>
-			</Container>
+			</LazyContainer>
 		)
 	}
 }

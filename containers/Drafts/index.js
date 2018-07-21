@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { bgColor } from '../../constants/Colors';
 import { FontAwesome } from '@expo/vector-icons';
 import FontedText from '../../components/FontedText';
+import LazyContainer from '../../components/LazyContainer';
 import BackHeader from '../../components/BackHeader';
 import { Container } from 'native-base';
 
@@ -44,7 +45,7 @@ class Drafts extends Component {
 
 	render() {
 		return (
-			<Container>
+			<LazyContainer>
 				<BackHeader
 					navigation={this.props.navigation}
 					title='المسودات' />
@@ -73,7 +74,7 @@ class Drafts extends Component {
 						</View>
 					}
 				/>
-			</Container>
+			</LazyContainer>
 		)
 	}
 }
