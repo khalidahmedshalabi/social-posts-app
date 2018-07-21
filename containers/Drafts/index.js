@@ -89,7 +89,7 @@ function mergeProps(stateProps, dispatchProps, ownProps) {
 	return {
 		...ownProps,
 		...stateProps,
-		removeDraftPost: (key_to_remove) => actions.removeCartItem(dispatch, key_to_remove),
+		removeDraftPost: (key_to_remove) => actions.removeDraftPost(dispatch, key_to_remove),
 		clearDraftPosts: () => actions.clearDraftPosts(dispatch),
 	};
 }
