@@ -7,6 +7,7 @@ import { mainColor, bgColor } from '../../constants/Colors';
 import { LinearGradient } from 'expo';
 import FontedText from '../../components/FontedText';
 import * as Animatable from 'react-native-animatable';
+import { GET } from '../../utils/Network';
 
 const fontSize = 13
 const boxBorderRadius = 30
@@ -14,7 +15,23 @@ const boxDim = 100
 const height = Dimensions.get('window').height
 
 class Profile extends Component {
+	state = {
+		fetchedData: false,
+
+		name: '',
+		points_earned: 0,
+		points_left: 0,
+		points_used: 0,
+		gifts_count: 0
+	}
+
+	componentDidMount() {
+		GET('Profile', res => this.setState({ ...res.data.user, fetchedData: true }), err => {  })
+	}
+
 	render() {
+		if (!this.state.fetchedData) return <View style={{ flex: 1, backgroundColor: bgColor }} />
+
 		return (
 			<Container style={{ backgroundColor: bgColor, alignItems: 'center' }}>
 				<Content style={{ width: '100%' }}>
@@ -115,7 +132,7 @@ class Profile extends Component {
 						</Animatable.Image>
 
 						<Animatable.View animation="fadeInDown" duration={1000} delay={500}>
-							<FontedText style={{ color: 'white', fontSize: 32 }}>محمد أحمد</FontedText>
+							<FontedText style={{ color: 'white', fontSize: 32 }}>{this.state.name}</FontedText>
 						</Animatable.View>
 					</LinearGradient>
 
@@ -184,7 +201,7 @@ class Profile extends Component {
 										right: 80,
 										zIndex: 2
 									}}>
-									<FontedText style={{ color: bgColor, fontSize: 15 }}>3</FontedText>
+									<FontedText style={{ color: bgColor, fontSize: 15 }}>{this.state.gifts_count}</FontedText>
 								</View>
 							</View>
 						</View>
@@ -263,17 +280,17 @@ class Profile extends Component {
 					<Animatable.View animation="fadeIn" duration={2000} delay={500} style={{ flexDirection: 'row', position: 'absolute', paddingHorizontal: 17, marginTop: height * 0.2125, backgroundColor: 'white', borderRadius: 7, justifyContent: 'center', alignItems: 'center', alignSelf: 'center' }}>
 						<View style={{ justifyContent: 'center', alignItems: 'center' }}>
 							<FontedText style={{ color: bgColor }}>نقاط متوفرة</FontedText>
-							<FontedText style={{ color: mainColor, fontSize: 17 }}>10</FontedText>
+							<FontedText style={{ color: mainColor, fontSize: 17 }}>{this.state.points_left}</FontedText>
 						</View>
 
 						<View style={{ justifyContent: 'center', alignItems: 'center', marginHorizontal: 17 }}>
 							<FontedText style={{ color: bgColor }}>مجموع النقاط</FontedText>
-							<FontedText style={{ color: mainColor, fontSize: 17 }}>100</FontedText>
+							<FontedText style={{ color: mainColor, fontSize: 17 }}>{this.state.points_earned}</FontedText>
 						</View>
 
 						<View style={{ justifyContent: 'center', alignItems: 'center' }}>
 							<FontedText style={{ color: bgColor }}>نقاط مصروفة</FontedText>
-							<FontedText style={{ color: mainColor, fontSize: 17 }}>1000</FontedText>
+							<FontedText style={{ color: mainColor, fontSize: 17 }}>{this.state.points_used}</FontedText>
 						</View>
 					</Animatable.View>
 				</Content>
