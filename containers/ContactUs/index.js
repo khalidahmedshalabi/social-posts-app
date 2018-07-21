@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { Entypo, Foundation, FontAwesome } from '@expo/vector-icons';
 import { bgColor } from '../../constants/Colors';
+import LazyContainer from '../../components/LazyContainer';
 import FontedText from '../../components/FontedText';
 import BackHeader from '../../components/BackHeader';
 import { Container } from 'native-base';
@@ -11,7 +12,7 @@ export default class ContactUs extends Component {
 
 	render() {
 		return (
-			<Container style={{ backgroundColor: bgColor }}>
+			<LazyContainer style={{ backgroundColor: bgColor }}>
 				<BackHeader
 					navigation={this.props.navigation}
 					title='تواصل معنا' />
@@ -45,7 +46,7 @@ export default class ContactUs extends Component {
 						</View>
 					</TouchableOpacity>
 				</View>
-			</Container>
+			</LazyContainer>
 		)
 	}
 }

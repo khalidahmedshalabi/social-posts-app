@@ -3,7 +3,7 @@ import {
 	View,
 	Dimensions,Image,TouchableOpacity
 } from 'react-native';
-import { Container} from 'native-base';
+import LazyContainer from '../../components/LazyContainer';
 import { LinearGradient } from 'expo';
 import { bgColor } from '../../constants/Colors'
 import FontedText from '../../components/FontedText'
@@ -40,7 +40,7 @@ export default class Gifts extends Component {
 	
 	render() {
 		return (
-			<Container style={{backgroundColor: bgColor}}>
+			<LazyContainer style={{backgroundColor: bgColor}}>
 				<BackHeader
 					navigation={this.props.navigation}
 					title='الهدايا' />
@@ -71,7 +71,7 @@ export default class Gifts extends Component {
 								<FontedText style={{ color: bgColor, textAlign: 'center', fontSize: 19 }}>اختار الهدية</FontedText>
 							</LinearGradient>
 				</TouchableOpacity>
-			</Container>
+			</LazyContainer>
 		)
 	}
 }

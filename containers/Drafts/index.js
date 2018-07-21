@@ -4,6 +4,8 @@ import { connect } from 'react-redux'
 import { bgColor } from '../../constants/Colors';
 import { FontAwesome } from '@expo/vector-icons';
 import FontedText from '../../components/FontedText';
+import LazyContainer from '../../components/LazyContainer';
+import NoContent from '../../components/NoContent';
 import BackHeader from '../../components/BackHeader';
 import { Container } from 'native-base';
 
@@ -44,7 +46,7 @@ class Drafts extends Component {
 
 	render() {
 		return (
-			<Container>
+			<LazyContainer>
 				<BackHeader
 					navigation={this.props.navigation}
 					title='المسودات' />
@@ -52,6 +54,7 @@ class Drafts extends Component {
 				<FlatList
 					data={this.props.draft_posts}
 					style={{ backgroundColor: bgColor, }}
+					ListEmptyComponent={<NoContent />}
 					//contentContainerStyle={{padding}}
 					ItemSeparatorComponent={this.FlatListItemSeparator}
 					renderItem={({ item }) =>
@@ -73,7 +76,7 @@ class Drafts extends Component {
 						</View>
 					}
 				/>
-			</Container>
+			</LazyContainer>
 		)
 	}
 }

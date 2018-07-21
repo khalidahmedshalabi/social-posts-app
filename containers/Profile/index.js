@@ -8,6 +8,7 @@ import { LinearGradient } from 'expo';
 import FontedText from '../../components/FontedText';
 import * as Animatable from 'react-native-animatable';
 import { GET } from '../../utils/Network';
+import HoldUp from '../../components/HoldUp';
 
 const fontSize = 13
 const boxBorderRadius = 30
@@ -30,7 +31,7 @@ class Profile extends Component {
 	}
 
 	render() {
-		if (!this.state.fetchedData) return <View style={{ flex: 1, backgroundColor: bgColor }} />
+		if (!this.state.fetchedData) return <HoldUp />
 
 		return (
 			<Container style={{ backgroundColor: bgColor, alignItems: 'center' }}>

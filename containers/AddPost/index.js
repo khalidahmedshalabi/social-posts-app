@@ -426,7 +426,7 @@ class AddPost extends Component {
 					ref="toast"
 					style={{ backgroundColor: '#dcdee2', borderRadius: 25 }}
 					position='bottom'
-					positionValue={height * 0.30}
+					positionValue={height * 0.52}
 					fadeInDuration={750}
 					fadeOutDuration={1000}
 					opacity={0.8}

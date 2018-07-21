@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { View, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
-import { Container } from 'native-base';
 import { FontAwesome, Entypo, Feather } from '@expo/vector-icons';
 import { mainColor, bgColor } from '../../constants/Colors';
+import LazyContainer from '../../components/LazyContainer';
 import { LinearGradient } from 'expo';
 import FontedText from '../../components/FontedText';
 import FontedInput from '../../components/FontedInput';
@@ -67,7 +67,7 @@ export default class ResetPassword extends Component {
 
 	render() {
 		return (
-			<Container style={{ backgroundColor: bgColor }}>
+			<LazyContainer style={{ backgroundColor: bgColor }}>
 				<KeyboardAvoidingView
 					behavior="padding" enabled
 					keyboardVerticalOffset={0}
@@ -108,7 +108,7 @@ export default class ResetPassword extends Component {
 								</View>
 
 								<FontedInput
-									placeholder='كلمة المرور'
+									placeholder='كلمة المرور الجديدة'
 									placeholderTextColor='#d8d8d8'
 									underlineColorAndroid='transparent'
 									maxLength={128}
@@ -127,7 +127,7 @@ export default class ResetPassword extends Component {
 								</View>
 
 								<FontedInput
-									placeholder='تأكيد كلمة المرور'
+									placeholder='تأكيد كلمة المرور الجديدة'
 									placeholderTextColor='#d8d8d8'
 									underlineColorAndroid='transparent'
 									maxLength={128}
@@ -139,16 +139,8 @@ export default class ResetPassword extends Component {
 									onChangeText={(text) => this.setState({ newpassword: text })}
 								/>
 
-							</View>
-							<Toast ref="toast"
-								style={{ backgroundColor: '#dcdee2', borderRadius: 25, }}
-								position='bottom'
-								positionValue={height * 0.52}
-								fadeInDuration={750}
-								fadeOutDuration={1000}
-								opacity={0.8}
-								textStyle={{ color: bgColor }} />
-						</View>
+							</View>						
+					</View>
 
 						<TouchableOpacity
 							onPress={() => {
@@ -166,7 +158,25 @@ export default class ResetPassword extends Component {
 						</TouchableOpacity>
 					</View>
 				</KeyboardAvoidingView>
-			</Container>
+
+				<Toast ref="toast"
+					style={{ backgroundColor: '#dcdee2', borderRadius: 25, }}
+					position='bottom'
+					positionValue={height * 0.60}
+					fadeInDuration={750}
+					fadeOutDuration={1000}
+					opacity={0.8}
+					textStyle={{ color: bgColor }} />
+
+				<Toast ref="toast"
+					style={{ backgroundColor: '#dcdee2', borderRadius: 25, }}
+					position='bottom'
+					positionValue={height * 0.60}
+					fadeInDuration={750}
+					fadeOutDuration={1000}
+					opacity={0.8}
+					textStyle={{ color: bgColor }} />
+			</LazyContainer>
 		)
 	}
 }
