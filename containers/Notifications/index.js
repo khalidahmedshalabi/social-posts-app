@@ -3,6 +3,7 @@ import { View, FlatList } from 'react-native';
 import { Entypo } from '@expo/vector-icons';
 import { bgColor } from '../../constants/Colors';
 import LazyContainer from '../../components/LazyContainer';
+import NoContent from '../../components/NoContent';
 import FontedText from '../../components/FontedText';
 import { Container } from 'native-base';
 
@@ -93,6 +94,7 @@ export default class Notifications extends Component {
 					contentContainerStyle={{
 						paddingVertical: 15
 					}}
+					ListEmptyComponent={<NoContent />}
 					ItemSeparatorComponent={ () => <View style={{ height: 1, backgroundColor: '#474668', width: '100%' }}></View> }
 					data={this.state.notifications}
 					renderItem={({ item }) => this.renderItem(item)} />

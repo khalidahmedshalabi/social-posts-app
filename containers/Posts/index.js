@@ -4,6 +4,7 @@ import { Video } from 'expo'
 import { Ionicons, MaterialCommunityIcons, Feather, FontAwesome, Entypo } from '@expo/vector-icons';
 import { mainColor, bgColor } from '../../constants/Colors';
 import FontedText from '../../components/FontedText';
+import NoContent from '../../components/NoContent';
 import { Container } from 'native-base';
 import PopupDialog from 'react-native-popup-dialog';
 const height = Dimensions.get('window').height
@@ -310,6 +311,7 @@ export default class Posts extends Component {
 			<Container style={{ alignItems: 'center', backgroundColor: bgColor, paddingHorizontal: 15 }}>
 				<FlatList
 					contentContainerStyle={{ paddingVertical: 20 }}
+					ListEmptyComponent={<NoContent />}
 					ItemSeparatorComponent={() => <View style={{ height: 20 }}></View>}
 					data={this.state.posts}
 					renderItem={({ item }) => this.renderItem(item)} />

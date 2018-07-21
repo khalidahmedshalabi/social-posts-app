@@ -5,6 +5,7 @@ import { bgColor } from '../../constants/Colors';
 import { FontAwesome } from '@expo/vector-icons';
 import FontedText from '../../components/FontedText';
 import LazyContainer from '../../components/LazyContainer';
+import NoContent from '../../components/NoContent';
 import BackHeader from '../../components/BackHeader';
 import { Container } from 'native-base';
 
@@ -53,6 +54,7 @@ class Drafts extends Component {
 				<FlatList
 					data={this.props.draft_posts}
 					style={{ backgroundColor: bgColor, }}
+					ListEmptyComponent={<NoContent />}
 					//contentContainerStyle={{padding}}
 					ItemSeparatorComponent={this.FlatListItemSeparator}
 					renderItem={({ item }) =>

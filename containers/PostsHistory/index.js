@@ -4,6 +4,7 @@ import { Video } from 'expo'
 import { Ionicons, MaterialCommunityIcons, Feather, FontAwesome } from '@expo/vector-icons';
 import { mainColor, bgColor } from '../../constants/Colors';
 import LazyContainer from '../../components/LazyContainer';
+import NoContent from '../../components/NoContent';
 import FontedText from '../../components/FontedText';
 import BackHeader from '../../components/BackHeader';
 import { Container } from 'native-base';
@@ -226,6 +227,7 @@ export default class PostsHistory extends Component {
 				<View style={{ flex: 1, alignItems: 'center', backgroundColor: bgColor, paddingHorizontal: 15 }}>
 					<FlatList
 						contentContainerStyle={{ paddingVertical: 20 }}
+						ListEmptyComponent={<NoContent />}
 						ItemSeparatorComponent={ () => <View style={{ height: 20 }}></View> }
 						data={this.state.posts}
 						renderItem={({ item }) => this.renderItem(item)} />
