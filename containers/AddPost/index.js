@@ -300,23 +300,29 @@ class AddPost extends Component {
 								<FontAwesome name='globe' size={27} color={'#93939b'} />
 							</View>
 
-							<ModalSelector
-								style={{ width: '100%', flex: 0.85 }}
-								selectStyle={{ borderWidth: 0, paddingHorizontal: 0, paddingVertical: 0, alignItems: 'flex-start' }}
-								selectTextStyle={{ color: '#d8d8d8', fontFamily: 'droidkufi', fontSize: 17, marginLeft: 4 }}
-								optionTextStyle={{ color: bgColor, fontSize: 17, fontFamily: 'droidkufi' }}
-								cancelText='إلغاء'
-								overlayStyle={{ backgroundColor: 'rgba(0,0,0,0.3)' }}
-								cancelTextStyle={{ color: '#f44242', fontSize: 17, fontFamily: 'droidkufi' }}
-								data={country_data}
-								initValue={this.state.country || 'الدولة'}
-								supportedOrientations={['portrait']}
-								accessible={true}
-								scrollViewAccessibilityLabel={'Scrollable options'}
-								cancelButtonAccessibilityLabel={'Cancel Button'}
-								onChange={(option) => this.setState({ country: option.label })}
-							//value={this.state.country}
-							/>
+						<ModalSelector
+							data={country_data}
+							selectStyle={{ borderWidth: 0, paddingHorizontal: 0, paddingVertical: 0, alignItems: 'flex-start' }}
+							selectTextStyle={{ color: '#d8d8d8', fontFamily: 'droidkufi', fontSize: 17, marginLeft: 4 }}
+							optionTextStyle={{ color: bgColor, fontSize: 17, fontFamily: 'droidkufi' }}
+							cancelText='إلغاء'
+							overlayStyle={{ backgroundColor: 'rgba(0,0,0,0.3)' }}
+							cancelTextStyle={{ color: '#f44242', fontSize: 17, fontFamily: 'droidkufi' }}
+    	       				initValue={this.state.country || 'الدولة'}
+        	           		supportedOrientations={['portrait']}
+            	    		accessible={true}
+                	   		scrollViewAccessibilityLabel={'Scrollable options'}
+                    		cancelButtonAccessibilityLabel={'Cancel Button'}
+                   			onChange={(option)=>{ this.setState({country:option.label})}}>
+ 
+                    	<FontedInput
+                        	style={{width: '100%', flex: 0.85 ,color:'#d8d8d8'}}
+                        	editable={false}
+							placeholder={this.state.country || 'الدولة'}
+							placeholderTextColor='#d8d8d8'
+                        	value={this.state.country} />
+ 
+                		</ModalSelector>
 						</View>
 
 						<View style={{ flex: 1, paddingVertical: 5, width: '100%', flexDirection: 'row', alignItems: 'center', borderTopWidth: 1, borderTopColor: '#39384b', borderBottomWidth: 1, borderBottomColor: '#39384b' }}>
@@ -325,7 +331,7 @@ class AddPost extends Component {
 							</View>
 
 							<ModalSelector
-								style={{ width: '100%', flex: 0.85 }}
+								//style={{ width: '100%', flex: 0.85 }}
 								selectStyle={{ borderWidth: 0, paddingHorizontal: 0, paddingVertical: 0, alignItems: 'flex-start' }}
 								selectTextStyle={{ color: '#d8d8d8', fontFamily: 'droidkufi', fontSize: 17, marginLeft: 4 }}
 								optionTextStyle={{ color: bgColor, fontSize: 17, fontFamily: 'droidkufi' }}
@@ -338,10 +344,17 @@ class AddPost extends Component {
 								accessible={true}
 								scrollViewAccessibilityLabel={'Scrollable options'}
 								cancelButtonAccessibilityLabel={'Cancel Button'}
-								onChange={(option) => { this.setState({ age: option.label }) }}
-							//	labelExtractor={(age_data)=> {age_data.label}}
-							//value={this.state.age}
-							/>
+								onChange={(option) => { this.setState({ age: option.label }) }}>
+
+							<FontedInput
+                        		style={{width: '100%', flex: 0.85 ,color:'#d8d8d8'}}
+                        		editable={false}
+								placeholder={this.state.age || 'العمر'}
+								placeholderTextColor='#d8d8d8'
+                        		value={this.state.age} />
+ 
+                			</ModalSelector>
+
 						</View>
 						<View style={{ flex: 1, paddingVertical: 5, width: '100%', flexDirection: 'row', alignItems: 'center', borderBottomWidth: 1, borderBottomColor: '#39384b' }}>
 							<View style={{ flex: 0.15, alignItems: 'center' }}>
@@ -349,7 +362,7 @@ class AddPost extends Component {
 							</View>
 
 							<ModalSelector
-								style={{ width: '100%', flex: 0.85 }}
+								//style={{ width: '100%', flex: 0.85 }}
 								selectStyle={{ borderWidth: 0, paddingHorizontal: 0, paddingVertical: 0, alignItems: 'flex-start' }}
 								selectTextStyle={{ color: '#d8d8d8', fontFamily: 'droidkufi', fontSize: 19 }}
 								optionTextStyle={{ color: bgColor, fontSize: 17, fontFamily: 'droidkufi' }}
@@ -362,9 +375,16 @@ class AddPost extends Component {
 								accessible={true}
 								scrollViewAccessibilityLabel={'Scrollable options'}
 								cancelButtonAccessibilityLabel={'Cancel Button'}
-								onChange={(option) => { this.setState({ gender: option.label }) }}
-							//value={this.state.gender}
-							/>
+								onChange={(option) => { this.setState({ gender: option.label }) }}>
+								
+							<FontedInput
+                    		style={{width: '100%', flex: 0.85 ,color:'#d8d8d8'}}
+                    		editable={false}
+							placeholder={this.state.gender || 'الجنس'}
+							placeholderTextColor='#d8d8d8'
+                    		value={this.state.gender} />
+ 
+                			</ModalSelector>
 						</View>
 
 						<View style={{ flex: 1, width: '100%', flexDirection: 'row', alignItems: 'center', borderBottomWidth: 1, borderBottomColor: '#39384b' }}>
