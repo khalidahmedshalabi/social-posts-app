@@ -326,17 +326,7 @@ class AddPost extends Component {
 							</View>
 						</View>
 					</View>
-				</Content>
-
-				<Toast
-					ref="toast"
-					style={{ backgroundColor: '#dcdee2', borderRadius: 25 }}
-					position='bottom'
-					positionValue={height * 0.30}
-					fadeInDuration={750}
-					fadeOutDuration={1000}
-					opacity={0.8}
-					textStyle={{ color: bgColor }} />
+				</Content>				
 
 				<View style={{ flexDirection: 'row', justifyContent: 'space-around', paddingVertical: 10 }}>
 					<TouchableOpacity style={{ borderRadius: 20, flex: 0.5, marginHorizontal: 10 }}>
@@ -363,6 +353,16 @@ class AddPost extends Component {
 						<FontedText style={{ color: mainColor, fontSize: 15 }}>حفظ كمسودة</FontedText>
 					</TouchableOpacity>
 				</View>
+
+				<Toast
+					ref="toast"
+					style={{ backgroundColor: '#dcdee2', borderRadius: 25 }}
+					position='bottom'
+					positionValue={height * 0.52}
+					fadeInDuration={750}
+					fadeOutDuration={1000}
+					opacity={0.8}
+					textStyle={{ color: bgColor }} />
 			</LazyContainer>
 		)
 	}

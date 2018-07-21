@@ -119,14 +119,7 @@ export default class ResetPassword extends Component {
 								 />
 							
 						</View>
-						<Toast 	ref="toast" 
-									style={{backgroundColor:'#dcdee2',borderRadius:25,}}
-									position='bottom'
-									positionValue={height*0.52}
-									fadeInDuration={750}
-									fadeOutDuration={1000}
-									opacity={0.8}
-									textStyle={{color:bgColor}}/>									
+															
 					</View>
 
 					<TouchableOpacity
@@ -145,6 +138,15 @@ export default class ResetPassword extends Component {
 					</TouchableOpacity>
 				</View>
 				</KeyboardAvoidingView>
+
+				<Toast ref="toast"
+					style={{ backgroundColor: '#dcdee2', borderRadius: 25, }}
+					position='bottom'
+					positionValue={height * 0.52}
+					fadeInDuration={750}
+					fadeOutDuration={1000}
+					opacity={0.8}
+					textStyle={{ color: bgColor }} />
 			</Container>
 		)
 	}
