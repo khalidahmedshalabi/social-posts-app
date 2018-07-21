@@ -9,6 +9,7 @@ import FontedInput from '../../components/FontedInput';
 import LazyContainer from '../../components/LazyContainer';
 import DatePicker from 'react-native-datepicker'
 import ModalSelector from 'react-native-modal-selector'
+import HoldUp from '../../components/HoldUp';
 import * as Animatable from 'react-native-animatable';
 import BackHeader from '../../components/BackHeader';
 import { POST, GET } from '../../utils/Network';
@@ -101,7 +102,7 @@ export default class EditProfile extends Component {
 	}
 
 	render() {
-		if (!this.state.fetchedSettings) return <View style={{ flex: 1, backgroundColor: bgColor }} />
+		if (!this.state.fetchedSettings) return <HoldUp />
 
 		const gender_data = [
 			{ key: 0, label: 'ذكر' },
