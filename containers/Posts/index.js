@@ -26,9 +26,11 @@ export default class Posts extends Component {
 					title: 'عنوان المنشور',
 					content: 'محتوى البوست محتوى البوست محتوى البوست محتوى البوست محتوى البوست',
 					media_type: 2,
-					media_url: 'http://mirrors.standaloneinstaller.com/video-sample/small.mp4',
+					media_url: 'http://techslides.com/demos/sample-videos/small.mp4',
 					link: 'https://google.com',
 					is_completed: 0,
+					is_liked: 0,
+					did_watch_video: 0,
 					likes: 13
 				},
 				{
@@ -39,6 +41,8 @@ export default class Posts extends Component {
 					media_url: 'https://thuocmocrauvatoc.files.wordpress.com/2016/07/rau-dep-16.jpg',
 					link: 'https://facebook.com',
 					is_completed: 0,
+					is_liked: 0,
+					did_watch_video: 0,
 					likes: 89
 				},
 				{
@@ -49,6 +53,8 @@ export default class Posts extends Component {
 					media_url: '',
 					link: 'https://youtube.com',
 					is_completed: 0,
+					is_liked: 1,
+					did_watch_video: 0,
 					likes: 2038
 				},
 				{
@@ -59,6 +65,8 @@ export default class Posts extends Component {
 					media_url: 'http://mirrors.standaloneinstaller.com/video-sample/grb_2.mp4',
 					link: 'https://google.com',
 					is_completed: 0,
+					is_liked: 0,
+					did_watch_video: 0,
 					likes: 29
 				},
 				{
@@ -69,6 +77,8 @@ export default class Posts extends Component {
 					media_url: 'https://thuocmocrauvatoc.files.wordpress.com/2016/07/rau-dep-16.jpg',
 					link: 'https://twitter.com',
 					is_completed: 1,
+					is_liked: 0,
+					did_watch_video: 0,
 					likes: 2394
 				},
 
@@ -101,7 +111,32 @@ export default class Posts extends Component {
 		});
 	}
 
-	renderCorrectMediaComponent = (key, is_playing, media_type, media_url) => {
+	setVideoAsWatched = (key) => {
+		// Find index by key
+		const index = this.state.posts.findIndex((el) => el.key === key);
+
+		// Make a copy of the posts array
+		let copy_posts = [...this.state.posts];
+
+		// Make a copy of the target post
+		let post = { ...copy_posts[index] };
+
+		// Set status as watched
+		post.did_watch_video = 1;
+
+		// Change playing status
+		post.is_playing = false;
+
+		// Update our copy of posts array
+		copy_posts[index] = post;
+
+		// Update component's state
+		this.setState({
+			posts: copy_posts
+		});
+	}
+
+	renderCorrectMediaComponent = (key, is_playing, media_type, media_url, did_watch_video) => {
 		if (media_type == 0) {
 			// link type
 			return (
@@ -120,7 +155,7 @@ export default class Posts extends Component {
 			)
 		}
 		else if (media_type == 1) {
-			// image type
+			// Image type
 			return (
 				<Image
 					style={{
@@ -134,7 +169,7 @@ export default class Posts extends Component {
 			)
 		}
 		else {
-			// video type
+			// Video type
 			return (
 				<View style={{
 					backgroundColor: 'white', alignItems: 'center', borderTopLeftRadius: 10, borderTopRightRadius: 10
@@ -147,7 +182,12 @@ export default class Posts extends Component {
 						resizeMode={Video.RESIZE_MODE_STRETCH}
 						usePoster={true}
 						shouldPlay={is_playing}
-						isLooping={true}
+						isLooping={false}
+						onPlaybackStatusUpdate={(playbackStatus) => {
+							if (playbackStatus.didJustFinish && !did_watch_video) {
+								this.setVideoAsWatched(key)
+							}
+						}}
 						style={{
 							width: '100%',
 							height: 250,
@@ -157,7 +197,7 @@ export default class Posts extends Component {
 					/>
 
 					{
-						is_playing ?
+						is_playing || did_watch_video ?
 							null
 							:
 							<TouchableOpacity
@@ -176,10 +216,57 @@ export default class Posts extends Component {
 		}
 	}
 
+	onPressLikePost = (key) => {
+		// Find index by key
+		const index = this.state.posts.findIndex((el) => el.key === key);
+
+		// Make a copy of the posts array
+		let copy_posts = [...this.state.posts];
+
+		// Make a copy of the target post
+		let post = { ...copy_posts[index] };
+
+		// Set status as liked
+		post.is_liked = 1;
+
+		// Update our copy of posts array
+		copy_posts[index] = post;
+
+		// Update component's state
+		this.setState({
+			posts: copy_posts
+		});
+	}
+
+	renderLikeButton = (item) => {
+		const { is_liked, did_watch_video, media_type, key } = item
+
+		const likeButtonColor = is_liked ? '#f23548' : '#B6B6B6'
+		const didNotWatchVideo = (media_type == 2 && !did_watch_video)
+		const isNotClickable = is_liked || didNotWatchVideo ? true : false
+
+		return (
+			<TouchableOpacity
+				key='2'
+				disabled={isNotClickable}
+				onPress={() => this.onPressLikePost(key)}
+				activeOpacity={0.8}
+				style={{
+					opacity: didNotWatchVideo && !is_liked ? 0.2 : 1.0,
+					position: 'absolute',
+					marginTop: height * 0.35,
+					alignSelf: 'flex-end',
+					paddingRight: 8,
+				}}>
+				<MaterialCommunityIcons name='heart' size={60} color={likeButtonColor} />
+			</TouchableOpacity>
+		)
+	}
+
 	renderItem = (item) => {
 		return (
 			<View style={{ opacity: item.is_completed == 0 ? null : 0.5 }}>
-				{this.renderCorrectMediaComponent(item.key, item.is_playing, item.media_type, item.media_url)}
+				{this.renderCorrectMediaComponent(item.key, item.is_playing, item.media_type, item.media_url, item.did_watch_video)}
 
 				<View style={{ borderBottomLeftRadius: 10, borderBottomRightRadius: 10, backgroundColor: item.is_completed == 0 ? 'white' : '#b5b5b5', justifyContent: 'center', alignItems: 'center', paddingVertical: 15, paddingHorizontal: 12 }}>
 					<FontedText style={{ color: 'black', fontSize: 18, alignSelf: 'flex-start' }}>{item.title}</FontedText>
@@ -207,17 +294,14 @@ export default class Posts extends Component {
 				</View>
 
 				{
-					(item.is_completed == 0) ? null :
+					(item.is_completed) ?
 						<Ionicons
+							key='1'
 							style={{ position: 'absolute', marginTop: height * 0.02, marginLeft: 15 }}
 							name='md-checkmark-circle' size={55} color={'#ff5e5e'} />
+						:
+						this.renderLikeButton(item)
 				}
-
-				<TouchableOpacity
-					activeOpacity={0.7}
-					style={{ position: 'absolute', marginTop: height * 0.35, alignSelf: 'flex-end', paddingRight: 8 }}>
-					<MaterialCommunityIcons name='heart' size={60} color={'#B6B6B6'} />
-				</TouchableOpacity>
 			</View>
 		)
 	}
