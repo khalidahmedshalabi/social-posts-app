@@ -11,6 +11,7 @@ import * as Animatable from 'react-native-animatable';
 import Toast from 'react-native-easy-toast'
 import { height } from '../../constants/Layout';
 import { createTransition, SlideUp } from 'react-native-transition';
+import { POST } from '../../utils/Network';
 
 const Transition = createTransition(SlideUp);
 
@@ -49,7 +50,24 @@ class Login extends Component {
 			this.refs.toast.show('بريد الكتروني غير صالح');
 		}
 		else {
-			this.successfulLoginTransition()
+			const { emailaddress, password } = this.state
+
+			POST('Signin', {
+				email: emailaddress,
+				password,
+			},
+				res => {
+					const { user_id } = res.data
+
+					if(user_id > 1) {
+						this.props.setUserID(user_id)
+						this.successfulLoginTransition()
+					}
+					else {
+						this.refs.toast.show('بريد الكتروني غير مسجل او كلمة المرور خاطئة');
+					}
+				},
+				err => this.refs.toast.show('خطاء فى الشبكة'))
 		}
 	};
 
@@ -151,7 +169,7 @@ class Login extends Component {
 					<Toast ref="toast"
 						style={{ backgroundColor: '#dcdee2', borderRadius: 25, }}
 						position='bottom'
-						positionValue={height * 0.52}
+						positionValue={height * 0.67}
 						fadeInDuration={750}
 						fadeOutDuration={1000}
 						opacity={0.8}
@@ -169,7 +187,8 @@ function mergeProps(stateProps, dispatchProps, ownProps) {
 	return {
 		...ownProps,
 		...stateProps,
-		setLoggedIn: (logged_in) => actions.setLoggedIn(dispatch, logged_in)
+		setLoggedIn: (logged_in) => actions.setLoggedIn(dispatch, logged_in),
+		setUserID: (user_id) => actions.setUserID(dispatch, user_id),
 	};
 }
 

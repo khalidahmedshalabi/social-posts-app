@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, Image, Platform } from 'react-native';
+import { View, TouchableOpacity, Image, Platform, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux'
 import { Content } from 'native-base';
 import { LinearGradient, ImagePicker, Permissions } from 'expo';
@@ -10,52 +10,68 @@ import FontedInput from '../../components/FontedInput';
 import LazyContainer from '../../components/LazyContainer';
 import ModalSelector from 'react-native-modal-selector'
 import BackHeader from '../../components/BackHeader';
-import Toast, {DURATION} from 'react-native-easy-toast';
+import Toast from 'react-native-easy-toast';
 import { height } from '../../constants/Layout';
 import { base_url, api_extension } from '../../constants/Server';
+import { POST } from '../../utils/Network';
 
 
 class AddPost extends Component {
-	componentDidMount () {
-		
-			if(this.props.navigation.state.params)
-			{
-			this.setState({title:this.props.navigation.state.params.title,content:this.props.navigation.state.params.content,link:this.props.navigation.state.params.link,country:this.props.navigation.state.params.country,age:this.props.navigation.state.params.age,gender:this.props.navigation.state.params.gender,max_reaches:this.props.navigation.state.params.max_reaches})
-			}
-			else{}
-	}
 	constructor() {
 		super()
 
 		this.state = {
 			image: null,
-			title: '', 
+			title: '',
 			content: '',
 			link: '',
-			country:'',
-			age:'', 
+			country: '',
+			age: '',
 			gender: '',
-			max_reaches:'',
+			max_reaches: '',
 			media_type: 0, // 0 link, 1 image, 2 video,
-			post_id: 0,
+
+			is_uploading_media: false,
 		}
 
 	}
-	DotheDraft = () => {
-		if(this.state.title)
-		{
-			this.props.addDraftPost({title:this.state.title ,content: this.state.content, link:this.state.link,country:this.state.country,age:this.state.age,gender:this.state.gender,max_reaches:this.state.max_reaches,})
-			console.log("title::"+this.state.title)
-			console.log("content::"+this.state.content)
-			console.log("country::"+this.state.country)
+
+	componentDidMount() {
+		if (this.props.navigation.state.params) {
+			this.setState({
+				title: this.props.navigation.state.params.title,
+				content: this.props.navigation.state.params.content,
+				link: this.props.navigation.state.params.link,
+				country: this.props.navigation.state.params.country,
+				age: this.props.navigation.state.params.age,
+				gender: this.props.navigation.state.params.gender,
+				max_reaches: this.props.navigation.state.params.max_reaches
+			})
+		}
+	}
+
+	addToDraft = () => {
+		if (this.state.title) {
+			this.props.addDraftPost({ 
+				title: this.state.title, 
+				content: this.state.content, 
+				link: this.state.link, 
+				country: this.state.country, 
+				age: this.state.age, 
+				gender: this.state.gender, 
+				max_reaches: this.state.max_reaches
+			})
+			//console.log("title::" + this.state.title)
+			//console.log("content::" + this.state.content)
+			//console.log("country::" + this.state.country)
 			this.props.navigation.push("Drafts")
 		}
-		else
-		{
+		else {
 			this.refs.toast.show('تأكد من ادخال العنوان');
 		}
-		
+
 	}
+
 	openImagePicker = async () => {
 		const result = await ImagePicker.launchImageLibraryAsync({
 			mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -72,7 +88,7 @@ class AddPost extends Component {
 	}
 
 	pickImage = async () => {
-		if(Platform.OS === 'ios') {
+		if (Platform.OS === 'ios') {
 			const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
 
 			if (status === 'granted') {
@@ -82,7 +98,9 @@ class AddPost extends Component {
 		else this.openImagePicker()
 	}
 
-	uploadPostMedia = () => {
+	uploadPostMedia = (post_id) => {
+		this.setState({ is_uploading_media: true })
+
 		const apiUrl = `${base_url}${api_extension}Posts/UploadPostMedia`;
 		const uri = this.state.image;
 		const uriParts = uri.split('.');
@@ -91,9 +109,8 @@ class AddPost extends Component {
 
 		formData.append('document', {
 			uri,
-			name: `post_${this.state.post_id}_media.${fileType}`,
+			name: `post_${post_id}_media.${fileType}`,
 			type: `${this.state.media_type_str}/${fileType}`,
-			post_id: this.state.post_id
 		});
 
 		const options = {
@@ -102,32 +119,80 @@ class AddPost extends Component {
 			headers: {
 				Accept: 'application/json',
 				'Content-Type': 'multipart/form-data',
+				post_id
 			},
 		};
 
-		return fetch(apiUrl, options);
+		return fetch(apiUrl, options).then((response) => response.json())
+			.then((responseJson) => {
+				if(responseJson.response == 1) {
+					this.props.navigation.goBack()
+				} 
+			})
+			.catch((error) => {
+				console.error(error);
+				alert('error')
+			});
+	}
+
+	addPost = () => {
+		const { title, content, link, country, age, gender, max_reaches, media_type } = this.state
+
+		if (!title || !content || !link || !country || !age || !gender || max_reaches < 1)
+			return this.refs.toast.show('من فضلك قم بادخال كل البيانات')
+
+		POST('Posts/AddPost', 
+			{
+				title, 
+				content, 
+				link, 
+				country, 
+				age, 
+				gender, 
+				max_reaches: parseInt(max_reaches), 
+				media_type
+			},
+			res => {
+				if(media_type > 0 && this.state.image) {
+					const { post_id } = res.data
+					this.uploadPostMedia(post_id)
+				}
+				else this.props.navigation.goBack()
+			},
+			err => {
+
+			})
 	}
 
 	renderPickedImage = () => {
-		if(this.state.image) {
+		if (this.state.image) {
 			return (
 				<Image
 					source={{ uri: this.state.image }}
 					style={{ width: 250, height: 250 }}
 					resizeMode='contain'
-					/>
+				/>
 			)
 		}
 		else {
 			return [
 				<SimpleLineIcons key='1' name='camera' size={100} color={'#93939b'} />
 				,
-				<FontedText key='2' style={{ color: '#d8d8d8', fontSize: 18 }}>إضافة صورة او فيديو</FontedText>
+				<FontedText key='2' style={{ color: '#d8d8d8', fontSize: 18 }}>إضافة صورة او فيديو | اختياري</FontedText>
 			]
 		}
 	}
 
 	render() {
+		if(this.state.is_uploading_media) {
+			return (
+				<View style={{ flex: 1, backgroundColor: bgColor, justifyContent: 'center', alignItems: 'center', padding: 25 }}>
+					<FontedText style={{ fontSize: 21, marginBottom: 15, color: '#d8d8d8' }}>جاري رفع {this.state.media_type == 1 ? 'الصورة' : 'الفيديو'}</FontedText>
+					<ActivityIndicator size="large" color={mainColor} />
+				</View>
+			)
+		}
+
 		const gender_data = [
 			{ key: 0, label: 'ذكر' },
 			{ key: 1, label: 'أنثى' },
@@ -150,13 +215,13 @@ class AddPost extends Component {
 		];
 
 		return (
-			<LazyContainer style={{backgroundColor: bgColor}}>
+			<LazyContainer style={{ backgroundColor: bgColor }}>
 				<BackHeader
 					navigation={this.props.navigation}
 					title='إضافة منشور' />
 
 				<Content>
-					<TouchableOpacity 
+					<TouchableOpacity
 						onPress={() => this.pickImage()}
 						style={{ flex: 0.55, justifyContent: 'center', alignItems: 'center', paddingVertical: 30 }}>
 						{this.renderPickedImage()}
@@ -176,7 +241,7 @@ class AddPost extends Component {
 									flex: 0.85,
 									color: 'white'
 								}}
-								onChangeText={(text) => this.setState({title:text})}
+								onChangeText={(text) => this.setState({ title: text })}
 								value={this.state.title}
 
 							/>
@@ -206,7 +271,7 @@ class AddPost extends Component {
 									paddingTop: 10,
 									paddingLeft: 13
 								}}
-								onChangeText={(text) => this.setState({content:text})}
+								onChangeText={(text) => this.setState({ content: text })}
 								value={this.state.content}
 							/>
 						</View>
@@ -225,7 +290,7 @@ class AddPost extends Component {
 									flex: 0.85,
 									color: 'white'
 								}}
-								onChangeText={(text) => this.setState({link:text})}
+								onChangeText={(text) => this.setState({ link: text })}
 								value={this.state.link}
 							/>
 						</View>
@@ -244,13 +309,13 @@ class AddPost extends Component {
 								overlayStyle={{ backgroundColor: 'rgba(0,0,0,0.3)' }}
 								cancelTextStyle={{ color: '#f44242', fontSize: 17, fontFamily: 'droidkufi' }}
 								data={country_data}
-								initValue="الدولة"
+								initValue={this.state.country || 'الدولة'}
 								supportedOrientations={['portrait']}
 								accessible={true}
 								scrollViewAccessibilityLabel={'Scrollable options'}
 								cancelButtonAccessibilityLabel={'Cancel Button'}
-								onChange={(option) =>  this.setState({textInputValue:option.label})}
-								//value={this.state.country}
+								onChange={(option) => this.setState({ country: option.label })}
+							//value={this.state.country}
 							/>
 						</View>
 
@@ -268,14 +333,14 @@ class AddPost extends Component {
 								overlayStyle={{ backgroundColor: 'rgba(0,0,0,0.3)' }}
 								cancelTextStyle={{ color: '#f44242', fontSize: 17, fontFamily: 'droidkufi' }}
 								data={age_data}
-								initValue="العمر"
+								initValue={this.state.age || 'العمر'}
 								supportedOrientations={['portrait']}
 								accessible={true}
 								scrollViewAccessibilityLabel={'Scrollable options'}
 								cancelButtonAccessibilityLabel={'Cancel Button'}
-								onChange={(option)=>{ this.setState({textInputValue:option.label})}}
+								onChange={(option) => { this.setState({ age: option.label }) }}
 							//	labelExtractor={(age_data)=> {age_data.label}}
-								//value={this.state.age}
+							//value={this.state.age}
 							/>
 						</View>
 						<View style={{ flex: 1, paddingVertical: 5, width: '100%', flexDirection: 'row', alignItems: 'center', borderBottomWidth: 1, borderBottomColor: '#39384b' }}>
@@ -285,20 +350,20 @@ class AddPost extends Component {
 
 							<ModalSelector
 								style={{ width: '100%', flex: 0.85 }}
-								selectStyle={{borderWidth: 0, paddingHorizontal: 0, paddingVertical: 0, alignItems: 'flex-start'}}
+								selectStyle={{ borderWidth: 0, paddingHorizontal: 0, paddingVertical: 0, alignItems: 'flex-start' }}
 								selectTextStyle={{ color: '#d8d8d8', fontFamily: 'droidkufi', fontSize: 19 }}
 								optionTextStyle={{ color: bgColor, fontSize: 17, fontFamily: 'droidkufi' }}
-								cancelText= 'إلغاء'
+								cancelText='إلغاء'
 								overlayStyle={{ backgroundColor: 'rgba(0,0,0,0.3)' }}
 								cancelTextStyle={{ color: '#f44242', fontSize: 17, fontFamily: 'droidkufi' }}
 								data={gender_data}
-								initValue="الجنس"
+								initValue={this.state.gender || 'الجنس'}
 								supportedOrientations={['portrait']}
 								accessible={true}
 								scrollViewAccessibilityLabel={'Scrollable options'}
 								cancelButtonAccessibilityLabel={'Cancel Button'}
-								onChange={(option)=>{ this.setState({textInputValue:option.label})}}							
-								//value={this.state.gender}
+								onChange={(option) => { this.setState({ gender: option.label }) }}
+							//value={this.state.gender}
 							/>
 						</View>
 
@@ -317,7 +382,7 @@ class AddPost extends Component {
 									flex: 0.70,
 									color: 'white'
 								}}
-								onChangeText={(text) => this.setState({max_reaches:text})}
+								onChangeText={(text) => this.setState({ max_reaches: text })}
 								value={this.state.max_reaches}
 							/>
 
@@ -326,10 +391,13 @@ class AddPost extends Component {
 							</View>
 						</View>
 					</View>
-				</Content>				
+				</Content>
 
-				<View style={{ flexDirection: 'row', justifyContent: 'space-around', paddingVertical: 10 }}>
-					<TouchableOpacity style={{ borderRadius: 20, flex: 0.5, marginHorizontal: 10 }}>
+				<View
+					style={{ flexDirection: 'row', justifyContent: 'space-around', paddingVertical: 10 }}>
+					<TouchableOpacity 
+						onPress={this.addPost}
+						style={{ borderRadius: 20, flex: 0.5, marginHorizontal: 10 }}>
 						<LinearGradient
 							colors={['#b28003', '#f9ce63']}
 							start={{ x: 0.0, y: 1.0 }}
@@ -344,10 +412,10 @@ class AddPost extends Component {
 						</LinearGradient>
 					</TouchableOpacity>
 
-				
+
 					<TouchableOpacity style={{ flex: 0.5, borderWidth: 1, borderColor: mainColor, marginHorizontal: 10, borderRadius: 20, justifyContent: 'center', alignItems: 'center' }}
 						onPress={() => {
-							{this.DotheDraft()}
+							{ this.addToDraft() }
 
 						}}>
 						<FontedText style={{ color: mainColor, fontSize: 15 }}>حفظ كمسودة</FontedText>
@@ -371,7 +439,7 @@ class AddPost extends Component {
 function mergeProps(stateProps, dispatchProps, ownProps) {
 	const { dispatch } = dispatchProps;
 	const { actions } = require('../../redux/DraftRedux.js');
-	
+
 	return {
 		...ownProps,
 		...stateProps,
