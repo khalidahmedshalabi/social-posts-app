@@ -168,23 +168,21 @@ export default class Posts extends Component {
 		else if (media_type == 1) {
 			// Image type
 			return (
-				<Image
-					style={{
-						width: '100%',
-						height: 250,
-						borderTopLeftRadius: 10,
-						borderTopRightRadius: 10
-					}}
-					source={{ uri: media_url }}
-				/>
+				<View style={{ backgroundColor: 'transparent', alignItems: 'center', borderTopLeftRadius: 10, borderTopRightRadius: 10, overflow: 'hidden' }}>
+					<Image
+						style={{
+							width: '100%',
+							height: 250
+						}}
+						source={{ uri: media_url }}
+					/>
+				</View>
 			)
 		}
 		else {
 			// Video type
 			return (
-				<View style={{
-					backgroundColor: 'transparent', alignItems: 'center', borderTopLeftRadius: 10, borderTopRightRadius: 10, overflow: 'hidden'
-				}}>
+				<View style={{ backgroundColor: 'transparent', alignItems: 'center', borderTopLeftRadius: 10, borderTopRightRadius: 10, overflow: 'hidden' }}>
 					<Video
 						source={{ uri: media_url }}
 						rate={1.0}
