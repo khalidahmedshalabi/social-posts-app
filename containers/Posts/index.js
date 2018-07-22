@@ -183,7 +183,7 @@ export default class Posts extends Component {
 			// Video type
 			return (
 				<View style={{
-					backgroundColor: 'white', alignItems: 'center', borderTopLeftRadius: 10, borderTopRightRadius: 10
+					backgroundColor: 'transparent', alignItems: 'center', borderTopLeftRadius: 10, borderTopRightRadius: 10, overflow: 'hidden'
 				}}>
 					<Video
 						source={{ uri: media_url }}
@@ -201,9 +201,8 @@ export default class Posts extends Component {
 						}}
 						style={{
 							width: '100%',
-							height: 250,
-							borderTopLeftRadius: 10,
-							borderTopRightRadius: 10
+							height: 250
+
 						}}
 					/>
 
