@@ -269,7 +269,7 @@ export default class Posts extends Component {
 				style={{
 					opacity: didNotWatchVideo && !is_liked ? 0.2 : 1.0,
 					position: 'absolute',
-					marginTop: height * 0.35,
+					top: 220,
 					alignSelf: 'flex-end',
 					paddingRight: 8,
 				}}>
