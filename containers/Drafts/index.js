@@ -70,7 +70,11 @@ class Drafts extends Component {
 								<FontedText style={{ color: 'white', fontSize: 10, textAlign: 'left' }} > {item.content} </FontedText>
 							</TouchableOpacity>
 
-							<TouchableOpacity style={{ flex: 0.1, justifyContent: 'center', alignItems: 'flex-end', paddingRight: 15 }}>
+							<TouchableOpacity 
+							onPress={() => {
+								this.props.removeDraftPost(item.key)
+							}}
+							style={{ flex: 0.1, justifyContent: 'center', alignItems: 'flex-end', paddingRight: 15 }}>
 								<FontAwesome name='trash' size={28} color={'#999999'} />
 							</TouchableOpacity>
 						</View>
