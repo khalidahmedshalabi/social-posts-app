@@ -183,23 +183,21 @@ export default class Posts extends Component {
 		else if (media_type == 1) {
 			// Image type
 			return (
-				<Image
-					style={{
-						width: '100%',
-						height: 250,
-						borderTopLeftRadius: 10,
-						borderTopRightRadius: 10
-					}}
-					source={{ uri: `${base_url}/${media_path}` }}
-				/>
+				<View style={{ backgroundColor: 'transparent', alignItems: 'center', borderTopLeftRadius: 10, borderTopRightRadius: 10, overflow: 'hidden' }}>
+					<Image
+						style={{
+							width: '100%',
+							height: 250
+						}}
+						source={{ uri: `${base_url}/${media_path}` }}
+					/>
+				</View>
 			)
 		}
 		else {
 			// Video type
 			return (
-				<View style={{
-					backgroundColor: 'white', alignItems: 'center', borderTopLeftRadius: 10, borderTopRightRadius: 10
-				}}>
+				<View style={{ backgroundColor: 'transparent', alignItems: 'center', borderTopLeftRadius: 10, borderTopRightRadius: 10, overflow: 'hidden' }}>
 					<Video
 						source={{ uri: `${base_url}/${media_path}` }}
 						rate={1.0}
@@ -216,9 +214,8 @@ export default class Posts extends Component {
 						}}
 						style={{
 							width: '100%',
-							height: 250,
-							borderTopLeftRadius: 10,
-							borderTopRightRadius: 10
+							height: 250
+
 						}}
 					/>
 
@@ -285,7 +282,7 @@ export default class Posts extends Component {
 				style={{
 					opacity: didNotWatchVideo && !is_liked ? 0.2 : 1.0,
 					position: 'absolute',
-					marginTop: height * 0.35,
+					top: 220,
 					alignSelf: 'flex-end',
 					paddingRight: 8,
 				}}>
