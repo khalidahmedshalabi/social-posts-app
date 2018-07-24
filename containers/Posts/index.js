@@ -293,7 +293,7 @@ export default class Posts extends Component {
 
 	renderItem = (item) => {
 		return (
-			<View style={{ opacity: item.is_completed ? 0.5 : 1.0 }}>
+			<View style={{ opacity: item.is_completed ? 0.5 : 1.0, marginHorizontal: 10 }}>
 				{this.renderCorrectMediaComponent(item.key, item.is_playing, item.media_type, item.media_path, item.did_watch_video)}
 
 				<View style={{ borderBottomLeftRadius: 10, borderBottomRightRadius: 10, backgroundColor: item.is_completed == 0 ? 'white' : '#b5b5b5', justifyContent: 'center', alignItems: 'center', paddingVertical: 15, paddingHorizontal: 12 }}>
@@ -350,7 +350,7 @@ export default class Posts extends Component {
 							}}
 						/>
 					}
-					contentContainerStyle={{ paddingVertical: 58, marginHorizontal: 10 }}
+					contentContainerStyle={{ paddingVertical: 58/*, marginHorizontal: 10*/ }}
 					ListEmptyComponent={() => [
 						<NoContent key='1' />
 						,
