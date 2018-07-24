@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, FlatList, Image, Dimensions, Linking } from 'react-native';
+import { View, TouchableOpacity, FlatList, Image, Dimensions, Linking, RefreshControl } from 'react-native';
 import { Video } from 'expo'
 import { Ionicons, MaterialCommunityIcons, Feather, FontAwesome, Entypo } from '@expo/vector-icons';
 import { mainColor, bgColor } from '../../constants/Colors';
@@ -7,6 +7,9 @@ import FontedText from '../../components/FontedText';
 import NoContent from '../../components/NoContent';
 import { Container } from 'native-base';
 import PopupDialog from 'react-native-popup-dialog';
+import { GET } from '../../utils/Network';
+import HoldUp from '../../components/HoldUp';
+import { base_url } from '../../constants/Server';
 const height = Dimensions.get('window').height
 
 export default class Posts extends Component {
@@ -15,13 +18,14 @@ export default class Posts extends Component {
 
 		this.state = {
 			points_gained: 10,
+			fetched: false,
 			posts: [
-				{
+				/*{
 					key: '1',
 					title: 'عنوان المنشور',
 					content: 'محتوى البوست محتوى البوست محتوى البوست محتوى البوست محتوى البوست',
 					media_type: 2,
-					media_url: 'http://techslides.com/demos/sample-videos/small.mp4',
+					media_path: 'http://techslides.com/demos/sample-videos/small.mp4',
 					link: 'https://google.com',
 					is_completed: 0,
 					is_liked: 0,
@@ -33,7 +37,7 @@ export default class Posts extends Component {
 					title: 'عنوان المنشور',
 					content: 'محتوى البوست محتوى البوست محتوى البوست محتوى البوست محتوى البوست',
 					media_type: 1,
-					media_url: 'https://thuocmocrauvatoc.files.wordpress.com/2016/07/rau-dep-16.jpg',
+					media_path: 'https://thuocmocrauvatoc.files.wordpress.com/2016/07/rau-dep-16.jpg',
 					link: 'https://facebook.com',
 					is_completed: 0,
 					is_liked: 0,
@@ -45,7 +49,7 @@ export default class Posts extends Component {
 					title: 'عنوان المنشور',
 					content: 'محتوى البوست محتوى البوست محتوى البوست محتوى البوست محتوى البوست',
 					media_type: 0,
-					media_url: '',
+					media_path: '',
 					link: 'https://youtube.com',
 					is_completed: 0,
 					is_liked: 1,
@@ -57,7 +61,7 @@ export default class Posts extends Component {
 					title: 'عنوان المنشور',
 					content: 'محتوى البوست محتوى البوست محتوى البوست محتوى البوست محتوى البوست',
 					media_type: 2,
-					media_url: 'http://mirrors.standaloneinstaller.com/video-sample/grb_2.mp4',
+					media_path: 'http://mirrors.standaloneinstaller.com/video-sample/grb_2.mp4',
 					link: 'https://google.com',
 					is_completed: 0,
 					is_liked: 0,
@@ -69,16 +73,27 @@ export default class Posts extends Component {
 					title: 'عنوان المنشور',
 					content: 'محتوى البوست محتوى البوست محتوى البوست محتوى البوست محتوى البوست',
 					media_type: 1,
-					media_url: 'https://thuocmocrauvatoc.files.wordpress.com/2016/07/rau-dep-16.jpg',
+					media_path: 'https://thuocmocrauvatoc.files.wordpress.com/2016/07/rau-dep-16.jpg',
 					link: 'https://twitter.com',
 					is_completed: 1,
 					is_liked: 0,
 					did_watch_video: 0,
 					likes: 2394
-				},
-
+				},*/
 			]
 		}
+	}
+
+	fetchPosts = (showLoader) => {
+		GET('Posts', res => {
+			this.setState({ posts: res.data.posts, fetched: showLoader })
+		}, err => {
+			//console.log(err)
+		})
+	}
+
+	componentDidMount () {
+		this.fetchPosts(true)
 	}
 
 	onPressPlayVideo = (key) => {
@@ -131,7 +146,7 @@ export default class Posts extends Component {
 		});
 	}
 
-	renderCorrectMediaComponent = (key, is_playing, media_type, media_url, did_watch_video) => {
+	renderCorrectMediaComponent = (key, is_playing, media_type, media_path, did_watch_video) => {
 		if (media_type == 0) {
 			// link type
 			return (
@@ -175,7 +190,7 @@ export default class Posts extends Component {
 						borderTopLeftRadius: 10,
 						borderTopRightRadius: 10
 					}}
-					source={{ uri: media_url }}
+					source={{ uri: `${base_url}/${media_path}` }}
 				/>
 			)
 		}
@@ -186,7 +201,7 @@ export default class Posts extends Component {
 					backgroundColor: 'white', alignItems: 'center', borderTopLeftRadius: 10, borderTopRightRadius: 10
 				}}>
 					<Video
-						source={{ uri: media_url }}
+						source={{ uri: `${base_url}/${media_path}` }}
 						rate={1.0}
 						volume={1.0}
 						isMuted={false}
@@ -281,13 +296,12 @@ export default class Posts extends Component {
 
 	renderItem = (item) => {
 		return (
-			<View style={{ opacity: item.is_completed == 0 ? null : 0.5 }}>
-				{this.renderCorrectMediaComponent(item.key, item.is_playing, item.media_type, item.media_url, item.did_watch_video)}
+			<View style={{ opacity: item.is_completed ? 0.5 : 1.0 }}>
+				{this.renderCorrectMediaComponent(item.key, item.is_playing, item.media_type, item.media_path, item.did_watch_video)}
 
 				<View style={{ borderBottomLeftRadius: 10, borderBottomRightRadius: 10, backgroundColor: item.is_completed == 0 ? 'white' : '#b5b5b5', justifyContent: 'center', alignItems: 'center', paddingVertical: 15, paddingHorizontal: 12 }}>
 					<FontedText style={{ color: 'black', fontSize: 18, alignSelf: 'flex-start' }}>{item.title}</FontedText>
-
-					<FontedText style={{ color: '#b5b5b5', fontSize: 13, textAlign: 'left', marginTop: 3 }}>{item.content}</FontedText>
+					<FontedText style={{ color: '#b5b5b5', fontSize: 13, alignSelf: 'flex-start', textAlign: 'left', marginTop: 3 }}>{item.content}</FontedText>
 
 					<View style={{ flex: 1, flexDirection: 'row', marginTop: 5 }}>
 						<View style={{ flex: 0.7, flexDirection: 'row', alignItems: 'center' }}>
@@ -323,11 +337,34 @@ export default class Posts extends Component {
 	}
 
 	render() {
+		if(!this.state.fetched)
+			return <HoldUp />
+
 		return (
-			<Container style={{ alignItems: 'center', backgroundColor: bgColor, paddingHorizontal: 15 }}>
+			<Container style={{ /*alignItems: 'center',*/ backgroundColor: bgColor }}>
 				<FlatList
-					contentContainerStyle={{ paddingVertical: 20 }}
-					ListEmptyComponent={<NoContent />}
+					refreshControl={
+						<RefreshControl
+							colors={[mainColor]}
+							tintColor={mainColor}
+							refreshing={!this.state.fetched}
+							onRefresh={() => {
+								this.fetchPosts(true)
+							}}
+						/>
+					}
+					contentContainerStyle={{ paddingVertical: 58, marginHorizontal: 10 }}
+					ListEmptyComponent={() => [
+						<NoContent key='1' />
+						,
+						<TouchableOpacity key='2' onPress={() => this.fetchPosts(true)}>
+							<Ionicons
+								style={{ marginTop: 20, alignSelf: 'center' }}
+								name='md-refresh'
+								size={40}
+								color={mainColor} />
+						</TouchableOpacity>
+					]}
 					ItemSeparatorComponent={() => <View style={{ height: 20 }}></View>}
 					data={this.state.posts}
 					renderItem={({ item }) => this.renderItem(item)} />
@@ -352,6 +389,23 @@ export default class Posts extends Component {
 					</View>
 				</PopupDialog>
 			</Container>
+		)
+	}
+}
+
+class NoContentWithRefresh extends Component {
+	render () {
+		return (
+			[
+				<NoContent key='1' />
+				,
+				<Ionicons
+					key='2'
+					style={{ marginTop: 20 }}
+					name='md-refresh'
+					size={40}
+					color={'#ff5e5e'} />
+			]
 		)
 	}
 }
