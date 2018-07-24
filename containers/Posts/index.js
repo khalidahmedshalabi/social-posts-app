@@ -19,68 +19,7 @@ export default class Posts extends Component {
 		this.state = {
 			points_gained: 10,
 			fetched: false,
-			posts: [
-				/*{
-					key: '1',
-					title: 'عنوان المنشور',
-					content: 'محتوى البوست محتوى البوست محتوى البوست محتوى البوست محتوى البوست',
-					media_type: 2,
-					media_path: 'http://techslides.com/demos/sample-videos/small.mp4',
-					link: 'https://google.com',
-					is_completed: 0,
-					is_liked: 0,
-					did_watch_video: 0,
-					likes: 13
-				},
-				{
-					key: '2',
-					title: 'عنوان المنشور',
-					content: 'محتوى البوست محتوى البوست محتوى البوست محتوى البوست محتوى البوست',
-					media_type: 1,
-					media_path: 'https://thuocmocrauvatoc.files.wordpress.com/2016/07/rau-dep-16.jpg',
-					link: 'https://facebook.com',
-					is_completed: 0,
-					is_liked: 0,
-					did_watch_video: 0,
-					likes: 89
-				},
-				{
-					key: '3',
-					title: 'عنوان المنشور',
-					content: 'محتوى البوست محتوى البوست محتوى البوست محتوى البوست محتوى البوست',
-					media_type: 0,
-					media_path: '',
-					link: 'https://youtube.com',
-					is_completed: 0,
-					is_liked: 1,
-					did_watch_video: 0,
-					likes: 2038
-				},
-				{
-					key: '4',
-					title: 'عنوان المنشور',
-					content: 'محتوى البوست محتوى البوست محتوى البوست محتوى البوست محتوى البوست',
-					media_type: 2,
-					media_path: 'http://mirrors.standaloneinstaller.com/video-sample/grb_2.mp4',
-					link: 'https://google.com',
-					is_completed: 0,
-					is_liked: 0,
-					did_watch_video: 0,
-					likes: 29
-				},
-				{
-					key: '5',
-					title: 'عنوان المنشور',
-					content: 'محتوى البوست محتوى البوست محتوى البوست محتوى البوست محتوى البوست',
-					media_type: 1,
-					media_path: 'https://thuocmocrauvatoc.files.wordpress.com/2016/07/rau-dep-16.jpg',
-					link: 'https://twitter.com',
-					is_completed: 1,
-					is_liked: 0,
-					did_watch_video: 0,
-					likes: 2394
-				},*/
-			]
+			posts: []
 		}
 	}
 
@@ -239,7 +178,9 @@ export default class Posts extends Component {
 		}
 	}
 
-	onPressLikePost = (key) => {
+	onPressLikePost = (key, id) => {
+		GET('Posts/UserLikePost?post_id=' + id, res => {}, err => {})
+
 		// Find index by key
 		const index = this.state.posts.findIndex((el) => el.key === key);
 
@@ -251,6 +192,9 @@ export default class Posts extends Component {
 
 		// Set status as liked
 		post.is_liked = 1;
+		
+		// Increase likes
+		post.likes = post.likes + 1
 
 		// Update our copy of posts array
 		copy_posts[index] = post;
@@ -267,7 +211,7 @@ export default class Posts extends Component {
 	}
 
 	renderLikeButton = (item) => {
-		const { is_liked, did_watch_video, media_type, key } = item
+		const { is_liked, did_watch_video, media_type, key, id } = item
 
 		const likeButtonColor = is_liked ? '#f23548' : '#B6B6B6'
 		const didNotWatchVideo = (media_type == 2 && !did_watch_video)
@@ -277,7 +221,7 @@ export default class Posts extends Component {
 			<TouchableOpacity
 				key='2'
 				disabled={isNotClickable}
-				onPress={() => this.onPressLikePost(key)}
+				onPress={() => this.onPressLikePost(key, id)}
 				activeOpacity={0.8}
 				style={{
 					opacity: didNotWatchVideo && !is_liked ? 0.2 : 1.0,
