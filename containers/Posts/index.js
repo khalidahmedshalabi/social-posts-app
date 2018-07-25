@@ -32,7 +32,7 @@ export default class Posts extends Component {
 	}
 
 	fetchPosts = (showLoader) => {
-		GET('Posts', res => {
+		GET(`Posts${this.props.history ? '/History' : ''}`, res => {
 			this.setState({ posts: res.data.posts, fetched: showLoader })
 		}, err => {
 			//console.log(err)
@@ -316,6 +316,9 @@ export default class Posts extends Component {
 	}
 
 	onViewablePostsChanged = (viewableItems/*, changed*/) => {
+		if (this.props.history) 
+			return
+		
 		if (!viewableItems.length)
 			return
 

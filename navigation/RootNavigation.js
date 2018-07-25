@@ -12,7 +12,6 @@ import AccountInfo from '../containers/AccountInfo'
 import CodeConfirmation from '../containers/CodeConfirmation'
 import EditProfile from '../containers/EditProfile'
 import AddPost from '../containers/AddPost'
-import PostsHistory from '../containers/PostsHistory'
 import Gifts from '../containers/Gifts'
 import Drafts from '../containers/Drafts';
 import ContactUs from '../containers/ContactUs';
@@ -48,7 +47,7 @@ const RootNavigatorCore = ({ screenProps, initialRouteName }) => {
 			screen: AddPost
 		},
 		PostsHistory: {
-			screen: PostsHistory
+			screen: props => <Posts {...props} history={true} />
 		},
 		Gifts: {
 			screen: Gifts
