@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import {
 	StyleSheet,
 	View,
-	Dimensions
+	Dimensions,
+	Platform
 } from 'react-native';
 import { Container, Button } from 'native-base';
 import { Video } from 'expo'
@@ -118,6 +119,7 @@ class Walkthrough extends Component {
 			<Container style={{backgroundColor: bgColor}}>
 				<Swiper
 					height="100%"
+					paginationStyle={{ flexDirection: Platform.OS === 'ios' ? 'row' : 'row-reverse' }}
 					horizontal={true}
 					loop={false}
 					showsPagination={true}
