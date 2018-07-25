@@ -10,6 +10,7 @@ import PopupDialog from 'react-native-popup-dialog';
 import { GET } from '../../utils/Network';
 import HoldUp from '../../components/HoldUp';
 import { base_url } from '../../constants/Server';
+import BackHeader from '../../components/BackHeader';
 const height = Dimensions.get('window').height
 
 const POPUP_DIALOG_SHOW_INTERVAL = 3000
@@ -342,12 +343,23 @@ export default class Posts extends Component {
 		//console.log("Changed in this iteration", changed);
 	}
 
+	renderPostsHistoryHeader = () => {
+		if (this.props.history) {
+			return (
+				<BackHeader
+					navigation={this.props.navigation}
+					title='منشورات شاهدتها' />
+			)
+		}
+	}
+
 	render() {
 		if(!this.state.fetched)
 			return <HoldUp />
 
 		return (
 			<Container style={{ /*alignItems: 'center',*/ backgroundColor: bgColor }}>
+				{this.renderPostsHistoryHeader()}
 				<FlatList
 					refreshControl={
 						<RefreshControl
