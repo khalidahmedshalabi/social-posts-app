@@ -15,6 +15,7 @@ import AddPost from '../containers/AddPost'
 import Gifts from '../containers/Gifts'
 import Drafts from '../containers/Drafts';
 import ContactUs from '../containers/ContactUs';
+import Posts from '../containers/Posts';
 
 // This is the core of the navigator: route configs, etc...
 const RootNavigatorCore = ({ screenProps, initialRouteName }) => {
