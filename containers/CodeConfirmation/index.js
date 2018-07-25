@@ -5,8 +5,10 @@ import { mainColor, bgColor } from '../../constants/Colors';
 import FontedText from '../../components/FontedText';
 import Toast from 'react-native-easy-toast';
 import { height, width } from '../../constants/Layout';
-import CodeInput from 'react-native-confirmation-code-input';
+
+
 import { GET, POST } from '../../utils/Network';
+import FontedInput from '../../components/FontedInput';
 
 class CodeConfirmation extends Component {
 
@@ -17,12 +19,13 @@ class CodeConfirmation extends Component {
 
 		this.state = {
 			code,
+			userCodeInput:'',
 		}
 	}
-
-	CheckCode = (isValid) => {
-		if (!isValid) {
+	CheckCode = () => {
+		if (this.state.userCodeInput != this.state.code) {
 			this.refs.toast.show('الكود خاطئ');
+			console.log("the code is : " + this.state.userCodeInput)
 		}
 		else {
 			const { sourceScreen, user_id } = this.props.navigation.state.params
@@ -69,24 +72,24 @@ class CodeConfirmation extends Component {
 					enabled
 					keyboardVerticalOffset={0}
 					style={{ flex: 1 }}
-					contentContainerStyle={{ flex: 1, flexDirection: 'column', alignItems: 'center', width: width }}>
-					<FontedText style={{ color: 'white', textAlign: 'center', paddingTop: 50 }}>ادخل الكود الذي وصلك علي بريدك الالكتروني - تفقد فولدر spam ايضا</FontedText>
-
-					<CodeInput
-						ref="codeInputRef2"
-						secureTextEntry
-						compareWithCode={this.state.code}
-						keyboardType="numeric"
-						activeColor={mainColor}
-						inactiveColor='white'
-						autoFocus={true}
-						inputPosition='center'
-						size={50}
-						onFulfill={(isValid) => this.CheckCode(isValid)}
-						containerStyle={{ paddingTop: 65, flexDirection: 'row-reverse' }}
-						codeInputStyle={{ borderWidth: 1.5 }}
+					contentContainerStyle={{ flex: 1, flexDirection: 'column', alignItems: 'center', width: width, }}>
+					<FontedText style={{ color: 'white', textAlign: 'center', paddingTop: 50,paddingHorizontal: 12, }}>ادخل الكود الذي وصلك علي بريدك الالكتروني - تفقد فولدر Spam/Junk ايضا</FontedText>
+					
+				<View style={{flex:0.17,justifyContent: 'center',alignItems: 'center',marginTop: 60,}}>
+					<FontedInput
+						borderBottomColor ='#bcbcbc'
+						borderBottomWidth= {2}
+						placeholder='الكود هنا'
+						placeholderTextColor='#bcbcbc'
+						keyboardType='decimal-pad'
+						returnKeyType='done'
+						maxLength={5}
+						style={{flex: 1,color:'white',fontSize: 34,}}
+						onChangeText={(value) => this.setState({userCodeInput: value})}
+						onSubmitEditing={() => this.CheckCode()}
+					
 					/>
-
+				</View>
 					<Toast ref="toast"
 						style={{ backgroundColor: '#dcdee2', borderRadius: 25, }}
 						position='bottom'

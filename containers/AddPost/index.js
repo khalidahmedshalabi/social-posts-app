@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, Image, Platform, ActivityIndicator } from 'react-native';
+import { View, TouchableOpacity, Image, Platform, ActivityIndicator, Alert, WebView } from 'react-native';
 import { connect } from 'react-redux'
 import { Content } from 'native-base';
 import { LinearGradient, ImagePicker, Permissions } from 'expo';
@@ -11,6 +11,7 @@ import LazyContainer from '../../components/LazyContainer';
 import ModalSelector from 'react-native-modal-selector'
 import BackHeader from '../../components/BackHeader';
 import Toast from 'react-native-easy-toast';
+import PopupDialog from 'react-native-popup-dialog';
 import { height } from '../../constants/Layout';
 import { base_url, api_extension } from '../../constants/Server';
 import { POST } from '../../utils/Network';
@@ -32,6 +33,10 @@ class AddPost extends Component {
 			media_type: 0, // 0 link, 1 image, 2 video,
 
 			is_uploading_media: false,
+
+			paymentMethod: 0,
+			published: false,
+			isPaymentDialogShown: false,
 		}
 
 	}
@@ -98,6 +103,14 @@ class AddPost extends Component {
 		else this.openImagePicker()
 	}
 
+	onPublishPost = () => {
+		this.setState({ published: true }, () => {
+			setTimeout(() => {
+				this.props.navigation.goBack()
+			}, 3000);
+		})
+	}
+
 	uploadPostMedia = (post_id) => {
 		this.setState({ is_uploading_media: true })
 
@@ -126,7 +139,7 @@ class AddPost extends Component {
 		return fetch(apiUrl, options).then((response) => response.json())
 			.then((responseJson) => {
 				if(responseJson.response == 1) {
-					this.props.navigation.goBack()
+					this.onPublishPost()
 				} 
 			})
 			.catch((error) => {
@@ -157,7 +170,7 @@ class AddPost extends Component {
 					const { post_id } = res.data
 					this.uploadPostMedia(post_id)
 				}
-				else this.props.navigation.goBack()
+				else this.onPublishPost()
 			},
 			err => {
 
@@ -183,7 +196,87 @@ class AddPost extends Component {
 		}
 	}
 
+	toggleDialog = (toggle) => {
+		this.setState({ isPaymentDialogShown: toggle }, () => {
+			if(toggle)
+				this.popupDialog.show()
+			else
+				this.popupDialog.dismiss()
+		})
+	}
+
+	askPaymentMethod = () => {
+		Alert.alert(
+			'طرق الدفع',
+			'اى طرق الدفع تفضل؟',
+			[
+				{ text: 'الدفع بالنقاط', onPress: () => this.setState({ paymentMethod: 1 }, () => this.toggleDialog(true)) },
+				{ text: 'الدفع بالمال', onPress: () => this.setState({ paymentMethod: 0 }, () => this.toggleDialog(true)) },
+			],
+			{ cancelable: true }
+		)
+	}
+
+	renderPopDialogContent = () => {
+		if (!this.state.isPaymentDialogShown) return null
+
+		if (!this.state.max_reaches || !this.state.title || !this.state.content || (!this.state.link && !this.state.image)
+			|| !this.state.country || !this.state.age || !this.state.gender 
+			|| (this.state.paymentMethod != 0 && this.state.paymentMethod != 1)) {
+			return (
+				<FontedText style={{ color: mainColor, margin: 23, textAlign: 'center' }}>قم بملء كل الخانات المطلوبة فى المنشور</FontedText>
+			)
+		}
+
+		const { paymentMethod, max_reaches } = this.state
+		const { user_id } = this.props
+		
+		return (
+			<WebView
+				scalesPageToFit={true}
+				javaScriptEnabled={true}
+				source={{ uri: `${base_url}/PayForPost?user_id=${user_id}&method=${paymentMethod}&reaches=${max_reaches}` }}
+				onMessage={(event) => { 
+					const { data } = event.nativeEvent
+					
+					this.toggleDialog(false)
+
+					switch(data) {
+						case 'success':
+							this.addPost()
+							break;
+						case 'invalid_request':
+							alert('طلب غير صالح')
+							break;
+						case 'payment_error':
+							alert('فشل فى الدفع')
+							break;
+						case 'not_enough_points':
+							alert('لا يوجد نقاط كافية')
+							break;
+						case 'expired':
+							alert('تأخرت فى الدفع. اعد المحاولة')
+							break;
+						case 'invalid_payment':
+							alert('عملية دفع غير صالحة')
+							break;
+					}
+				 }}
+				style={{ flex: 1, height: 300, width: 300 }}
+				ref="WebView"
+			/>
+		)
+	}
+
 	render() {
+		if (this.state.published) {
+			return (
+				<View style={{ flex: 1, backgroundColor: bgColor, justifyContent: 'center', alignItems: 'center', padding: 25 }}>
+					<FontedText style={{ fontSize: 24, marginBottom: 15, color: '#d8d8d8' }}>تم النشر</FontedText>
+				</View>
+			)
+		}
+
 		if(this.state.is_uploading_media) {
 			return (
 				<View style={{ flex: 1, backgroundColor: bgColor, justifyContent: 'center', alignItems: 'center', padding: 25 }}>
@@ -405,9 +498,9 @@ class AddPost extends Component {
 								value={this.state.max_reaches}
 							/>
 
-							<View style={{ flex: 0.15, alignItems: 'flex-start' }}>
+							{/*<View style={{ flex: 0.15, alignItems: 'flex-start' }}>
 								<FontedText style={{ color: mainColor }}>35 رس</FontedText>
-							</View>
+							</View>*/}
 						</View>
 					</View>
 				</Content>
@@ -415,7 +508,7 @@ class AddPost extends Component {
 				<View
 					style={{ flexDirection: 'row', justifyContent: 'space-around', paddingVertical: 10 }}>
 					<TouchableOpacity 
-						onPress={this.addPost}
+						onPress={() => this.askPaymentMethod()}
 						style={{ borderRadius: 20, flex: 0.5, marginHorizontal: 10 }}>
 						<LinearGradient
 							colors={['#b28003', '#f9ce63']}
@@ -434,12 +527,19 @@ class AddPost extends Component {
 
 					<TouchableOpacity style={{ flex: 0.5, borderWidth: 1, borderColor: mainColor, marginHorizontal: 10, borderRadius: 20, justifyContent: 'center', alignItems: 'center' }}
 						onPress={() => {
-							{ this.addToDraft() }
-
+							this.addToDraft()
 						}}>
 						<FontedText style={{ color: mainColor, fontSize: 15 }}>حفظ كمسودة</FontedText>
 					</TouchableOpacity>
 				</View>
+
+				<PopupDialog
+					dialogStyle={{ backgroundColor: bgColor, borderRadius: 10, justifyContent: 'center', alignItems: 'center' }}
+					width={0.80}
+					height={0.7}
+					ref={(popupDialog) => { this.popupDialog = popupDialog; }}>
+					{this.renderPopDialogContent()}
+				</PopupDialog>
 
 				<Toast
 					ref="toast"
@@ -455,6 +555,10 @@ class AddPost extends Component {
 	}
 }
 
+const mapStateToProps = (state) => ({
+	user_id: state.login.user_id || -1,
+})
+
 function mergeProps(stateProps, dispatchProps, ownProps) {
 	const { dispatch } = dispatchProps;
 	const { actions } = require('../../redux/DraftRedux.js');
@@ -466,4 +570,4 @@ function mergeProps(stateProps, dispatchProps, ownProps) {
 	};
 }
 
-export default connect(undefined, undefined, mergeProps)(AddPost)
+export default connect(mapStateToProps, undefined, mergeProps)(AddPost)
