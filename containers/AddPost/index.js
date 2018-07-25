@@ -211,7 +211,26 @@ class AddPost extends Component {
 		const country_data = [
 			{ key: 0, label: 'السعودية' },
 			{ key: 1, label: 'مصر' },
-			{ key: 2, label: 'فلسطين' }
+			{ key: 2, label: 'فلسطين' },
+			{ key: 3, label: 'الجزائر' },
+			{ key: 4, label: 'العراق' },
+			{ key: 5, label: 'السودان' },
+			{ key: 6, label: 'المغرب' },
+			{ key: 7, label: 'اليمن' },
+			{ key: 8, label: 'سوريا' },
+			{ key: 9, label: 'تونس' },
+			{ key: 10, label: 'الصومال' },
+			{ key: 11, label: 'الإمارات' },
+			{ key: 12, label: 'الأردن' },
+			{ key: 13, label: 'ليبيا' },
+			{ key: 14, label: 'لبنان' },
+			{ key: 15, label: 'موريتانيا' },
+			{ key: 16, label: 'عُمان' },
+			{ key: 17, label: 'الكويت' },
+			{ key: 18, label: 'قطر' },
+			{ key: 19, label: 'البحرين' },
+			{ key: 20, label: 'جيبوتي' },
+			{ key: 21, label: 'جزر القمر' },
 		];
 
 		return (
