@@ -21,7 +21,7 @@ export default class Notifications extends Component {
 	fetchData = () => {
 		GET('PointsNotifications', res => {
 			this.setState({ notifications: res.data.notifications, fetched: true })
-		})
+		}, err => console.log(err))
 	}
 
 	componentDidMount () {
