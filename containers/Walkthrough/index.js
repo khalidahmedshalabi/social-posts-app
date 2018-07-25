@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import {
 	StyleSheet,
 	View,
-	Dimensions
+	Dimensions,
+	Platform
 } from 'react-native';
 import { Container, Button } from 'native-base';
-import { Video } from 'expo'
 import * as Animatable from 'react-native-animatable';
 import { FontAwesome, Entypo, MaterialIcons, Ionicons } from '@expo/vector-icons';
 import { mainColor, bgColor } from '../../constants/Colors'
@@ -23,14 +23,14 @@ class Walkthrough extends Component {
 	ShouldAnim3=true
 
 	componentDidMount () {
-		this.video1.stopAsync()
+		this.viewIcon1.fadeOut(0)
 		this.viewText1.fadeOut(0)
 		this.viewIcon3.fadeOut(0)
 		this.viewText3.fadeOut(0)
 	}
 
 	applyTheAnim = () => {
-		this.video1.playAsync()
+		this.viewIcon1.bounce(1500)
 		this.viewText1.fadeInUpBig(1500)
 		//this.viewSkip1.fadeInUpBig(1500)
 	}
@@ -48,7 +48,7 @@ class Walkthrough extends Component {
 	onPageChanged = (number) => {
 		if(number == 0) {
 			this.viewText1.fadeOut(0)
-			//this.video1.stopAsync()
+			this.viewIcon1.fadeOut(0)
 			//this.viewSkip1.fadeOut(0)
 			
 		}
@@ -65,7 +65,7 @@ class Walkthrough extends Component {
 			else if(this.ShouldAnim1==false) 
 			{		
 				this.viewText1.stopAnimation()
-				//this.video1.stopAsync()
+				this.viewIcon1.stopAnimation()
 				this.viewText2.fadeOut(0)
 				this.viewIcon2.fadeOut(0)
 			}
@@ -80,7 +80,7 @@ class Walkthrough extends Component {
 			this.applyTheAnim2()
 
 			this.viewText1.fadeOut(0)
-			//this.video1.stopAsync()
+			this.viewIcon1.fadeOut(0)
 			this.ShouldAnim2=false
 		//	this.viewSkip1.fadeOut(0)
 			}
@@ -115,9 +115,10 @@ class Walkthrough extends Component {
 
 	render() {
 		return (
-			<Container style={{backgroundColor: bgColor}}>
+			<Container style={{backgroundColor: bgColor, paddingBottom: 15}}>
 				<Swiper
 					height="100%"
+					paginationStyle={{ flexDirection: Platform.OS === 'ios' ? 'row' : 'row-reverse' }}
 					horizontal={true}
 					loop={false}
 					showsPagination={true}
@@ -126,19 +127,13 @@ class Walkthrough extends Component {
 					onIndexChanged={(number) => this.onPageChanged(number)}
 				>
 					<View style={styles.contentContainer}>
-						<Video
-							//ref={ref => this.video1 = ref} 
-							source={require('../../assets/images/WalkthroughStatsVideo.mp4')}
-							rate={1.0}
-							volume={0.0}
-							resizeMode="contain"
-							isLooping={false}
-							shouldPlay={true}
-							style={{
-								width: '100%',
-								height: 250
-							}}>
-						</Video>
+						<Animatable.View 
+							style={styles.contentContainerIcon} 
+							animation="rubberBand" 
+							duration={1500}
+							delay={300}>
+							<MaterialIcons name='attach-money' size={120} color={mainColor} />
+						</Animatable.View>
 
 						<Animatable.View style={styles.contentContainerText} animation="fadeInUpBig" >
 							<FontedText style={{ color: 'white', fontSize: 23, textAlign: 'center' }}>هل تريد ان تحصل على المال بدون جهد</FontedText>
@@ -155,19 +150,11 @@ class Walkthrough extends Component {
 					</View> 
 
 					<View style={styles.contentContainer}>
-						<Video
-							ref={ref => this.video1 = ref} 
-							source={require('../../assets/images/WalkthroughStatsVideo.mp4')}
-							rate={1.0}
-							isMuted={true}
-							resizeMode="contain"
-							isLooping={false}
-							shouldPlay={true}
-							style={{
-								width: '100%',
-								height: 250
-							}}>
-						</Video>
+						<Animatable.View 
+							ref={ref => this.viewIcon1 = ref} 
+							style={styles.contentContainerIcon}>
+							<Entypo name='trophy' size={120} color={mainColor} />
+						</Animatable.View>
 					
 						<Animatable.View 
 							ref={ref => this.viewText1 = ref} 
@@ -256,7 +243,7 @@ const styles = StyleSheet.create({
 	},
 	contentContainer: {
 		paddingHorizontal: pagePadding,
-		backgroundColor: '#2D2C3A',
+		backgroundColor: bgColor,
 		flex: 1,
 		justifyContent: 'center',
 		alignItems: 'center'
