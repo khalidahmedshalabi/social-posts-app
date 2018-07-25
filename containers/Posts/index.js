@@ -12,12 +12,14 @@ import HoldUp from '../../components/HoldUp';
 import { base_url } from '../../constants/Server';
 const height = Dimensions.get('window').height
 
+const POPUP_DIALOG_SHOW_INTERVAL = 3000
+
 export default class Posts extends Component {
 	constructor(props) {
 		super(props)
 
 		this.state = {
-			points_gained: 10,
+			points_earned: 0,
 			fetched: false,
 			posts: []
 		}
@@ -60,7 +62,16 @@ export default class Posts extends Component {
 		});
 	}
 
-	setVideoAsWatched = (key) => {
+	setVideoAsWatched = (key, id) => {
+		GET('Posts/UserWatchVideo?post_id=' + id, res => { 
+			if(!res.data.response) return
+
+			this.setState({ points_earned: res.data.points_earned }, () => {
+				this.popupDialog.show();
+				setTimeout(() => this.popupDialog.dismiss(), POPUP_DIALOG_SHOW_INTERVAL)
+			})
+		}, err => { })
+
 		// Find index by key
 		const index = this.state.posts.findIndex((el) => el.key === key);
 
@@ -85,7 +96,7 @@ export default class Posts extends Component {
 		});
 	}
 
-	renderCorrectMediaComponent = (key, is_playing, media_type, media_path, did_watch_video) => {
+	renderCorrectMediaComponent = (id, key, is_playing, media_type, media_path, did_watch_video) => {
 		if (media_type == 0) {
 			// link type
 			return (
@@ -144,11 +155,11 @@ export default class Posts extends Component {
 						isMuted={false}
 						resizeMode={Video.RESIZE_MODE_STRETCH}
 						usePoster={true}
-						shouldPlay={is_playing}
+						shouldPlay={is_playing ? true : false}
 						isLooping={false}
 						onPlaybackStatusUpdate={(playbackStatus) => {
 							if (playbackStatus.didJustFinish && !did_watch_video) {
-								this.setVideoAsWatched(key)
+								this.setVideoAsWatched(key, id)
 							}
 						}}
 						style={{
@@ -178,9 +189,31 @@ export default class Posts extends Component {
 		}
 	}
 
-	onPressLikePost = (key, id) => {
-		GET('Posts/UserLikePost?post_id=' + id, res => {}, err => {})
+	onPressLink = (item) => {
+		GET('Posts/UserVisitLink?post_id=' + item.id, res => {
+			Linking.openURL(item.link)
+			/*Linking.openURL(() => {
+				return item.link.replace(
+					/((https?\:\/\/)|(www\.))(\S+)(\w{2,4})(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/gi,
+					function (url) {
+						var full_url = url;
+						if (!full_url.match('^https?:\/\/')) {
+							full_url = 'http://' + full_url;
+						}
+						return full_url;
+					}
+				)
+			})*/
+			if (!res.data.response) return
 
+			this.setState({ points_earned: res.data.points_earned }, () => {
+				this.popupDialog.show();
+				setTimeout(() => this.popupDialog.dismiss(), POPUP_DIALOG_SHOW_INTERVAL)
+			})
+		 }, err => { })
+	}
+
+	onPressLikePost = (key, id) => {
 		// Find index by key
 		const index = this.state.posts.findIndex((el) => el.key === key);
 
@@ -192,9 +225,13 @@ export default class Posts extends Component {
 
 		// Set status as liked
 		post.is_liked = 1;
-		
-		// Increase likes
-		post.likes = post.likes + 1
+
+		GET('Posts/UserLikePost?post_id=' + id, res => {
+			if (res.data.response === 1) {
+				// Increase likes locally too
+				post.likes = post.likes + 1
+			}
+		}, err => { })
 
 		// Update our copy of posts array
 		copy_posts[index] = post;
@@ -202,11 +239,6 @@ export default class Posts extends Component {
 		// Update component's state
 		this.setState({
 			posts: copy_posts,
-			points_gained: 25
-		}, 
-		() => {
-			this.popupDialog.show();
-			setTimeout(() => this.popupDialog.dismiss(), 3000)
 		});
 	}
 
@@ -238,7 +270,7 @@ export default class Posts extends Component {
 	renderItem = (item) => {
 		return (
 			<View style={{ opacity: item.is_completed ? 0.5 : 1.0, marginHorizontal: 10 }}>
-				{this.renderCorrectMediaComponent(item.key, item.is_playing, item.media_type, item.media_path, item.did_watch_video)}
+				{this.renderCorrectMediaComponent(item.id, item.key, item.is_playing, item.media_type, item.media_path, item.did_watch_video)}
 
 				<View style={{ borderBottomLeftRadius: 10, borderBottomRightRadius: 10, backgroundColor: item.is_completed == 0 ? 'white' : '#b5b5b5', justifyContent: 'center', alignItems: 'center', paddingVertical: 15, paddingHorizontal: 12 }}>
 					<FontedText style={{ color: 'black', fontSize: 18, alignSelf: 'flex-start' }}>{item.title}</FontedText>
@@ -250,7 +282,7 @@ export default class Posts extends Component {
 								name='link' size={18} color={'#b5b5b5'} />
 
 							<TouchableOpacity
-								onPress={() => { Linking.openURL(item.link) }}
+								onPress={() => { this.onPressLink(item) }}
 								style={{ marginLeft: 7 }}>
 								<FontedText style={{ color: '#007AF9', fontSize: 15 }}>{item.link}</FontedText>
 							</TouchableOpacity>
@@ -323,7 +355,7 @@ export default class Posts extends Component {
 					<View style={{ flexDirection: 'row', marginTop: 15 }}>
 						<FontedText style={{ color: 'white', fontSize: 16 }}>لقد تم إضافة</FontedText>
 
-						<FontedText style={{ color: '#4d9336', fontSize: 16, marginLeft: 5 }}>{this.state.points_gained}</FontedText>
+						<FontedText style={{ color: '#4d9336', fontSize: 16, marginLeft: 5 }}>{this.state.points_earned}</FontedText>
 						<FontedText style={{ color: '#4d9336', fontSize: 16, marginRight: 5 }}></FontedText>
 
 						<FontedText style={{ color: 'white', fontSize: 16 }}>نقطة إلى حسابك</FontedText>
