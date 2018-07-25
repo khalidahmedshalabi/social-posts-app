@@ -23,6 +23,12 @@ export default class Posts extends Component {
 			fetched: false,
 			posts: []
 		}
+
+		this.viewabilityConfig = {
+			viewAreaCoveragePercentThreshold: 90
+		}
+
+		this.reachedPosts = []
 	}
 
 	fetchPosts = (showLoader) => {
@@ -309,6 +315,29 @@ export default class Posts extends Component {
 		)
 	}
 
+	onViewablePostsChanged = (viewableItems/*, changed*/) => {
+		if (!viewableItems.length)
+			return
+
+		if (this.reachedPosts.length == this.state.posts.length)
+			return
+
+		let eligibleViewableItems = []
+		for (let item of viewableItems) {
+			if (this.reachedPosts.findIndex(reachedItem => reachedItem === item.key) === -1) {
+				eligibleViewableItems.push(item.key)
+			}
+		}
+
+		eligibleViewableItems.map(key => {
+			GET('Posts/UserReachPost?post_id=' + parseInt(key), res => { }, err => { })
+
+			this.reachedPosts.push(key)
+		});
+		//console.log("Visible items are", viewableItems);
+		//console.log("Changed in this iteration", changed);
+	}
+
 	render() {
 		if(!this.state.fetched)
 			return <HoldUp />
@@ -338,9 +367,13 @@ export default class Posts extends Component {
 								color={mainColor} />
 						</TouchableOpacity>
 					]}
-					ItemSeparatorComponent={() => <View style={{ height: 20 }}></View>}
+					ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
 					data={this.state.posts}
-					renderItem={({ item }) => this.renderItem(item)} />
+					renderItem={({ item }) => this.renderItem(item)}
+					onViewableItemsChanged={({ viewableItems/*, changed*/ }) => {
+						this.onViewablePostsChanged(viewableItems/*, changed*/)
+					}}
+					viewabilityConfig={this.viewabilityConfig} />
 
 				<PopupDialog
 					dialogStyle={{ backgroundColor: bgColor, borderRadius: 10, justifyContent: 'center', alignItems: 'center' }}
@@ -362,23 +395,6 @@ export default class Posts extends Component {
 					</View>
 				</PopupDialog>
 			</Container>
-		)
-	}
-}
-
-class NoContentWithRefresh extends Component {
-	render () {
-		return (
-			[
-				<NoContent key='1' />
-				,
-				<Ionicons
-					key='2'
-					style={{ marginTop: 20 }}
-					name='md-refresh'
-					size={40}
-					color={'#ff5e5e'} />
-			]
 		)
 	}
 }
