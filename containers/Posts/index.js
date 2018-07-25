@@ -24,6 +24,7 @@ export default class Posts extends Component {
 			posts: []
 		}
 
+		this.handleViewableItemsChanged = this.handleViewableItemsChanged.bind(this)
 		this.viewabilityConfig = {
 			viewAreaCoveragePercentThreshold: 90
 		}
@@ -315,7 +316,7 @@ export default class Posts extends Component {
 		)
 	}
 
-	onViewablePostsChanged = (viewableItems/*, changed*/) => {
+	handleViewableItemsChanged = (viewableItems/*, changed*/) => {
 		if (this.props.history) 
 			return
 		
@@ -373,9 +374,7 @@ export default class Posts extends Component {
 					ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
 					data={this.state.posts}
 					renderItem={({ item }) => this.renderItem(item)}
-					onViewableItemsChanged={({ viewableItems/*, changed*/ }) => {
-						this.onViewablePostsChanged(viewableItems/*, changed*/)
-					}}
+					onViewableItemsChanged={this.handleViewableItemsChanged}
 					viewabilityConfig={this.viewabilityConfig} />
 
 				<PopupDialog
