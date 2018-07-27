@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, FlatList, Image, Dimensions, Linking, RefreshControl, Platform } from 'react-native';
+import { View, TouchableOpacity, FlatList, Image, Dimensions, Linking, RefreshControl } from 'react-native';
 import { Video } from 'expo'
 import { Ionicons, MaterialCommunityIcons, Feather, FontAwesome, Entypo } from '@expo/vector-icons';
 import { mainColor, bgColor } from '../../constants/Colors';
-import Swiper from 'react-native-swiper';
 import FontedText from '../../components/FontedText';
 import NoContent from '../../components/NoContent';
 import { Container, Content } from 'native-base';
@@ -38,9 +37,8 @@ export default class Posts extends Component {
 	fetchPosts = (showLoader) => {
 		GET(`Posts${this.props.history ? '/History' : ''}`, res => {
 			this.setState({ posts: res.data.posts, fetched: showLoader })
-		}, err => {
-			//console.log(err)
-		})
+		}, () => {
+			})
 	}
 
 	componentDidMount () {
@@ -51,9 +49,8 @@ export default class Posts extends Component {
 				if(res.data.response === 1) {
 					this.setState({ announcements: res.data.announcements, announcementShown: true })
 				}
-			}, err => {
-				//console.log(err)
-			})
+			}, () => {
+				})
 		}
 	}
 
@@ -114,7 +111,7 @@ export default class Posts extends Component {
 				this.popupDialog.show();
 				setTimeout(() => this.popupDialog.dismiss(), POPUP_DIALOG_SHOW_INTERVAL)
 			})
-		}, err => { })
+		}, () => { })
 
 		// Find index by key
 		const index = this.state.posts.findIndex((el) => el.key === key);
@@ -254,7 +251,7 @@ export default class Posts extends Component {
 				this.popupDialog.show();
 				setTimeout(() => this.popupDialog.dismiss(), POPUP_DIALOG_SHOW_INTERVAL)
 			})
-		 }, err => { })
+		 }, () => { })
 	}
 
 	onPressLikePost = (key, id) => {
@@ -275,7 +272,7 @@ export default class Posts extends Component {
 				// Increase likes locally too
 				post.likes = post.likes + 1
 			}
-		}, err => { })
+		}, () => { })
 
 		// Update our copy of posts array
 		copy_posts[index] = post;
@@ -371,7 +368,7 @@ export default class Posts extends Component {
 		}
 
 		eligibleViewableItems.map(key => {
-			GET('Posts/UserReachPost?post_id=' + parseInt(key), res => { }, err => { })
+			GET('Posts/UserReachPost?post_id=' + parseInt(key), () => { }, () => { })
 
 			this.reachedPosts.push(key)
 		});
