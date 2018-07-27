@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, FlatList, Image, Dimensions, Linking, RefreshControl } from 'react-native';
+import { View, TouchableOpacity, FlatList, Image, Dimensions, Linking, RefreshControl, Platform } from 'react-native';
 import { Video } from 'expo'
 import { Ionicons, MaterialCommunityIcons, Feather, FontAwesome, Entypo } from '@expo/vector-icons';
 import { mainColor, bgColor } from '../../constants/Colors';
+import Swiper from 'react-native-swiper';
 import FontedText from '../../components/FontedText';
 import NoContent from '../../components/NoContent';
-import { Container } from 'native-base';
+import { Container, Content } from 'native-base';
 import PopupDialog from 'react-native-popup-dialog';
 import { GET } from '../../utils/Network';
 import HoldUp from '../../components/HoldUp';
@@ -22,7 +23,8 @@ export default class Posts extends Component {
 		this.state = {
 			points_earned: 0,
 			fetched: false,
-			posts: []
+			posts: [],
+			announcements: []
 		}
 
 		this.handleViewableItemsChanged = this.handleViewableItemsChanged.bind(this)
@@ -43,6 +45,40 @@ export default class Posts extends Component {
 
 	componentDidMount () {
 		this.fetchPosts(true)
+
+		if (!this.props.history) {
+			GET('Announcements', res => {
+				if(res.data.response === 1) {
+					this.setState({ announcements: res.data.announcements, announcementShown: true })
+				}
+			}, err => {
+				//console.log(err)
+			})
+		}
+	}
+
+	renderAnnouncementModal = () => {
+		if(!this.props.history) {
+			return (
+				<PopupDialog
+					show={this.state.announcementShown}
+					dialogStyle={{ backgroundColor: bgColor, borderRadius: 10, justifyContent: 'center', alignItems: 'center' }}
+					width={0.85}
+					height={0.7}
+					ref={(popupDialog) => { this.announcementModal = popupDialog; }}>
+					<Content>
+						{
+							this.state.announcements.map(ann => (
+								<View key={ann.id} style={{ alignItems: 'center', padding: 16, marginVertical: 4 }}>
+									<FontedText style={{ color: mainColor, fontSize: 17 }}>{ann.title}</FontedText>
+									<FontedText style={{ color: 'white', fontSize: 15, marginTop: 8 }}>{ann.message}</FontedText>
+								</View>
+							))
+						}
+					</Content>
+				</PopupDialog>
+			)
+		}
 	}
 
 	onPressPlayVideo = (key) => {
@@ -388,6 +424,8 @@ export default class Posts extends Component {
 					renderItem={({ item }) => this.renderItem(item)}
 					onViewableItemsChanged={this.handleViewableItemsChanged}
 					viewabilityConfig={this.viewabilityConfig} />
+
+				{this.renderAnnouncementModal()}
 
 				<PopupDialog
 					dialogStyle={{ backgroundColor: bgColor, borderRadius: 10, justifyContent: 'center', alignItems: 'center' }}
