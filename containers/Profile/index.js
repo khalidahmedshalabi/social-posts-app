@@ -19,6 +19,7 @@ class Profile extends Component {
 	state = {
 		fetchedData: false,
 
+		id: '',
 		name: '',
 		points_earned: 0,
 		points_left: 0,
@@ -133,7 +134,7 @@ class Profile extends Component {
 						</Animatable.Image>
 
 						<Animatable.View animation="fadeInDown" duration={1000} delay={500}>
-							<FontedText style={{ color: 'white', fontSize: 32 }}>{this.state.name}</FontedText>
+							<FontedText style={{ color: 'white', fontSize: 32 }}>({this.state.id})  {this.state.name}</FontedText>
 						</Animatable.View>
 					</LinearGradient>
 
