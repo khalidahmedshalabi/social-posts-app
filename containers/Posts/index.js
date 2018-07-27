@@ -354,14 +354,16 @@ export default class Posts extends Component {
 		if (this.props.history) 
 			return
 		
-		if (!viewableItems.length)
+		const itemsAtHand = viewableItems.viewableItems
+		
+		if (!itemsAtHand)
 			return
-
+		
 		if (this.reachedPosts.length == this.state.posts.length)
 			return
 
 		let eligibleViewableItems = []
-		for (let item of viewableItems) {
+		for (let item of itemsAtHand) {
 			if (this.reachedPosts.findIndex(reachedItem => reachedItem === item.key) === -1) {
 				eligibleViewableItems.push(item.key)
 			}
@@ -372,7 +374,7 @@ export default class Posts extends Component {
 
 			this.reachedPosts.push(key)
 		});
-		//console.log("Visible items are", viewableItems);
+		//console.log("Visible items are", itemsAtHand);
 		//console.log("Changed in this iteration", changed);
 	}
 
