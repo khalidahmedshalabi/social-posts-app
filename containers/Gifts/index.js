@@ -1,46 +1,71 @@
 import React, { Component } from 'react';
-import {
-	View,
-	Dimensions,Image,TouchableOpacity
-} from 'react-native';
+import { View, Dimensions, Image, TouchableOpacity } from 'react-native';
 import LazyContainer from '../../components/LazyContainer';
 import { LinearGradient } from 'expo';
-import { bgColor } from '../../constants/Colors'
+import { bgColor, mainColor } from '../../constants/Colors'
 import FontedText from '../../components/FontedText'
 import Carousel from 'react-native-snap-carousel';
 import BackHeader from '../../components/BackHeader';
+import { GET } from '../../utils/Network';
+import HoldUp from '../../components/HoldUp';
 
-const height = Dimensions.get('window').height
 const width = Dimensions.get('window').width
 
 
 export default class Gifts extends Component {
-
 	constructor(props) {
 		super(props);
+
 		this.state = {
-			data: [
-				{title: 'اسم الهدية', photo: 'https://cdn1.imggmi.com/uploads/2018/7/16/834aeaae6f5a7c34c8668355c09841f6-full.png',  description: "وصف محتوي الهدية الاولي "},
-				{title: 'اسم الهدية', photo: 'https://cdn1.imggmi.com/uploads/2018/7/16/834aeaae6f5a7c34c8668355c09841f6-full.png',  description: "وصف محتوي الهدية الثانية"},
-				{title: 'اسم الهدية', photo: 'https://cdn1.imggmi.com/uploads/2018/7/16/834aeaae6f5a7c34c8668355c09841f6-full.png',  description: "وصف محتوي الهدية الثالثة "},
-				{title: 'اسم الهدية', photo: 'https://cdn1.imggmi.com/uploads/2018/7/16/834aeaae6f5a7c34c8668355c09841f6-full.png',  description: "وصف محتوي الهدية الرابعة"},
-			]
-			
-			}
+			fetchedData: false,
+			can_buy_cash_gifts: true,
+			user_points: 0,
+			gifts: []
 		}
-	_renderItem ({item}) {
+	}
+
+	componentDidMount() {
+		GET('Gifts', res => {
+			this.setState({ ...res.data, fetchedData: true })
+		}, err => { })
+	}
+
+	_renderItem({ item }) {
+		let img = {}
+
+		switch (item.type_id) {
+			case 1:
+				img = require('../../assets/images/gift-phone.png')
+				break;
+			case 2:
+				img = require('../../assets/images/gift-coupon.png')
+				break;
+			case 3:
+				img = require('../../assets/images/gift-money.png')
+				break;
+		}
+
 		return (
-			<View style={{flexDirection:'column',paddingVertical: 20, justifyContent:'center',alignItems:'center',backgroundColor:'#474668',borderRadius:40}}>
-				<Image style={{ width:160, height: 160, resizeMode:'contain',borderRadius:50,marginBottom:12}} source={{ uri: item.photo }} />
-				<FontedText style={{color: 'white', fontSize: 23, textAlign: 'center'}}>{item.title}</FontedText>
-				<FontedText style={{color: 'white', fontSize: 16, textAlign: 'center'}}>{item.description}</FontedText>
+			<View style={{ paddingVertical: 20, paddingHorizontal: 10, justifyContent: 'center', alignItems: 'center', backgroundColor: '#474668', borderRadius: 40 }}>
+				<Image 
+					style={{ width: 150, height: 150, resizeMode: 'contain', marginBottom: 10 }} 
+					source={img} />
+
+				<FontedText style={{ color: 'white', fontSize: 20, textAlign: 'center' }}>{item.title}</FontedText>
+				<FontedText style={{ color: '#EEEEEE', fontSize: 14, textAlign: 'center' }}>{item.info}</FontedText>
+				
+				<View style={{ marginTop: 13, flexDirection: 'row' }}>
+					<FontedText style={{ color: mainColor, fontSize: 13, textAlign: 'center' }}>{item.price} نقطة</FontedText>
+				</View>
 			</View>
 		);
 	}
-	
+
 	render() {
+		if (!this.state.fetchedData) return <HoldUp />
+
 		return (
-			<LazyContainer style={{backgroundColor: bgColor}}>
+			<LazyContainer style={{ backgroundColor: bgColor }}>
 				<BackHeader
 					navigation={this.props.navigation}
 					title='الهدايا' />
@@ -49,27 +74,25 @@ export default class Gifts extends Component {
 					<Carousel
 						contentContainerCustomStyle={{ marginTop: 83 }}
 						ref={(c) => { this._carousel = c; }}
-						data={this.state.data}
+						data={this.state.gifts}
 						renderItem={this._renderItem}
 						sliderWidth={width}
-						itemWidth={width*0.75}
+						itemWidth={width * 0.75}
 						activeSlideAlignment='center'
-						layout={'default'} 
-						//layoutCardOffset={9}
-					/>
+						layout={'default'} />
 				</View>
 
 				<TouchableOpacity style={{ flex: 0.12 }} >
-							<LinearGradient
-								colors={['#b28003', '#f9ce63']}
-								start={{ x: 0.0, y: 1.0 }}
-								end={{ x: 1.0, y: 0.0 }}
-								style={{
-									paddingVertical: 12,
-									flex: 1
-								}}>
-								<FontedText style={{ color: bgColor, textAlign: 'center', fontSize: 19 }}>اختار الهدية</FontedText>
-							</LinearGradient>
+					<LinearGradient
+						colors={['#b28003', '#f9ce63']}
+						start={{ x: 0.0, y: 1.0 }}
+						end={{ x: 1.0, y: 0.0 }}
+						style={{
+							paddingVertical: 12,
+							flex: 1
+						}}>
+						<FontedText style={{ color: bgColor, textAlign: 'center', fontSize: 19 }}>اشترى الهدية</FontedText>
+					</LinearGradient>
 				</TouchableOpacity>
 			</LazyContainer>
 		)
