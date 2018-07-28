@@ -55,7 +55,7 @@ export default class Notifications extends Component {
 					item.type == 2 ? 
 						(
 							<View style={{ flexDirection: 'row' }}>
-								<FontedText style={{ color: 'white', fontSize: 14, textAlign: 'left', marginLeft: 15 }}>تم تنفيذ الطلب: {item.value}</FontedText>
+								<FontedText style={{ color: 'white', fontSize: 14, textAlign: 'left', marginLeft: 15, marginRight: 20 }}>تم تنفيذ الطلب: {item.value}</FontedText>
 							</View>
 						) : (
 							<View style={{ flexDirection: 'row' }}>
