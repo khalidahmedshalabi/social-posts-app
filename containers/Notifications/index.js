@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { View, FlatList } from 'react-native';
+import { View, FlatList, RefreshControl } from 'react-native';
 import { Entypo } from '@expo/vector-icons';
-import { bgColor } from '../../constants/Colors';
+import { bgColor, mainColor } from '../../constants/Colors';
 import LazyContainer from '../../components/LazyContainer';
 import NoContent from '../../components/NoContent';
 import FontedText from '../../components/FontedText';
@@ -18,14 +18,14 @@ export default class Notifications extends Component {
 		}
 	}
 
-	fetchData = () => {
+	fetchData = (showLoader) => {
 		GET('PointsNotifications', res => {
-			this.setState({ notifications: res.data.notifications, fetched: true })
+			this.setState({ notifications: res.data.notifications, fetched: showLoader })
 		}, err => console.log(err))
 	}
 
 	componentDidMount () {
-		this.fetchData()
+		this.fetchData(true)
 	}
 
 	renderItem = (item) => {
@@ -80,6 +80,16 @@ export default class Notifications extends Component {
 		return (
 			<LazyContainer style={{ backgroundColor: bgColor }}>
 				<FlatList
+					refreshControl={
+						<RefreshControl
+							colors={[mainColor]}
+							tintColor={mainColor}
+							refreshing={!this.state.fetched}
+							onRefresh={() => {
+								this.fetchData(true)
+							}}
+						/>
+					}
 					keyExtractor={this._keyExtractor}
 					contentContainerStyle={{
 						paddingVertical: 15
