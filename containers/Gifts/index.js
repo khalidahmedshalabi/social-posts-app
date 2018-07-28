@@ -9,6 +9,7 @@ import BackHeader from '../../components/BackHeader';
 import { GET } from '../../utils/Network';
 import HoldUp from '../../components/HoldUp';
 import Toast from 'react-native-easy-toast'
+import { UpdateProfile } from '../../utils/Updaters';
 
 const width = Dimensions.get('window').width
 const height = Dimensions.get('window').height
@@ -83,6 +84,7 @@ export default class Gifts extends Component {
 					this.refs.toast.show('ليس لديك نقاط كافية');
 				}
 				else if (res.data.response == 1) {
+					UpdateProfile()
 					this.refs.toast.show('تم الشراء. ستصلك الهدية خلال يوم او اكثر. راقب بريدك الالكتروني و التنبيهات', 10000);
 				}
 			}, err => { })

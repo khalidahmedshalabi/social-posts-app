@@ -12,6 +12,7 @@ import * as Animatable from 'react-native-animatable';
 import { GET, POST } from '../../utils/Network';
 import HoldUp from '../../components/HoldUp';
 import Toast from 'react-native-easy-toast'
+import { EventRegister } from 'react-native-event-listeners'
 
 const fontSize = 13
 const boxBorderRadius = 30
@@ -30,8 +31,22 @@ class Profile extends Component {
 		gifts_count: 0
 	}
 
+	componentWillMount() {
+		this.refreshListener = EventRegister.addEventListener('UpdateProfile', () => {
+			this.fetchData(true)
+		})
+	}
+
+	componentWillUnmount() {
+		EventRegister.removeEventListener(this.refreshListener)
+	}
+
 	componentDidMount() {
-		GET('Profile', res => this.setState({ ...res.data.user, fetchedData: true }), err => {  })
+		this.fetchData(true)
+	}
+
+	fetchData = (showLoader) => {
+		GET('Profile', res => this.setState({ ...res.data.user, fetchedData: showLoader }), err => { })
 	}
 
 	onTransferPoints = () => {
@@ -57,6 +72,7 @@ class Profile extends Component {
 					this.refs.toast.show('ليس لديك نقاط كافية')
 					break
 				case 1:
+					this.fetchData(true)
 					this.refs.toast.show('تم تحويل النقاط بنجاح')
 					break
 			}

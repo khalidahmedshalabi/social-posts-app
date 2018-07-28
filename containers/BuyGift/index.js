@@ -10,6 +10,7 @@ import ModalSelector from 'react-native-modal-selector'
 import FontedInput from '../../components/FontedInput';
 import Toast from 'react-native-easy-toast'
 import { GET } from '../../utils/Network';
+import { UpdateProfile } from '../../utils/Updaters';
 
 const height = Dimensions.get('window').height
 
@@ -39,6 +40,7 @@ export default class BuyGift extends Component {
 				this.refs.toast.show('ليس لديك نقاط كافية');
 			}
 			else if (res.data.response == 1) {
+				UpdateProfile()
 				this.refs.toast.show('تم الشراء. ستصلك الهدية خلال يوم او اكثر. راقب بريدك الالكتروني و التنبيهات', 10000);
 			}
 		}, err => { })

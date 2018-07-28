@@ -11,6 +11,7 @@ import { GET } from '../../utils/Network';
 import HoldUp from '../../components/HoldUp';
 import { base_url } from '../../constants/Server';
 import BackHeader from '../../components/BackHeader';
+import { UpdateProfile } from '../../utils/Updaters';
 const height = Dimensions.get('window').height
 
 const POPUP_DIALOG_SHOW_INTERVAL = 3000
@@ -112,6 +113,8 @@ export default class Posts extends Component {
 	setVideoAsWatched = (key, id) => {
 		GET('Posts/UserWatchVideo?post_id=' + id, res => { 
 			if(!res.data.response) return
+
+			UpdateProfile()
 
 			this.setState({ points_earned: res.data.points_earned }, () => {
 				this.popupDialog.show();
@@ -252,6 +255,8 @@ export default class Posts extends Component {
 				)
 			})*/
 			if (!res.data.response) return
+
+			UpdateProfile()
 
 			this.setState({ points_earned: res.data.points_earned }, () => {
 				this.popupDialog.show();
