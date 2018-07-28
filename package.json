@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@expo/samples": "2.1.1",
+    "@expo/traveling-fastlane-linux": "^1.5.0",
     "axios": "^0.18.0",
     "expo": "^28.0.0",
     "native-base": "^2.6.1",
