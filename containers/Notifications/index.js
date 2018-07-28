@@ -25,7 +25,13 @@ export default class Notifications extends Component {
 	}
 
 	componentDidMount () {
+		this.refreshTimer = setInterval(() => { this.fetchData(true) }, 240000)
+
 		this.fetchData(true)
+	}
+
+	componentWillMount() {
+		clearInterval(this.refreshTimer)
 	}
 
 	renderItem = (item) => {
