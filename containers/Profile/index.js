@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { View, TouchableOpacity, Dimensions } from 'react-native';
+import { View, TouchableOpacity, Dimensions, Keyboard } from 'react-native';
 import { Container, Content } from 'native-base';
 import { MaterialIcons, MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
 import { mainColor, bgColor } from '../../constants/Colors';
@@ -36,6 +36,7 @@ class Profile extends Component {
 
 	onTransferPoints = () => {
 		this.popupDialog.dismiss()
+		Keyboard.dismiss()
 
 		const { transfer_points_amount, transfer_points_target } = this.state
 
@@ -361,6 +362,7 @@ class Profile extends Component {
 					overlayOpacity={0.85}
 					width={0.85}
 					height={0.4}
+					onDismissed={() => { Keyboard.dismiss() }}
 					ref={(popupDialog) => { this.popupDialog = popupDialog; }}>
 
 					<FontedInput
