@@ -105,8 +105,9 @@ class AddPost extends Component {
 
 	onPublishPost = () => {
 		this.setState({ published: true }, () => {
+
 			setTimeout(() => {
-				this.props.navigation.goBack()
+				this.props.navigation.replace('Tabs')
 			}, 3000);
 		})
 	}
