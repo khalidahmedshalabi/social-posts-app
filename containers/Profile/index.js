@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { View, TouchableOpacity, Dimensions } from 'react-native';
-import { Container, Content } from 'native-base';
+import { Container, Content, Button } from 'native-base';
 import { MaterialIcons, MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
 import { mainColor, bgColor } from '../../constants/Colors';
 import { LinearGradient } from 'expo';
+import FontedInput from '../../components/FontedInput';
 import FontedText from '../../components/FontedText';
+import PopupDialog from 'react-native-popup-dialog';
 import * as Animatable from 'react-native-animatable';
 import { GET } from '../../utils/Network';
 import HoldUp from '../../components/HoldUp';
@@ -134,7 +136,7 @@ class Profile extends Component {
 						</Animatable.Image>
 
 						<Animatable.View animation="fadeInDown" duration={1000} delay={500}>
-							<FontedText style={{ color: 'white', fontSize: 32 }}>({this.state.id})  {this.state.name}</FontedText>
+							<FontedText style={{ color: 'white', fontSize: 32 }}>({this.state.id}) {this.state.name}</FontedText>
 						</Animatable.View>
 					</LinearGradient>
 
@@ -213,22 +215,6 @@ class Profile extends Component {
 								<TouchableOpacity
 									onPress={
 										() => {
-											this.props.setLoggedIn(false)
-										}
-									}
-									activeOpacity={0.7}>
-									<View style={{ backgroundColor: '#474668', borderRadius: boxBorderRadius, height: boxDim, width: boxDim, justifyContent: 'center', alignItems: 'center' }}>
-										<Ionicons name='md-exit' size={70} color={mainColor} />
-									</View>
-
-									<FontedText style={{ color: 'white', textAlign: 'center', marginTop: 13, fontSize: fontSize }}>تسجيل الخروج</FontedText>
-								</TouchableOpacity>
-							</View>
-
-							<View style={{ flex: 0.333, alignItems: 'center' }}>
-								<TouchableOpacity
-									onPress={
-										() => {
 											this.props.navigation.navigate("EditProfile")
 										}
 									}
@@ -256,10 +242,42 @@ class Profile extends Component {
 									<FontedText style={{ color: 'white', textAlign: 'center', marginTop: 13, fontSize: fontSize }}>منشورات شاهدتها</FontedText>
 								</TouchableOpacity>
 							</View>
+
+							<View style={{ flex: 0.333, alignItems: 'center' }}>
+								<TouchableOpacity
+									onPress={
+										() => {
+											this.popupDialog.show();
+										}
+									}
+									activeOpacity={0.7}>
+									<View style={{ backgroundColor: '#474668', borderRadius: boxBorderRadius, height: boxDim, width: boxDim, justifyContent: 'center', alignItems: 'center' }}>
+										<MaterialCommunityIcons name='transfer' size={70} color={mainColor} />
+									</View>
+
+									<FontedText style={{ color: 'white', textAlign: 'center', marginTop: 13, fontSize: fontSize }}>تحويل نقاط</FontedText>
+								</TouchableOpacity>
+							</View>
 						</View>
 
 						<View style={{ flexDirection: 'row', marginVertical: 20 }}>
-							<View style={{ flex: 0.50, alignItems: 'center' }}>
+							<View style={{ flex: 0.333, alignItems: 'center' }}>
+								<TouchableOpacity
+									onPress={
+										() => {
+											this.props.setLoggedIn(false)
+										}
+									}
+									activeOpacity={0.7}>
+									<View style={{ backgroundColor: '#474668', borderRadius: boxBorderRadius, height: boxDim, width: boxDim, justifyContent: 'center', alignItems: 'center' }}>
+										<Ionicons name='md-exit' size={70} color={mainColor} />
+									</View>
+
+									<FontedText style={{ color: 'white', textAlign: 'center', marginTop: 13, fontSize: fontSize }}>تسجيل الخروج</FontedText>
+								</TouchableOpacity>
+							</View>
+
+							<View style={{ flex: 0.333, alignItems: 'center' }}>
 								<TouchableOpacity
 									onPress={
 										() => {
@@ -273,6 +291,9 @@ class Profile extends Component {
 
 									<FontedText style={{ color: 'white', textAlign: 'center', marginTop: 13, fontSize: fontSize }}>تواصل معنا</FontedText>
 								</TouchableOpacity>
+							</View>
+
+							<View style={{ flex: 0.333 }}>
 							</View>
 						</View>
 					</Animatable.View>
@@ -296,6 +317,67 @@ class Profile extends Component {
 						</View>
 					</Animatable.View>
 				</Content>
+
+				<PopupDialog
+					dialogStyle={{ 
+						backgroundColor: bgColor, 
+						borderRadius: 10, 
+						justifyContent: 'center', 
+						alignItems: 'center', 
+						paddingVertical: 30,
+						paddingHorizontal: 15 
+					}}
+					overlayOpacity={0.85}
+					width={0.85}
+					height={0.4}
+					ref={(popupDialog) => { this.popupDialog = popupDialog; }}>
+
+					<FontedInput
+						placeholder='رقم الحساب'
+						placeholderTextColor='#d8d8d8'
+						underlineColorAndroid='transparent'
+						keyboardType='numeric'
+						maxLength={254}
+						style={{
+							backgroundColor: '#2a293d',
+							borderRadius: 10,
+							width: '100%',
+							paddingLeft: 13
+						}}
+					/>
+
+					<FontedInput
+						placeholder='عدد النقاط'
+						placeholderTextColor='#d8d8d8'
+						underlineColorAndroid='transparent'
+						keyboardType='numeric'
+						maxLength={254}
+						style={{
+							backgroundColor: '#2a293d',
+							borderRadius: 10,
+							width: '100%',
+							marginTop: 15,
+							paddingLeft: 13
+						}}
+					/>
+
+					<TouchableOpacity
+						style={{ borderRadius: 20, marginTop: 30 }}>
+						<LinearGradient
+							colors={['#b28003', '#f9ce63']}
+							start={{ x: 0.0, y: 1.0 }}
+							end={{ x: 1.0, y: 0.0 }}
+							style={{
+								justifyContent: 'center',
+								alignItems: 'center',
+								borderRadius: 20,
+								paddingVertical: 10,
+								paddingHorizontal: 50
+							}}>
+							<FontedText style={{ color: bgColor, fontSize: 15 }}>تحويل</FontedText>
+						</LinearGradient>
+					</TouchableOpacity>
+				</PopupDialog>
 			</Container>
 		)
 	}
