@@ -8,9 +8,10 @@ import Carousel from 'react-native-snap-carousel';
 import BackHeader from '../../components/BackHeader';
 import { GET } from '../../utils/Network';
 import HoldUp from '../../components/HoldUp';
+import Toast from 'react-native-easy-toast'
 
 const width = Dimensions.get('window').width
-
+const height = Dimensions.get('window').height
 
 export default class Gifts extends Component {
 	constructor(props) {
@@ -26,7 +27,8 @@ export default class Gifts extends Component {
 
 	componentDidMount() {
 		GET('Gifts', res => {
-			this.setState({ ...res.data, fetchedData: true })
+			this.currentGift = res.data.gifts[0]
+			this.setState({ ...res.data, fetchedData: true,  })
 		}, err => { })
 	}
 
@@ -61,6 +63,32 @@ export default class Gifts extends Component {
 		);
 	}
 
+	onBuyGift = () => {
+		const { currentGift } = this
+
+		if (currentGift.price > this.state.user_points) {
+			this.refs.toast.show('ليس لديك نقاط كافية');
+			return
+		}
+
+		if (currentGift.type_id == 3) {
+			this.props.navigation.navigate('BuyGift', { gift: currentGift })
+		}
+		else {
+			const { id, info, title } = currentGift
+			const message = `${title} - ${info}`
+
+			GET(`Gifts/UserOrderGift?gift_id=${String(id)}&info=${message}`, res => {
+				if (res.data.response == 0) {
+					this.refs.toast.show('ليس لديك نقاط كافية');
+				}
+				else if (res.data.response == 1) {
+					this.refs.toast.show('تم الشراء. ستصلك الهدية خلال يوم او اكثر. راقب بريدك الالكتروني و التنبيهات', 10000);
+				}
+			}, err => { })
+		}
+	}
+
 	render() {
 		if (!this.state.fetchedData) return <HoldUp />
 
@@ -79,10 +107,19 @@ export default class Gifts extends Component {
 						sliderWidth={width}
 						itemWidth={width * 0.75}
 						activeSlideAlignment='center'
-						layout={'default'} />
+						layout={'default'}
+						onBeforeSnapToItem={(slideIndex) => {
+							// Gotta reverse due to RTL..
+							const len = this.state.gifts.length
+							const correctIndex = len - 1 - slideIndex
+							
+							this.currentGift = this.state.gifts[correctIndex]
+						}} />
 				</View>
 
-				<TouchableOpacity style={{ flex: 0.12 }} >
+				<TouchableOpacity 
+					onPress={() => { this.onBuyGift() }}
+					style={{ flex: 0.12 }} >
 					<LinearGradient
 						colors={['#b28003', '#f9ce63']}
 						start={{ x: 0.0, y: 1.0 }}
@@ -94,6 +131,16 @@ export default class Gifts extends Component {
 						<FontedText style={{ color: bgColor, textAlign: 'center', fontSize: 19 }}>اشترى الهدية</FontedText>
 					</LinearGradient>
 				</TouchableOpacity>
+
+				<Toast 
+					ref="toast"
+					style={{ backgroundColor: '#dcdee2', borderRadius: 25, }}
+					position='bottom'
+					positionValue={height * 0.78}
+					fadeInDuration={750}
+					fadeOutDuration={1000}
+					opacity={0.8}
+					textStyle={{ color: bgColor }} />
 			</LazyContainer>
 		)
 	}
