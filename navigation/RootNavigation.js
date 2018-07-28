@@ -13,6 +13,7 @@ import CodeConfirmation from '../containers/CodeConfirmation'
 import EditProfile from '../containers/EditProfile'
 import AddPost from '../containers/AddPost'
 import Gifts from '../containers/Gifts'
+import BuyGift from '../containers/BuyGift'
 import Drafts from '../containers/Drafts';
 import ContactUs from '../containers/ContactUs';
 import Posts from '../containers/Posts';
@@ -52,6 +53,9 @@ const RootNavigatorCore = ({ screenProps, initialRouteName }) => {
 		},
 		Gifts: {
 			screen: Gifts
+		},
+		BuyGift: {
+			screen: BuyGift
 		},
 		Drafts: {
 			screen: Drafts

@@ -42,6 +42,8 @@ export default class Posts extends Component {
 	}
 
 	componentDidMount () {
+		this.refreshTimer = setInterval(() => { this.fetchPosts(true) }, 240000)
+
 		this.fetchPosts(true)
 
 		if (!this.props.history) {
@@ -52,6 +54,10 @@ export default class Posts extends Component {
 			}, () => {
 				})
 		}
+	}
+
+	componentWillMount () {
+		clearInterval(this.refreshTimer)
 	}
 
 	renderAnnouncementModal = () => {

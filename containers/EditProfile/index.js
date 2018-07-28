@@ -98,7 +98,8 @@ export default class EditProfile extends Component {
 				},
 			)
 		}
-		this.props.navigation.goBack()
+		
+		this.props.navigation.replace('Tabs')
 	}
 
 	render() {

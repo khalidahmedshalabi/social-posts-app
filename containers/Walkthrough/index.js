@@ -183,7 +183,7 @@ class Walkthrough extends Component {
 							ref={ref => this.viewText2 = ref}
 							style={styles.contentContainerText}>
 							<FontedText style={{ color: 'white', fontSize: 23, textAlign: 'center' }}>
-								هل انت صاحب مشروع وتريد ايصال اعلانك لاكبر قدر من الناس المهتين</FontedText>
+								هل انت صاحب مشروع وتريد ايصال اعلانك لاكبر قدر من الناس المهتمين</FontedText>
 						{/*	<Button 
 								onPress={
 									() => {
