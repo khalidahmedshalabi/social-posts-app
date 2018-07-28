@@ -16,7 +16,6 @@ import { height } from '../../constants/Layout';
 import { base_url, api_extension } from '../../constants/Server';
 import { POST } from '../../utils/Network';
 
-
 class AddPost extends Component {
 	constructor() {
 		super()
@@ -50,7 +49,10 @@ class AddPost extends Component {
 				country: this.props.navigation.state.params.country,
 				age: this.props.navigation.state.params.age,
 				gender: this.props.navigation.state.params.gender,
-				max_reaches: this.props.navigation.state.params.max_reaches
+				max_reaches: this.props.navigation.state.params.max_reaches,
+				media_type: this.props.navigation.state.params.media_type,
+				media_type_str: this.props.navigation.state.params.media_type_str,
+				image: this.props.navigation.state.params.image,
 			})
 		}
 	}
@@ -60,15 +62,16 @@ class AddPost extends Component {
 			this.props.addDraftPost({ 
 				title: this.state.title, 
 				content: this.state.content, 
-				link: this.state.link, 
+				link: this.state.link,
 				country: this.state.country, 
-				age: this.state.age, 
+				age: this.state.age,
 				gender: this.state.gender, 
-				max_reaches: this.state.max_reaches
+				max_reaches: this.state.max_reaches,
+				media_type: this.state.media_type,
+				media_type_str: this.state.media_type_str,
+				image: this.state.image,
 			})
-			//console.log("title::" + this.state.title)
-			//console.log("content::" + this.state.content)
-			//console.log("country::" + this.state.country)
+			
 			this.props.navigation.push("Drafts")
 		}
 		else {
