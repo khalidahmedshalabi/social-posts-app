@@ -29,16 +29,45 @@ export default class Notifications extends Component {
 	}
 
 	renderItem = (item) => {
+		let iconName
+		let iconColor
+
+		switch (item.type) {
+			case 0:
+				iconName = 'circle-with-minus'
+				iconColor = '#c13c3f'
+				break;
+			case 1:
+				iconName = 'circle-with-plus'
+				iconColor = '#4d9336'
+				break;
+			case 2:
+				iconName = 'check'
+				iconColor = '#4259f4'
+				break;
+		}
+
 		return (
 			<View style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', paddingVertical: 15, paddingHorizontal: 15 }}>
-				<Entypo name={item.status == 0 ? 'circle-with-minus' : 'circle-with-plus' } size={28} color={item.status == 0 ? '#c13c3f' : '#4d9336' } />
+				<Entypo name={iconName} size={28} color={iconColor} />
 
-				<FontedText style={{ color: 'white', fontSize: 16, marginLeft: 15 }}>{item.status == 0 ? 'لقد تم خصم' : 'لقد تم إضافة'}</FontedText>				
+				{
+					item.type == 2 ? 
+						(
+							<View style={{ flexDirection: 'row' }}>
+								<FontedText style={{ color: 'white', fontSize: 14, textAlign: 'left', marginLeft: 15 }}>تم تنفيذ الطلب: {item.value}</FontedText>
+							</View>
+						) : (
+							<View style={{ flexDirection: 'row' }}>
+								<FontedText style={{ color: 'white', fontSize: 14, textAlign: 'left', marginLeft: 15 }}>{item.type == 0 ? 'لقد تم خصم' : 'لقد تم إضافة'}</FontedText>
 
-				<FontedText style={{ color: item.status == 0 ? '#bcbcbc' : '#bcbcbc', fontSize: 16, marginLeft: 5 }}>{item.amount}</FontedText>
-				<FontedText style={{ color: item.status == 0 ? '#bcbcbc' : '#bcbcbc', fontSize: 16, marginRight: 5 }}>{item.status == 0 ? '-' : '+'}</FontedText>
-				
-				<FontedText style={{ color: 'white', fontSize: 16 }}>{item.status == 0 ? 'نقطة من حسابك' : 'نقطة إلى حسابك'}</FontedText>
+								<FontedText style={{ color: item.type == 0 ? '#bcbcbc' : '#bcbcbc', fontSize: 14, textAlign: 'left', marginLeft: 5 }}>{item.value}</FontedText>
+								<FontedText style={{ color: item.type == 0 ? '#bcbcbc' : '#bcbcbc', fontSize: 14, textAlign: 'left', marginRight: 5 }}>{item.type == 0 ? '-' : '+'}</FontedText>
+
+								<FontedText style={{ color: 'white', fontSize: 14, textAlign: 'left', }}>{item.type == 0 ? 'نقطة من حسابك' : 'نقطة إلى حسابك'}</FontedText>
+							</View>
+						)
+				}
 			</View>
 		)
 	}
