@@ -370,7 +370,6 @@ class AddPost extends Component {
 								underlineColorAndroid='transparent'
 								multiline={true}
 								autoCapitalize='none'
-								keyboardType='email-address'
 								maxLength={254}
 								style={{
 									flex: 0.85,
