@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { View, TouchableOpacity, Dimensions } from 'react-native';
-import { Container, Content, Button } from 'native-base';
+import { Container, Content } from 'native-base';
 import { MaterialIcons, MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
 import { mainColor, bgColor } from '../../constants/Colors';
 import { LinearGradient } from 'expo';
@@ -9,8 +9,9 @@ import FontedInput from '../../components/FontedInput';
 import FontedText from '../../components/FontedText';
 import PopupDialog from 'react-native-popup-dialog';
 import * as Animatable from 'react-native-animatable';
-import { GET } from '../../utils/Network';
+import { GET, POST } from '../../utils/Network';
 import HoldUp from '../../components/HoldUp';
+import Toast from 'react-native-easy-toast'
 
 const fontSize = 13
 const boxBorderRadius = 30
@@ -31,6 +32,36 @@ class Profile extends Component {
 
 	componentDidMount() {
 		GET('Profile', res => this.setState({ ...res.data.user, fetchedData: true }), err => {  })
+	}
+
+	onTransferPoints = () => {
+		this.popupDialog.dismiss()
+
+		const { transfer_points_amount, transfer_points_target } = this.state
+
+		if(!transfer_points_amount || !transfer_points_target) {
+			this.refs.toast.show('مدخلات ناقصة')
+			return
+		}
+
+		POST('Profile/TransferPoints', {
+			to_user_id: parseInt(transfer_points_target),
+			amount: parseInt(transfer_points_amount)
+		}, res => {
+			switch(res.data.response) {
+				case -1:
+					this.refs.toast.show('لا يوجد مستخدم بهذا الرقم')
+					break
+				case 0:
+					this.refs.toast.show('ليس لديك نقاط كافية')
+					break
+				case 1:
+					this.refs.toast.show('تم تحويل النقاط بنجاح')
+					break
+			}
+		}, err => {
+
+		})
 	}
 
 	render() {
@@ -337,13 +368,14 @@ class Profile extends Component {
 						placeholderTextColor='#d8d8d8'
 						underlineColorAndroid='transparent'
 						keyboardType='numeric'
-						maxLength={254}
 						style={{
+							color: 'white',
 							backgroundColor: '#2a293d',
 							borderRadius: 10,
 							width: '100%',
 							paddingLeft: 13
 						}}
+						onChangeText={(text) => this.setState({ transfer_points_target: text })}
 					/>
 
 					<FontedInput
@@ -351,17 +383,19 @@ class Profile extends Component {
 						placeholderTextColor='#d8d8d8'
 						underlineColorAndroid='transparent'
 						keyboardType='numeric'
-						maxLength={254}
 						style={{
+							color: 'white',
 							backgroundColor: '#2a293d',
 							borderRadius: 10,
 							width: '100%',
 							marginTop: 15,
 							paddingLeft: 13
 						}}
+						onChangeText={(text) => this.setState({ transfer_points_amount: text })}
 					/>
 
 					<TouchableOpacity
+						onPress={this.onTransferPoints}
 						style={{ borderRadius: 20, marginTop: 30 }}>
 						<LinearGradient
 							colors={['#b28003', '#f9ce63']}
@@ -378,6 +412,16 @@ class Profile extends Component {
 						</LinearGradient>
 					</TouchableOpacity>
 				</PopupDialog>
+
+				<Toast
+					ref="toast"
+					style={{ backgroundColor: '#dcdee2', borderRadius: 25, }}
+					position='bottom'
+					positionValue={height * 0.78}
+					fadeInDuration={750}
+					fadeOutDuration={1000}
+					opacity={0.8}
+					textStyle={{ color: bgColor }} />
 			</Container>
 		)
 	}
