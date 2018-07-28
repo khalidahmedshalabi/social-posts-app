@@ -7,6 +7,7 @@ import { LinearGradient } from 'expo';
 import FontedText from '../../components/FontedText';
 import DatePicker from 'react-native-datepicker'
 import ModalSelector from 'react-native-modal-selector'
+import BackHeader from '../../components/BackHeader';
 import * as Animatable from 'react-native-animatable';
 import Toast from 'react-native-easy-toast';
 import { height } from '../../constants/Layout';
@@ -96,6 +97,10 @@ export default class AccountInfo extends Component {
 
 		return (
 			<Container style={{backgroundColor: bgColor}}>
+				<BackHeader
+					navigation={this.props.navigation}
+					title='بيانات الحساب' />
+
 				<View style={{ flex: 0.44, justifyContent: 'flex-end', alignItems: 'center' }}>
 					<Animatable.View animation="fadeIn" duration={1000} delay={500}>
 						<MaterialCommunityIcons name='file-document' size={150} color={mainColor} />
