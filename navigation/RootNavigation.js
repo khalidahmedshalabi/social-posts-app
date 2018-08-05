@@ -6,6 +6,7 @@ import Tabs from './TabNavigation'
 
 import Login from '../containers/Login'
 import Signup from '../containers/Signup'
+import TermsAndConditions from '../containers/TermsAndConditions'
 import ResetPassword from '../containers/ResetPassword'
 import Walkthrough from '../containers/Walkthrough'
 import AccountInfo from '../containers/AccountInfo'
@@ -32,6 +33,9 @@ const RootNavigatorCore = ({ screenProps, initialRouteName }) => {
 		},
 		Signup: {
 			screen: Signup
+		},
+		TermsAndConditions: {
+			screen: TermsAndConditions
 		},
 		ResetPassword: {
 			screen: ResetPassword
