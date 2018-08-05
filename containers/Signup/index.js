@@ -57,7 +57,7 @@ export default class Signup extends Component {
 	render() {
 		return (
 			<LazyContainer style={{ backgroundColor: bgColor }}>
-				<View style={{ flex: 0.36, justifyContent: 'flex-end', alignItems: 'center' }}>
+				<View style={{ justifyContent: 'flex-end', alignItems: 'center' }}>
 					<Animatable.View animation="fadeInDown" duration={1000} delay={500}>
 						<Feather name='user' size={150} color={mainColor} />
 					</Animatable.View>
@@ -67,7 +67,7 @@ export default class Signup extends Component {
 					behavior="padding" enabled
 					keyboardVerticalOffset={0}
 					style={{ flex: 1, justifyContent: 'center' }}
-					contentContainerStyle={{ flex: 0.64, flexDirection: 'column', alignItems: 'center', width: width }}>
+					contentContainerStyle={{ flexDirection: 'column', alignItems: 'center', width: width }}>
 					<View style={{ flex: 1, justifyContent: 'center' }}>
 						<View style={{ flex: 0.15, flexDirection: 'row', alignItems: 'center', borderTopWidth: 1, borderTopColor: '#39384b' }}>
 							<View style={{ flex: 0.10, marginLeft: 30, marginRight: 10, alignItems: 'center' }}>
@@ -143,31 +143,39 @@ export default class Signup extends Component {
 								onChangeText={(text) => this.setState({ confirmpassword: text })}
 							/>
 						</View>
-
-
-						<View style={{ flex: 0.20, justifyContent: 'flex-end', alignItems: 'center' }}>
-							<TouchableOpacity>
-								<FontedText style={{ color: 'white' }}>لديك حساب بالفعل؟</FontedText>
-							</TouchableOpacity>
-						</View>
-
 					</View>
-
-					<TouchableOpacity
-						onPress={() => {
-							this.Check()
-						}}>
-						<LinearGradient
-							colors={['#b28003', '#f9ce63']}
-							start={{ x: 0.0, y: 1.0 }}
-							end={{ x: 1.0, y: 0.0 }}
-							style={{
-								paddingVertical: 12
-							}}>
-							<FontedText style={{ color: bgColor, textAlign: 'center', fontSize: 19 }}>إنشاء حساب</FontedText>
-						</LinearGradient>
-					</TouchableOpacity>
 				</KeyboardAvoidingView>
+					
+				<View style={{ paddingBottom: 40, alignItems: 'center'}}>
+					<TouchableOpacity>
+						<FontedText style={{ color: 'white' }}>لديك حساب بالفعل؟</FontedText>
+					</TouchableOpacity>
+
+					<TouchableOpacity 
+						onPress={
+							() => {
+								this.props.navigation.navigate("TermsAndConditions", {})
+							}
+						}
+						style={{ marginTop: 20 }}>
+						<FontedText style={{ color: 'white' }}>سياسة الخصوصية والشروط والأحكام</FontedText>
+					</TouchableOpacity>
+				</View>
+
+				<TouchableOpacity
+					onPress={() => {
+						this.Check()
+					}}>
+					<LinearGradient
+						colors={['#b28003', '#f9ce63']}
+						start={{ x: 0.0, y: 1.0 }}
+						end={{ x: 1.0, y: 0.0 }}
+						style={{
+							paddingVertical: 12
+						}}>
+						<FontedText style={{ color: bgColor, textAlign: 'center', fontSize: 19 }}>إنشاء حساب</FontedText>
+					</LinearGradient>
+				</TouchableOpacity>
 
 				<Toast ref="toast"
 					style={{ backgroundColor: '#dcdee2', borderRadius: 25, }}
