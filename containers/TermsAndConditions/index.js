@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { WebView } from 'react-native';
 import { Container } from 'native-base';
 import BackHeader from '../../components/BackHeader';
+import { base_url } from '../../constants/Server';
 
 export default class TermsAndConditions extends Component {
 	render() {
@@ -12,7 +13,7 @@ export default class TermsAndConditions extends Component {
 					title='سياسة الخصوصية والشروط والأحكام' />
 
 				<WebView
-					source={{ uri: 'https://github.com/facebook/react-native' }}
+					source={{ uri: `${base_url}/terms-privacy-policy` }}
 				/>
 			</Container>
 		);
