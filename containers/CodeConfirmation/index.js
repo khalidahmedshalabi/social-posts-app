@@ -5,8 +5,6 @@ import { mainColor, bgColor } from '../../constants/Colors';
 import FontedText from '../../components/FontedText';
 import Toast from 'react-native-easy-toast';
 import { height, width } from '../../constants/Layout';
-
-
 import { GET, POST } from '../../utils/Network';
 import FontedInput from '../../components/FontedInput';
 

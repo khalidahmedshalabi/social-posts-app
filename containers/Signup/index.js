@@ -147,7 +147,12 @@ export default class Signup extends Component {
 				</KeyboardAvoidingView>
 					
 				<View style={{ paddingBottom: 40, alignItems: 'center'}}>
-					<TouchableOpacity>
+					<TouchableOpacity
+						onPress={
+							() => {
+								this.props.navigation.goback()
+							}
+						}>
 						<FontedText style={{ color: 'white' }}>لديك حساب بالفعل؟</FontedText>
 					</TouchableOpacity>
 
