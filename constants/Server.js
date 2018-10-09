@@ -1,4 +1,4 @@
-export const base_url = 'http://cashyablash.com';
+export const base_url = 'https://cashyablash-app.herokuapp.com';
 export const api_extension = '/api/v1/'
 
 export default {
